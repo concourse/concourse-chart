@@ -625,6 +625,18 @@ spec:
             - name: CONCOURSE_NEWRELIC_SERVICE_PREFIX
               value: {{ .Values.concourse.web.newrelic.servicePrefix | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.newrelic.batchSize }}
+            - name: CONCOURSE_NEWRELIC_BATCH_SIZE
+              value: {{ .Values.concourse.web.newrelic.batchSize | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.newrelic.batchDuration }}
+            - name: CONCOURSE_NEWRELIC_BATCH_DURATION
+              value: {{ .Values.concourse.web.newrelic.batchDuration | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.newrelic.disableCompression }}
+            - name: CONCOURSE_NEWRELIC_BATCH_DISABLE_COMPRESSION
+              value: {{ .Values.concourse.web.newrelic.disableCompression | quote }}
+            {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.prometheus.enabled }}
             - name: CONCOURSE_PROMETHEUS_BIND_IP

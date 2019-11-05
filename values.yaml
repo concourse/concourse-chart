@@ -603,6 +603,19 @@ concourse:
       ##
       servicePrefix:
 
+      ## Number of events to batch together before emitting
+      ##
+      batchSize:
+
+      ## Length of time to wait between emitting until all currently batched events are emitted
+      ## Example: 60s
+      ##
+      batchDuration:
+
+      ## Disables compression of the batch before sending it
+      ##
+      disableCompression:
+
     prometheus:
       enabled: false
 
