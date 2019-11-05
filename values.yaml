@@ -19,7 +19,7 @@ image: concourse/concourse
 ##      of `concourse/concourse`.
 ## Ref: https://hub.docker.com/r/concourse/concourse/tags/
 ##
-imageTag: "5.6.0"
+imageTag: "5.7.1"
 
 ## Specific image digest to use in place of a tag.
 ## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
@@ -238,6 +238,10 @@ concourse:
     ## ref: https://concourse-ci.org/container-placement.html#limit-active-tasks-strategy
     ##
     limitActiveTasks:
+
+    ## How long to wait for requests to Garden to complete. 0 means no timeout.
+    ##
+    gardenRequestTimeout:
 
     ## How long to wait for Baggageclaim to send the response header.
     ##
@@ -1214,6 +1218,10 @@ concourse:
       ## Use the insecure Houdini Garden backend.
       ##
       useHoudini:
+
+      ## How long to wait for requests to Garden to complete. 0 means no timeout.
+      ##
+      requestTimeout:
 
     baggageclaim:
       ## Minimum level of logs to see. Possible values: debug, info, error

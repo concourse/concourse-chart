@@ -209,6 +209,10 @@ spec:
             - name: CONCOURSE_GARDEN_DNS_PROXY_ENABLE
               value: {{ .Values.concourse.worker.garden.dnsProxyEnable | quote }}
             {{- end }}
+            {{- if .Values.concourse.worker.garden.requestTimeout }}
+            - name: CONCOURSE_GARDEN_REQUEST_TIMEOUT
+              value: {{ .Values.concourse.worker.garden.requestTimeout | quote }}
+            {{- end }}
             {{- if .Values.concourse.worker.baggageclaim.logLevel }}
             - name: CONCOURSE_BAGGAGECLAIM_LOG_LEVEL
               value: {{ .Values.concourse.worker.baggageclaim.logLevel | quote }}
