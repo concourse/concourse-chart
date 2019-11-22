@@ -25,9 +25,7 @@ Fixes # .
 > Are the following items included as part of this PR? Please delete checkbox items that don't apply.
 - [ ] Bumped chart version in `chart.yml` (**required**)
   - [ ] If a major bump, update `CHANGELOG.md`
-- [ ] Update app version in `chart.yml`
-- [ ] Update image tag in `values.yml`
-- [ ] Update image tag in `README.md`
+- [ ] Variables are documented in the `README.md`
 
 
 # Reviewer Checklist
