@@ -1695,6 +1695,15 @@ worker:
   ##
   hardAntiAffinity: false
 
+  ## Set of labels to use in the hard anti affinity rule.
+  ##
+  ## Example:
+  ##   hardAntiAffinity: true
+  ##   hardAntiAffinityLabels:
+  ##     application: concourse
+  ##
+  hardAntiAffinityLabels: {}
+
   ## Tolerations for the worker nodes.
   ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   ##
