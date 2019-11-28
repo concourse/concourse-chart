@@ -299,8 +299,12 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchLabels:
+{{- if .Values.worker.hardAntiAffinityLabels }}
+{{ toYaml .Values.worker.hardAntiAffinityLabels | indent 16 }}
+{{- else }}
                 app: {{ template "concourse.worker.fullname" . }}
                 release: {{ .Release.Name | quote }}
+{{- end }}
             topologyKey: kubernetes.io/hostname
           {{- else }}
           preferredDuringSchedulingIgnoredDuringExecution:
