@@ -6,7 +6,8 @@
 ## TL;DR;
 
 ```console
-$ helm install stable/concourse
+$ helm repo add concourse https://concourse-charts.storage.googleapis.com/
+$ helm install concourse/concourse
 ```
 
 
