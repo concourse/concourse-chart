@@ -674,13 +674,17 @@ spec:
             - name: CONCOURSE_MAIN_TEAM_LOCAL_USER
               value: {{ .Values.concourse.web.auth.mainTeam.localUser | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.auth.mainTeam.cf.org }}
-            - name: CONCOURSE_MAIN_TEAM_CF_ORG
-              value: {{ .Values.concourse.web.auth.mainTeam.cf.org | quote }}
+            {{- if .Values.concourse.web.auth.mainTeam.cf.insecureOrg }}
+            - name: CONCOURSE_MAIN_TEAM_CF_INSECURE_ORG
+              value: {{ .Values.concourse.web.auth.mainTeam.cf.insecureOrg | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.auth.mainTeam.cf.space }}
-            - name: CONCOURSE_MAIN_TEAM_CF_SPACE
-              value: {{ .Values.concourse.web.auth.mainTeam.cf.space | quote }}
+            {{- if .Values.concourse.web.auth.mainTeam.cf.insecureSpace }}
+            - name: CONCOURSE_MAIN_TEAM_CF_INSECURE_SPACE
+              value: {{ .Values.concourse.web.auth.mainTeam.cf.insecureSpace | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.cf.orgGuid }}
+            - name: CONCOURSE_MAIN_TEAM_CF_ORG_GUID
+              value: {{ .Values.concourse.web.auth.mainTeam.cf.orgGuid | quote }}
             {{- end }}
             {{- if .Values.concourse.web.auth.mainTeam.cf.spaceGuid }}
             - name: CONCOURSE_MAIN_TEAM_CF_SPACE_GUID
