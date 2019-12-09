@@ -6,7 +6,8 @@
 ## TL;DR;
 
 ```console
-$ helm install stable/concourse
+$ helm repo add concourse https://concourse-charts.storage.googleapis.com/
+$ helm install concourse/concourse
 ```
 
 
@@ -83,7 +84,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `imageDigest` | Specific image digest to use in place of a tag. | `nil` |
 | `imagePullPolicy` | Concourse image pull policy | `IfNotPresent` |
 | `imagePullSecrets` | Array of imagePullSecrets in the namespace for pulling images | `[]` |
-| `imageTag` | Concourse image version | `5.6.0` |
+| `imageTag` | Concourse image version | `5.7.1` |
 | `image` | Concourse image | `concourse/concourse` |
 | `nameOverride` | Provide a name in place of `concourse` for `app:` labels | `nil` |
 | `persistence.enabled` | Enable Concourse persistence using Persistent Volume Claims | `true` |
@@ -210,6 +211,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.enabled` | Enable or disable the worker component. You should set postgres.enabled=false in order not to get an unnecessary Postgres chart deployed | `true` |
 | `worker.env` | Configure additional environment variables for the worker container(s) | `[]` |
 | `worker.hardAntiAffinity` | Should the workers be forced (as opposed to preferred) to be on different nodes? | `false` |
+| `worker.hardAntiAffinityLabels` | Set of labels used for hard anti affinity rule | `{}` |
 | `worker.keySecretsPath` | Specify the mount directory of the worker keys secrets | `/concourse-keys` |
 | `worker.livenessProbe.failureThreshold` | Minimum consecutive failures for the probe to be considered failed after having succeeded | `5` |
 | `worker.livenessProbe.httpGet.path` | Path to access on the HTTP server when performing the healthcheck | `/` |

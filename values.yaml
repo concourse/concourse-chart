@@ -19,7 +19,7 @@ image: concourse/concourse
 ##      of `concourse/concourse`.
 ## Ref: https://hub.docker.com/r/concourse/concourse/tags/
 ##
-imageTag: "5.6.0"
+imageTag: "5.7.1"
 
 ## Specific image digest to use in place of a tag.
 ## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
@@ -238,6 +238,10 @@ concourse:
     ## ref: https://concourse-ci.org/container-placement.html#limit-active-tasks-strategy
     ##
     limitActiveTasks:
+
+    ## How long to wait for requests to Garden to complete. 0 means no timeout.
+    ##
+    gardenRequestTimeout:
 
     ## How long to wait for Baggageclaim to send the response header.
     ##
@@ -598,6 +602,19 @@ concourse:
       ## An optional prefix for emitted New Relic events
       ##
       servicePrefix:
+
+      ## Number of events to batch together before emitting
+      ##
+      batchSize:
+
+      ## Length of time to wait between emitting until all currently batched events are emitted
+      ## Example: 60s
+      ##
+      batchDuration:
+
+      ## Disables compression of the batch before sending it
+      ##
+      disableCompression:
 
     prometheus:
       enabled: false
@@ -1215,6 +1232,10 @@ concourse:
       ##
       useHoudini:
 
+      ## How long to wait for requests to Garden to complete. 0 means no timeout.
+      ##
+      requestTimeout:
+
     baggageclaim:
       ## Minimum level of logs to see. Possible values: debug, info, error
       ##
@@ -1673,6 +1694,15 @@ worker:
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#inter-pod-affinity-and-anti-affinity-beta-feature
   ##
   hardAntiAffinity: false
+
+  ## Set of labels to use in the hard anti affinity rule.
+  ##
+  ## Example:
+  ##   hardAntiAffinity: true
+  ##   hardAntiAffinityLabels:
+  ##     application: concourse
+  ##
+  hardAntiAffinityLabels: {}
 
   ## Tolerations for the worker nodes.
   ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
