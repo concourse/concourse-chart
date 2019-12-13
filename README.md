@@ -27,7 +27,7 @@ This chart bootstraps a [Concourse](https://concourse-ci.org/) deployment on a [
 To install the chart with the release name `my-release`:
 
 ```console
-$ helm install my-release stable/concourse
+$ helm install my-release concourse/concourse
 ```
 
 
