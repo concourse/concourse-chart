@@ -27,7 +27,7 @@ This chart bootstraps a [Concourse](https://concourse-ci.org/) deployment on a [
 To install the chart with the release name `my-release`:
 
 ```console
-$ helm install --name my-release stable/concourse
+$ helm install --name my-release concourse/concourse
 ```
 
 
@@ -243,7 +243,7 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```console
-$ helm install --name my-release -f values.yaml stable/concourse
+$ helm install --name my-release -f values.yaml concourse/concourse
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
