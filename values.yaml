@@ -820,6 +820,18 @@ concourse:
           ##
           group:
 
+        ## Authentication (Main Team) (Microsoft Login)
+        ##
+        microsoft:
+
+          ## List of whitelisted Microsoft users
+          ##
+          user:
+
+          ## List of whitelisted Microsoft groups
+          ##
+          group:
+
       ## Authentication (CloudFoundry)
       ##
       cf:
@@ -1035,6 +1047,19 @@ concourse:
         ## Concourse user name.
         ##
         userNameKey: username
+
+      ## Authentication (Microsoft)
+      microsoft:
+        enabled: false
+
+        # Microsoft Tenant limitation (common, consumers, organizations, tenant name or tenant uuid)
+        tenant:
+
+        # Allowed Active Directory Groups
+        groups:
+
+        # Only fetch security groups
+        onlySecurityGroups:
 
     tsa:
       ## Minimum level of logs to see. Possible values: debug, info, error.
@@ -2075,6 +2100,10 @@ secrets:
   oidcClientId:
   oidcClientSecret:
   oidcCaCert:
+
+  ## Secrets for Microsoft Auth.
+  microsoftClientId:
+  microsoftClientSecret:
 
   ## Secrets for using Hashcorp Vault as a credential manager.
   ##

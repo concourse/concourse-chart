@@ -819,6 +819,14 @@ spec:
             - name: CONCOURSE_MAIN_TEAM_OIDC_USER
               value: {{ .Values.concourse.web.auth.mainTeam.oidc.user | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.microsoft.user }}
+            - name: CONCOURSE_MAIN_TEAM_MICROSOFT_USER
+              value: {{ .Values.concourse.web.auth.mainTeam.microsoft.user | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.microsoft.group }}
+            - name: CONCOURSE_MAIN_TEAM_MICROSOFT_GROUP
+              value: {{ .Values.concourse.web.auth.mainTeam.microsoft.group | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.auth.cf.enabled }}
             - name: CONCOURSE_CF_CLIENT_ID
               valueFrom:
@@ -1061,6 +1069,26 @@ spec:
               value: {{ .Values.concourse.web.auth.oidc.userNameKey | quote }}
             {{- end }}
             {{- end }}
+
+            {{- if .Values.concourse.web.auth.microsoft.enabled }}
+            - name: CONCOURSE_MICROSOFT_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: microsoft-client-id
+            - name: CONCOURSE_MICROSOFT_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: microsoft-client-secret
+            - name: CONCOURSE_MICROSOFT_TENANT
+              value: {{ .Values.concourse.web.auth.microsoft.tenant | quote }}
+            - name: CONCOURSE_MICROSOFT_GROUPS
+              value: {{ .Values.concourse.web.auth.microsoft.groups | quote }}
+            - name: CONCOURSE_MICROSOFT_ONLY_SECURITY_GROUPS
+              value: {{ .Values.concourse.web.auth.microsoft.onlySecurityGroups | quote }}
+            {{- end }}
+
             {{- if .Values.concourse.web.peerAddress }}
             - name: CONCOURSE_PEER_ADDRESS
               value: {{ .Values.concourse.web.peerAddress | quote }}
