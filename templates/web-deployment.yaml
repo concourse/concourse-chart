@@ -547,6 +547,43 @@ spec:
                   key: credhub-client-key
             {{- end }}
             {{- end }}
+
+            {{- if .Values.concourse.web.conjur.enabled }}
+            - name: CONCOURSE_CONJUR_APPLIANCE_URL
+              value: {{ .Values.concourse.web.conjur.applianceUrl | quote }}
+            - name: CONCOURSE_CONJUR_ACCOUNT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: conjur-account
+            - name: CONCOURSE_CONJUR_CERT_FILE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: conjur-cert-file
+            - name: CONCOURSE_CONJUR_AUTHN_LOGIN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: conjur-authn-login
+            - name: CONCOURSE_CONJUR_AUTHN_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: conjur-authn-api-key
+            - name: CONCOURSE_CONJUR_AUTHN_TOKEN_FILE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: conjur-authn-token-file
+            - name: CONCOURSE_CONJUR_PIPELINE_SECRET_TEMPLATE
+              value: {{ .Values.concourse.web.conjur.pipelineSecretTemplate | quote }}
+            - name: CONCOURSE_CONJUR_TEAM_SECRET_TEMPLATE
+              value: {{ .Values.concourse.web.conjur.teamSecretTemplate | quote }}
+            - name: CONCOURSE_CONJUR_SECRET_TEMPLATE
+              value: {{ .Values.concourse.web.conjur.secretTemplate | quote }}
+            {{- end }}
+
             {{- if .Values.concourse.web.noop }}
             - name: CONCOURSE_NOOP
               value: {{ .Values.concourse.web.noop | quote }}

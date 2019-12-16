@@ -496,6 +496,18 @@ concourse:
       ##
       authenticationMode: "secrets"
 
+    ## TODO link to docs: Configuration for using Conjur as a credential manager.
+    ##
+    conjur:
+      enabled: false
+
+      # URL of the Conjur instance.
+      applianceUrl:
+
+      # Optional overrides for pattern of storing different types of secrets.
+      pipelineSecretTemplate:
+      teamSecretTemplate:
+      secretTemplate:
 
     ## Don't actually do any automatic scheduling or checking.
     ##
@@ -2104,3 +2116,20 @@ secrets:
   ## SSL certificate used to verify the Syslog server for draining build logs.
   ##
   syslogCaCert:
+
+  ## Secrets for Conjur credentials manager.
+  #
+  # Org account.
+  conjurAccount:
+
+  # Host username. E.g host/concourse
+  conjurAuthnLogin:
+
+  # Api key related to the host.
+  conjurAuthnApiKey:
+
+  # Token file used if conjur instance is running in k8s or iam. E.g. /path/to/token_file
+  conjurAuthnTokenFile:
+
+  # Cert file used if conjur instance is using a self signed cert. E.g. /path/to/conjur.pem
+  conjurCertFile:
