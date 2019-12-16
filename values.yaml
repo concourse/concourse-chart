@@ -419,6 +419,10 @@ concourse:
       ##
       url:
 
+      ## Vault namespace to use for authentication and secret lookup.
+      ##
+      namespace:
+
       ## Vault path under which to namespace credentials lookup.
       ##
       pathPrefix: /concourse
@@ -695,6 +699,10 @@ concourse:
       ##
       useCaCert: false
 
+    ## Customize RBAC role-action mapping.
+    ##
+    configRBAC:
+
     auth:
       ## Force sending secure flag on http cookies
       ##
@@ -727,7 +735,23 @@ concourse:
           ##
           org:
 
-          ## List of whitelisted CloudFoundry spaces
+          ## List of whitelisted CloudFoundry spaces for users with any role
+          ##
+          spaceWithAnyRole:
+
+          ## List of whitelisted CloudFoundry spaces for users with the 'developer' role
+          ##
+          spaceWithDeveloperRole:
+
+          ## List of whitelisted CloudFoundry spaces for users with the 'auditor' role
+          ##
+          spaceWithAuditorRole:
+
+          ## List of whitelisted CloudFoundry spaces for users with the 'manager' role
+          ##
+          spaceWithManagerRole:
+
+          ## (Deprecated) List of whitelisted CloudFoundry spaces for users with the 'developer' role
           ##
           space:
 

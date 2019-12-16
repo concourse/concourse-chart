@@ -163,30 +163,6 @@ spec:
             - name: CONCOURSE_CAPTURE_ERROR_METRICS
               value: {{ .Values.concourse.web.metrics.captureErrorMetrics | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.auth.mainTeam.config }}
-            - name: CONCOURSE_MAIN_TEAM_CONFIG
-              value: {{ .Values.concourse.web.auth.mainTeam.config | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.auth.mainTeam.bitbucketCloud.user }}
-            - name: CONCOURSE_MAIN_TEAM_BITBUCKET_CLOUD_USER
-              value: {{ .Values.concourse.web.auth.mainTeam.bitbucketCloud.user | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.auth.mainTeam.bitbucketCloud.team }}
-            - name: CONCOURSE_MAIN_TEAM_BITBUCKET_CLOUD_TEAM
-              value: {{ .Values.concourse.web.auth.mainTeam.bitbucketCloud.team | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.auth.bitbucketCloud.enabled }}
-            - name: CONCOURSE_BITBUCKET_CLOUD_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "concourse.web.fullname" . }}
-                  key: bitbucket-cloud-client-id
-            - name: CONCOURSE_BITBUCKET_CLOUD_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "concourse.web.fullname" . }}
-                  key: bitbucket-cloud-client-secret
-            {{- end }}
             {{- if .Values.concourse.web.logLevel }}
             - name: CONCOURSE_LOG_LEVEL
               value: {{ .Values.concourse.web.logLevel | quote }}
@@ -453,6 +429,10 @@ spec:
               value: {{ .Values.concourse.web.vault.url | quote }}
             - name: CONCOURSE_VAULT_PATH_PREFIX
               value: {{ .Values.concourse.web.vault.pathPrefix | quote }}
+            {{- if.Values.concourse.web.vault.namespace }}
+            - name: CONCOURSE_VAULT_NAMESPACE
+              value: {{ .Values.concourse.web.vault.namespace | quote }}
+            {{- end }}
             {{- if.Values.concourse.web.vault.sharedPath }}
             - name: CONCOURSE_VAULT_SHARED_PATH
               value: {{ .Values.concourse.web.vault.sharedPath | quote }}
@@ -708,6 +688,34 @@ spec:
               value: "{{ .Values.web.syslogSecretsPath }}/ca.cert"
             {{- end }}
             {{- end }}
+            {{- if .Values.concourse.web.configRBAC }}
+            - name: CONCOURSE_CONFIG_RBAC
+              value: /config-rbac.yml
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.config }}
+            - name: CONCOURSE_MAIN_TEAM_CONFIG
+              value: /main-team.yml
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.bitbucketCloud.user }}
+            - name: CONCOURSE_MAIN_TEAM_BITBUCKET_CLOUD_USER
+              value: {{ .Values.concourse.web.auth.mainTeam.bitbucketCloud.user | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.bitbucketCloud.team }}
+            - name: CONCOURSE_MAIN_TEAM_BITBUCKET_CLOUD_TEAM
+              value: {{ .Values.concourse.web.auth.mainTeam.bitbucketCloud.team | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.bitbucketCloud.enabled }}
+            - name: CONCOURSE_BITBUCKET_CLOUD_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: bitbucket-cloud-client-id
+            - name: CONCOURSE_BITBUCKET_CLOUD_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: bitbucket-cloud-client-secret
+            {{- end }}
             {{- if .Values.concourse.web.auth.cookieSecure }}
             - name: CONCOURSE_COOKIE_SECURE
               value: {{ .Values.concourse.web.auth.cookieSecure | quote }}
@@ -725,6 +733,22 @@ spec:
             {{- if .Values.concourse.web.auth.mainTeam.cf.org }}
             - name: CONCOURSE_MAIN_TEAM_CF_ORG
               value: {{ .Values.concourse.web.auth.mainTeam.cf.org | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.cf.spaceWithAnyRole }}
+            - name: CONCOURSE_MAIN_TEAM_CF_SPACE_WITH_ANY_ROLE
+              value: {{ .Values.concourse.web.auth.mainTeam.cf.spaceWithAnyRole | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.cf.spaceWithDeveloperRole }}
+            - name: CONCOURSE_MAIN_TEAM_CF_SPACE_WITH_DEVELOPER_ROLE
+              value: {{ .Values.concourse.web.auth.mainTeam.cf.spaceWithDeveloperRole | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.cf.spaceWithAuditorRole }}
+            - name: CONCOURSE_MAIN_TEAM_CF_SPACE_WITH_AUDITOR_ROLE
+              value: {{ .Values.concourse.web.auth.mainTeam.cf.spaceWithAuditorRole | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.cf.spaceWithManagerRole }}
+            - name: CONCOURSE_MAIN_TEAM_CF_SPACE_WITH_MANAGER_ROLE
+              value: {{ .Values.concourse.web.auth.mainTeam.cf.spaceWithManagerRole | quote }}
             {{- end }}
             {{- if .Values.concourse.web.auth.mainTeam.cf.space }}
             - name: CONCOURSE_MAIN_TEAM_CF_SPACE
@@ -1121,6 +1145,16 @@ spec:
 {{- if .Values.web.additionalVolumeMounts }}
 {{ toYaml .Values.web.additionalVolumeMounts | indent 12 }}
 {{- end }}
+{{- if .Values.concourse.web.auth.mainTeam.config }}
+            - name: main-team-config
+              mountPath: /main-team.yml
+              subPath: main-team.yml
+{{- end }}
+{{- if .Values.concourse.web.configRBAC }}
+            - name: config-rbac
+              mountPath: /config-rbac.yml
+              subPath: config-rbac.yml
+{{- end }}
             - name: concourse-keys
               mountPath: {{ .Values.web.keySecretsPath | quote }}
               readOnly: true
@@ -1164,6 +1198,16 @@ spec:
       volumes:
 {{- if .Values.web.additionalVolumes }}
 {{ toYaml .Values.web.additionalVolumes | indent 8 }}
+{{- end }}
+{{- if .Values.concourse.web.auth.mainTeam.config }}
+        - name: main-team-config
+          configMap:
+            name: {{ template "concourse.web.fullname" . }}
+{{- end }}
+{{- if .Values.concourse.web.configRBAC }}
+        - name: config-rbac
+          configMap:
+            name: {{ template "concourse.web.fullname" . }}
 {{- end }}
         - name: concourse-keys
           secret:
