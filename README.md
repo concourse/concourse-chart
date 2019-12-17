@@ -20,6 +20,7 @@ This chart bootstraps a [Concourse](https://concourse-ci.org/) deployment on a [
 
 * Kubernetes 1.6 (for [`pod affinity`](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) support)
 * [`PersistentVolume`](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) support on underlying infrastructure (if persistence is required)
+* Helm v2.x
 
 
 ## Installing the Chart
