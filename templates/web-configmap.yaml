@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "concourse.web.fullname" . }}
+  labels:
+    app: {{ template "concourse.web.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+data:
+  main-team.yml: {{ .Values.concourse.web.auth.mainTeam.config | quote }}
+  config-rbac.yml: {{ .Values.concourse.web.configRBAC | quote }}
