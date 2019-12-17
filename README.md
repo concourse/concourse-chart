@@ -114,6 +114,11 @@ The following table lists the configurable parameters of the Concourse chart and
 | `secrets.cfCaCert` | CA certificate for cf auth provider | `nil` |
 | `secrets.cfClientId` | Client ID for cf auth provider | `nil` |
 | `secrets.cfClientSecret` | Client secret for cf auth provider | `nil` |
+| `secrets.conjurAccount` | Account for Conjur auth provider | `nil` |
+| `secrets.conjurAuthnLogin` | Host username for Conjur auth provider | `nil` |
+| `secrets.conjurAuthnApiKey` | API key for host used for Conjur auth provider. Either API key or token file can be used, but not both. | `nil` |
+| `secrets.conjurAuthnTokenFile` | Token file used for Conjur auth provider if running in Kubernetes or IAM. Either token file or API key can be used, but not both. | `nil` |
+| `secrets.conjurCertFile` | Token file used for Conjur auth provider if running in Kubernetes or IAM | `nil` |
 | `secrets.create` | Create the secret resource from the following values. *See [Secrets](#secrets)* | `true` |
 | `secrets.credhubCaCert` | Value of PEM-encoded CA cert file to use to verify the CredHub server SSL cert. | `nil` |
 | `secrets.credhubClientId` | Client ID for CredHub authorization. | `nil` |
@@ -131,6 +136,8 @@ The following table lists the configurable parameters of the Concourse chart and
 | `secrets.influxdbPassword` | Password used to authenticate with influxdb | `nil` |
 | `secrets.ldapCaCert` | CA Certificate for LDAP | `nil` |
 | `secrets.localUsers` | Create concourse local users. Default username and password are `test:test` *See [values.yaml](values.yaml)* |
+| `secrets.microsoftClientId` | Client ID for Microsoft authorization. | `nil ` |
+| `secrets.microsoftClientSecret` | Client secret for Microsoft authorization. | `nil` |
 | `secrets.oauthCaCert` | CA certificate for Generic OAuth | `nil` |
 | `secrets.oauthClientId` | Application client ID for Generic OAuth | `nil` |
 | `secrets.oauthClientSecret` | Application client secret for Generic OAuth | `nil` |
