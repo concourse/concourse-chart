@@ -19,7 +19,7 @@ image: concourse/concourse
 ##      of `concourse/concourse`.
 ## Ref: https://hub.docker.com/r/concourse/concourse/tags/
 ##
-imageTag: "5.5.7"
+imageTag: "5.5.6"
 
 ## Specific image digest to use in place of a tag.
 ## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
@@ -690,17 +690,13 @@ concourse:
 
           ## List of whitelisted CloudFoundry orgs
           ##
-          insecureOrg:
+          org:
 
           ## List of whitelisted CloudFoundry spaces
           ##
-          insecureSpace:
+          space:
 
-          ## List of whitelisted CloudFoundry org guids
-          ##
-          orgGuid:
-
-          ## List of whitelisted CloudFoundry space guids
+          ## (Deprecated) List of whitelisted CloudFoundry space guids
           ##
           spaceGuid:
 
