@@ -677,17 +677,13 @@ concourse:
 
           ## List of whitelisted CloudFoundry orgs
           ##
-          insecureOrg:
+          org:
 
           ## List of whitelisted CloudFoundry spaces
           ##
-          insecureSpace:
+          space:
 
-          ## List of whitelisted CloudFoundry org guids
-          ##
-          orgGuid:
-
-          ## List of whitelisted CloudFoundry space guids
+          ## (Deprecated) List of whitelisted CloudFoundry space guids
           ##
           spaceGuid:
 
