@@ -1625,8 +1625,9 @@ worker:
   ##
   replicas: 2
 
-  ## Set privileged security context
+  ## Set security context
   ## For kubelet v1.15+ change to:
+  #
   ## securityContext:
   ##   privileged: false
   ##   allowPrivilegeEscalation: true
