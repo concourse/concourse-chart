@@ -56,7 +56,7 @@ spec:
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           securityContext:
-            privileged: true
+          {{- toYaml .Values.worker.securityContext | nindent 12 }}
           command:
             - /bin/bash
           args:
@@ -280,7 +280,7 @@ spec:
 {{ toYaml .Values.worker.resources | indent 12 }}
 {{- end }}
           securityContext:
-            privileged: true
+          {{- toYaml .Values.worker.securityContext | nindent 12 }}
           volumeMounts:
             - name: concourse-keys
               mountPath: {{ .Values.worker.keySecretsPath | quote }}

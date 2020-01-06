@@ -235,6 +235,8 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.replicas` | Number of Concourse Worker replicas | `2` |
 | `worker.resources.requests.cpu` | Minimum amount of cpu resources requested | `100m` |
 | `worker.resources.requests.memory` | Minimum amount of memory resources requested | `512Mi` |
+| `worker.securityContext.allowPrivilegeEscalation` | Allow privilege escalation (For kubelet v1.15+ set to `true` | `false` |
+| `worker.securityContext.privileged` | Set privileged security context (For kubelet v1.15+ set to `false` | `true` |
 | `worker.sidecarContainers` | Array of extra containers to run alongside the Concourse worker container | `nil` |
 | `worker.terminationGracePeriodSeconds` | Upper bound for graceful shutdown to allow the worker to drain its tasks | `60` |
 | `worker.tolerations` | Tolerations for the worker nodes | `[]` |

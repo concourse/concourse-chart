@@ -1625,6 +1625,15 @@ worker:
   ##
   replicas: 2
 
+  ## Set privileged security context
+  ## For kubelet v1.15+ change to:
+  ## securityContext:
+  ##   privileged: false
+  ##   allowPrivilegeEscalation: true
+  securityContext:
+    privileged: true
+    allowPrivilegeEscalation: false
+
   ## Array of extra containers to run alongside the Concourse worker
   ## container.
   ##
