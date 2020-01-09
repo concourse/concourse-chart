@@ -711,7 +711,14 @@ concourse:
       ##
       useCaCert: false
 
-    ## Customize RBAC role-action mapping.
+    ## Customize RBAC role-action mapping. Pass in as a multi-line YAML string
+    ## Ref: https://concourse-ci.org/user-roles.html#configuring-rbac
+    ## Example:
+    ## configRBAC: |
+    ##   owner:
+    ##   - SetTeam
+    ##   member:
+    ##   - CreateBuild
     ##
     configRBAC:
 
@@ -725,8 +732,18 @@ concourse:
       duration: 24h
 
       mainTeam:
-        ## Configuration file for specifying team params.
+
+        ## Configuration file for specifying the main teams params.
         ## Ref: https://concourse-ci.org/managing-teams.html#setting-roles
+        ## Example:
+        ## config: |
+        ##   roles:
+        ##   - name: owner
+        ##     local:
+        ##       users: ["admin"]
+        ##   - name: member
+        ##     local:
+        ##       users: ["test"]
         ##
         config:
 
