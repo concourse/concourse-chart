@@ -94,3 +94,57 @@ Return the appropriate apiVersion for ingress.
 {{- print "networking.k8s.io/v1beta1" -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Create a registry image reference for use in a spec.
+Includes the `image` and `imagePullPolicy` keys.
+*/}}
+{{- define "concourse.registryImage" -}}
+image: {{ include "concourse.imageReference" . }}
+{{ include "concourse.imagePullPolicy" . }}
+{{- end -}}
+
+{{/*
+The most complete image reference, including the
+registry address, repository, tag and digest when available.
+*/}}
+{{- define "concourse.imageReference" -}}
+{{- $registry := coalesce .image.registry .values.global.imageRegistry "docker.io" -}}
+{{- $namespace := coalesce .image.namespace .values.imageNamespace .values.global.imageNamespace "concourse" -}}
+{{- printf "%s/%s/%s:%s" $registry $namespace .image.name .image.tag -}}
+{{- if .image.digest -}}
+{{- printf "@%s" .image.digest -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Specify the image pull policy
+*/}}
+{{- define "concourse.imagePullPolicy" -}}
+{{- $policy := coalesce .image.pullPolicy .values.global.imagePullPolicy -}}
+{{- if $policy -}}
+imagePullPolicy: "{{ printf "%s" $policy -}}"
+{{- end -}}
+{{- end -}}
+
+{{/*
+Use the image pull secrets. All of the specified secrets will be used
+*/}}
+{{- define "concourse.imagePullSecrets" -}}
+{{- $secrets := .Values.global.imagePullSecrets -}}
+{{- range $_, $image := .Values.images -}}
+{{- range $_, $s := $image.pullSecrets -}}
+{{- if not $secrets -}}
+{{- $secrets = list $s -}}
+{{- else -}}
+{{- $secrets = append $secrets $s -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- if $secrets }}
+imagePullSecrets:
+{{- range $secrets }}
+- name: {{ . }}
+{{- end }}
+{{- end -}}
+{{- end -}}

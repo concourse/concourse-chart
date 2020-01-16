@@ -36,25 +36,15 @@ spec:
       {{- if .Values.worker.tolerations }}
       tolerations:
 {{ toYaml .Values.worker.tolerations | indent 8 }}
-      {{- end }}
-      {{- if .Values.imagePullSecrets }}
-      imagePullSecrets:
-      {{- range .Values.imagePullSecrets }}
-        - name: {{ . }}
-      {{- end }}
-      {{- end }}
+      {{- end -}}
+{{- include "concourse.imagePullSecrets" . | indent 6 | trimSuffix "      " }}
       {{- if .Values.worker.terminationGracePeriodSeconds }}
       terminationGracePeriodSeconds: {{ .Values.worker.terminationGracePeriodSeconds }}
       {{- end }}
       {{- if .Values.worker.cleanUpWorkDirOnStart }}
       initContainers:
         - name: {{ template "concourse.worker.fullname" . }}-init-rm
-          {{- if .Values.imageDigest }}
-          image: "{{ .Values.image }}@{{ .Values.imageDigest }}"
-          {{- else }}
-          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-          {{- end }}
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+{{ include "concourse.registryImage" (dict "image" .Values.images.concourse "values" .Values) | indent 10 }}
           securityContext:
             privileged: true
           command:
@@ -75,12 +65,7 @@ spec:
       {{- toYaml .Values.worker.sidecarContainers | nindent 8 }}
       {{- end }}
         - name: {{ template "concourse.worker.fullname" . }}
-          {{- if .Values.imageDigest }}
-          image: "{{ .Values.image }}@{{ .Values.imageDigest }}"
-          {{- else }}
-          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-          {{- end }}
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+{{ include "concourse.registryImage" (dict "image" .Values.images.concourse "values" .Values) | indent 10 }}
           args:
             - worker
 {{- if .Values.worker.livenessProbe }}

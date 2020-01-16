@@ -2,6 +2,25 @@
 ## This is a YAML-formatted file.
 ## Declare variables to be passed into your templates.
 
+global:
+  ## Specify a imagePullPolicy regarding the fetching of container images.
+  ## Ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ##
+  # imagePullPolicy: IfNotPresent
+
+  ## Array of imagePullSecrets to allow pulling the Concourse image from private registries.
+  ## ps.: secrets must be manually created in the namespace.
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  ## Example:
+  ##
+  ##   imagePullSecrets:
+  ##    - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+  imageRegistry: docker.io
+
+
 ## Provide a name in place of `concourse` for `app:` labels
 ##
 nameOverride:
@@ -12,36 +31,20 @@ fullnameOverride:
 
 ## Concourse image to use in both Web and Worker containers.
 ##
-image: concourse/concourse
+images:
+  concourse:
+    name: concourse
+    namespace: concourse
+    ## Concourse image tag.
+    ##
+    tag: "5.8.0"
 
-## Concourse image tag.
-## ps.: release candidates are published under `concourse/concourse-rc` instead
-##      of `concourse/concourse`.
-## Ref: https://hub.docker.com/r/concourse/concourse/tags/
-##
-imageTag: "5.8.0"
+    ## Specific image digest to use in place of a tag.
+    ## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
+    ##
+    digest: sha256:b50f6207373cc671965ea0c4832bb394508b7eca337a80100d38d961be27fbb5
 
-## Specific image digest to use in place of a tag.
-## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
-##
-imageDigest:
-
-## Specify a imagePullPolicy regarding the fetching of container images.
-## Ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-##
-imagePullPolicy: IfNotPresent
-
-## Array of imagePullSecrets to allow pulling the Concourse image from private registries.
-## ps.: secrets must be manually created in the namespace.
-## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-##
-## Example:
-##
-##   imagePullSecrets:
-##    - myRegistryKeySecretName
-##
-imagePullSecrets: []
-
+    pullPolicy: IfNotPresent
 
 ## Configuration values for the Concourse application (worker and web components).
 ## The values specified here are almost direct references to the flags under the

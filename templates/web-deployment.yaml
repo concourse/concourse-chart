@@ -35,27 +35,17 @@ spec:
 {{ toYaml .Values.web.nodeSelector | indent 8 }}
     {{- end }}
       serviceAccountName: {{ if .Values.rbac.create }}{{ template "concourse.web.fullname" . }}{{ else }}{{ .Values.rbac.webServiceAccountName }}{{ end }}
+{{- include "concourse.imagePullSecrets" . | indent 6 | trimSuffix "      " }}
       {{- if .Values.web.tolerations }}
       tolerations:
 {{ toYaml .Values.web.tolerations | indent 8 }}
-      {{- end }}
-      {{- if .Values.imagePullSecrets }}
-      imagePullSecrets:
-      {{- range .Values.imagePullSecrets }}
-        - name: {{ . }}
-      {{- end }}
       {{- end }}
       containers:
       {{- if .Values.web.sidecarContainers }}
       {{- toYaml .Values.web.sidecarContainers | nindent 8 }}
       {{- end }}
         - name: {{ template "concourse.web.fullname" . }}
-          {{- if .Values.imageDigest }}
-          image: "{{ .Values.image }}@{{ .Values.imageDigest }}"
-          {{- else }}
-          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-          {{- end }}
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+{{ include "concourse.registryImage" (dict "image" .Values.images.concourse "values" .Values) | indent 10 }}
           args:
             - web
           env:

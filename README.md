@@ -79,172 +79,183 @@ See [Configuration](#configuration) and [`values.yaml`](./values.yaml) for the c
 
 The following table lists the configurable parameters of the Concourse chart and their default values.
 
-| Parameter               | Description                           | Default                                                    |
-| ----------------------- | ----------------------------------    | ---------------------------------------------------------- |
-| `fullnameOverride` | Provide a name to substitute for the full names of resources | `nil` |
-| `imageDigest` | Specific image digest to use in place of a tag. | `nil` |
-| `imagePullPolicy` | Concourse image pull policy | `IfNotPresent` |
-| `imagePullSecrets` | Array of imagePullSecrets in the namespace for pulling images | `[]` |
-| `imageTag` | Concourse image version | `5.8.0` |
-| `image` | Concourse image | `concourse/concourse` |
-| `nameOverride` | Provide a name in place of `concourse` for `app:` labels | `nil` |
-| `persistence.enabled` | Enable Concourse persistence using Persistent Volume Claims | `true` |
-| `persistence.worker.accessMode` | Concourse Worker Persistent Volume Access Mode | `ReadWriteOnce` |
-| `persistence.worker.size` | Concourse Worker Persistent Volume Storage Size | `20Gi` |
-| `persistence.worker.storageClass` | Concourse Worker Persistent Volume Storage Class | `generic` |
-| `postgresql.enabled` | Enable PostgreSQL as a chart dependency | `true` |
-| `postgresql.persistence.accessModes` | Persistent Volume Access Mode | `["ReadWriteOnce"]` |
-| `postgresql.persistence.enabled` | Enable PostgreSQL persistence using Persistent Volume Claims | `true` |
-| `postgresql.persistence.size` | Persistent Volume Storage Size | `8Gi` |
-| `postgresql.persistence.storageClass` | Concourse data Persistent Volume Storage Class | `nil` |
-| `postgresql.postgresqlDatabase` | PostgreSQL Database to create | `concourse` |
-| `postgresql.postgresqlPassword` | PostgreSQL Password for the new user | `concourse` |
-| `postgresql.postgresqlUsername` | PostgreSQL User to create | `concourse` |
-| `rbac.apiVersion` | RBAC version | `v1beta1` |
-| `rbac.create` | Enables creation of RBAC resources | `true` |
-| `rbac.webServiceAccountName` | Name of the service account to use for web pods if `rbac.create` is `false` | `default` |
-| `rbac.workerServiceAccountName` | Name of the service account to use for workers if `rbac.create` is `false` | `default` |
-| `secrets.awsSecretsmanagerAccessKey` | AWS Access Key ID for Secrets Manager access | `nil` |
-| `secrets.awsSecretsmanagerSecretKey` | AWS Secret Access Key ID for Secrets Manager access | `nil` |
-| `secrets.awsSecretsmanagerSessionToken` | AWS Session Token for Secrets Manager access | `nil` |
-| `secrets.awsSsmAccessKey` | AWS Access Key ID for SSM access | `nil` |
-| `secrets.awsSsmSecretKey` | AWS Secret Access Key ID for SSM access | `nil` |
-| `secrets.awsSsmSessionToken` | AWS Session Token for SSM access | `nil` |
-| `secrets.bitbucketCloudClientId` | Client ID for the BitbucketCloud OAuth | `nil` |
-| `secrets.bitbucketCloudClientSecret` | Client Secret for the BitbucketCloud OAuth | `nil` |
-| `secrets.cfCaCert` | CA certificate for cf auth provider | `nil` |
-| `secrets.cfClientId` | Client ID for cf auth provider | `nil` |
-| `secrets.cfClientSecret` | Client secret for cf auth provider | `nil` |
-| `secrets.conjurAccount` | Account for Conjur auth provider | `nil` |
-| `secrets.conjurAuthnLogin` | Host username for Conjur auth provider | `nil` |
-| `secrets.conjurAuthnApiKey` | API key for host used for Conjur auth provider. Either API key or token file can be used, but not both. | `nil` |
-| `secrets.conjurAuthnTokenFile` | Token file used for Conjur auth provider if running in Kubernetes or IAM. Either token file or API key can be used, but not both. | `nil` |
-| `secrets.conjurCertFile` | Token file used for Conjur auth provider if running in Kubernetes or IAM | `nil` |
-| `secrets.create` | Create the secret resource from the following values. *See [Secrets](#secrets)* | `true` |
-| `secrets.credhubCaCert` | Value of PEM-encoded CA cert file to use to verify the CredHub server SSL cert. | `nil` |
-| `secrets.credhubClientId` | Client ID for CredHub authorization. | `nil` |
-| `secrets.credhubClientSecret` | Client secret for CredHub authorization. | `nil` |
-| `secrets.credhubClientKey` | Client key for Credhub authorization. | `nil` |
-| `secrets.credhubClientCert` | Client cert for Credhub authorization | `nil` |
-| `secrets.encryptionKey` | current encryption key | `nil` |
-| `secrets.githubCaCert` | CA certificate for Enterprise Github OAuth | `nil` |
-| `secrets.githubClientId` | Application client ID for GitHub OAuth | `nil` |
-| `secrets.githubClientSecret` | Application client secret for GitHub OAuth | `nil` |
-| `secrets.gitlabClientId` | Application client ID for GitLab OAuth | `nil` |
-| `secrets.gitlabClientSecret` | Application client secret for GitLab OAuth | `nil` |
-| `secrets.hostKeyPub` | Concourse Host Public Key | *See [values.yaml](values.yaml)* |
-| `secrets.hostKey` | Concourse Host Private Key | *See [values.yaml](values.yaml)* |
-| `secrets.influxdbPassword` | Password used to authenticate with influxdb | `nil` |
-| `secrets.ldapCaCert` | CA Certificate for LDAP | `nil` |
-| `secrets.localUsers` | Create concourse local users. Default username and password are `test:test` *See [values.yaml](values.yaml)* |
-| `secrets.microsoftClientId` | Client ID for Microsoft authorization. | `nil ` |
-| `secrets.microsoftClientSecret` | Client secret for Microsoft authorization. | `nil` |
-| `secrets.oauthCaCert` | CA certificate for Generic OAuth | `nil` |
-| `secrets.oauthClientId` | Application client ID for Generic OAuth | `nil` |
-| `secrets.oauthClientSecret` | Application client secret for Generic OAuth | `nil` |
-| `secrets.oidcCaCert` | CA certificate for OIDC Oauth | `nil` |
-| `secrets.oidcClientId` | Application client ID for OIDI OAuth | `nil` |
-| `secrets.oidcClientSecret` | Application client secret for OIDC OAuth | `nil` |
-| `secrets.oldEncryptionKey` | old encryption key, used for key rotation | `nil` |
-| `secrets.postgresCaCert` | PostgreSQL CA certificate | `nil` |
-| `secrets.postgresClientCert` | PostgreSQL Client certificate | `nil` |
-| `secrets.postgresClientKey` | PostgreSQL Client key | `nil` |
-| `secrets.postgresPassword` | PostgreSQL User Password | `nil` |
-| `secrets.postgresUser` | PostgreSQL User Name | `nil` |
-| `secrets.sessionSigningKey` | Concourse Session Signing Private Key | *See [values.yaml](values.yaml)* |
-| `secrets.syslogCaCert` | SSL certificate to verify Syslog server | `nil` |
-| `secrets.teamAuthorizedKeys` | Array of team names and worker public keys for external workers | `nil` |
-| `secrets.vaultAuthParam` | Paramter to pass when logging in via the backend | `nil` |
-| `secrets.vaultCaCert` | CA certificate use to verify the vault server SSL cert | `nil` |
-| `secrets.vaultClientCert` | Vault Client Certificate | `nil` |
-| `secrets.vaultClientKey` | Vault Client Key | `nil` |
-| `secrets.vaultClientToken` | Vault periodic client token | `nil` |
-| `secrets.webTlsCert` | TLS certificate for the web component to terminate TLS connections | `nil` |
-| `secrets.webTlsKey` | An RSA private key, used to encrypt HTTPS traffic  | `nil` |
-| `secrets.workerKeyPub` | Concourse Worker Public Key | *See [values.yaml](values.yaml)* |
-| `secrets.workerKey` | Concourse Worker Private Key | *See [values.yaml](values.yaml)* |
-| `web.additionalAffinities` | Additional affinities to apply to web pods. E.g: node affinity | `{}` |
-| `web.additionalVolumeMounts` | VolumeMounts to be added to the web pods | `nil` |
-| `web.additionalVolumes` | Volumes to be added to the web pods | `nil` |
-| `web.annotations`| Annotations to be added to the web pods | `{}` |
-| `web.authSecretsPath` | Specify the mount directory of the web auth secrets | `/concourse-auth` |
-| `web.credhubSecretsPath` | Specify the mount directory of the web credhub secrets | `/concourse-credhub` |
-| `web.datadog.agentHostUseHostIP` | Use IP of Pod's node overrides `agentHost` | `false` |
-| `web.datadog.agentHost` | Datadog Agent host | `127.0.0.1` |
-| `web.datadog.agentPort` | Datadog Agent port | `8125` |
-| `web.datadog.enabled` | Enable or disable Datadog metrics | `false` |
-| `web.datadog.prefix` | Prefix for emitted metrics | `"concourse.ci"` |
-| `web.enabled` | Enable or disable the web component | `true` |
-| `web.env` | Configure additional environment variables for the web containers | `[]` |
-| `web.ingress.annotations` | Concourse Web Ingress annotations | `{}` |
-| `web.ingress.enabled` | Enable Concourse Web Ingress | `false` |
-| `web.ingress.hosts` | Concourse Web Ingress Hostnames | `[]` |
-| `web.ingress.tls` | Concourse Web Ingress TLS configuration | `[]` |
-| `web.keySecretsPath` | Specify the mount directory of the web keys secrets | `/concourse-keys` |
-| `web.labels`| Additional labels to be added to the worker pods | `{}` |
-| `web.livenessProbe.failureThreshold` | Minimum consecutive failures for the probe to be considered failed after having succeeded | `5` |
-| `web.livenessProbe.httpGet.path` | Path to access on the HTTP server when performing the healthcheck | `/api/v1/info` |
-| `web.livenessProbe.httpGet.port` | Name or number of the port to access on the container | `atc` |
-| `web.livenessProbe.initialDelaySeconds` | Number of seconds after the container has started before liveness probes are initiated | `10` |
-| `web.livenessProbe.periodSeconds` | How often (in seconds) to perform the probe | `15` |
-| `web.livenessProbe.timeoutSeconds` | Number of seconds after which the probe times out | `3` |
-| `web.nameOverride` | Override the Concourse Web components name | `nil` |
-| `web.nodeSelector` | Node selector for web nodes | `{}` |
-| `web.postgresqlSecretsPath` | Specify the mount directory of the web postgresql secrets | `/concourse-postgresql` |
+| Parameter                                  | Description                                                                                                                                       | Default                                 |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| `fullnameOverride`                         | Provide a name to substitute for the full names of resources                                                                                      | `nil`                                   |
+| `global.imagePullSecrets`                  | Global Docker registry secret names as an array                                                                                                   | `[]`                                    |
+| `global.imageRegistry`                     | Override the default Docker Image registry                                                                                                        | `nil`                                   |
+| `global.imageNamespace`                    | Override the default Registry Image Namespace                                                                                                     | `nil`                                   |
+| `global.imagePullPolicy`                   | Global default for the image pull policy                                                                                                          | `nil`                                   |
+| `global.imagePullSecrets`                  | Global image pull secrets                                                                                                                         | `nil`                                   |
+| `imageRegistry`                            | Docker Image Registry, overrides `global.imageRegistry`                                                                                           | `nil`                                   |
+| `imageNamespace`                           | Registry Image Namespace, overrides `global.imageNamespace`                                                                                       | `nil`                                   |
+| `imagePullPolicy`                          | Image Pull Policy, overrides `global.imagePullPolicy`                                                                                             | `nil`                                   |
+| `imagePullSecrets`                         | The chart's image pull secrets, gets concatenated with `global.imagePullSecrets`                                                                  | `nil`                                   |
+| `images.concourse.tag`                     | Concourse image tag                                                                                                                               | `5.8.0`                                 |
+| `images.concourse.registry`                | Docker Registry for the concourse image, overrides `imageRegstry`                                                                                 | `nil`                                   |
+| `images.concourse.namespace`               | Concourse image registry namespace, overrides `imageNamespace`                                                                                    | `nil`                                   |
+| `images.concourse.name`                    | Concourse image name                                                                                                                              | `concourse`                             |
+| `images.concourse.digest`                  | Specific image digest to use with or in place of a tag                                                                                            | `nil`                                   |
+| `images.concourse.pullSecrets`             | Array of imagePullSecrets in the namespace for pulling images                                                                                     | `[]`                                    |
+| `images.concourse.pullPolicy`              | Concourse image pull policy                                                                                                                       | `IfNotPresent`                          |
+| `nameOverride`                             | Provide a name in place of `concourse` for `app:` labels                                                                                          | `nil`                                   |
+| `persistence.enabled`                      | Enable Concourse persistence using Persistent Volume Claims                                                                                       | `true`                                  |
+| `persistence.worker.accessMode`            | Concourse Worker Persistent Volume Access Mode                                                                                                    | `ReadWriteOnce`                         |
+| `persistence.worker.size`                  | Concourse Worker Persistent Volume Storage Size                                                                                                   | `20Gi`                                  |
+| `persistence.worker.storageClass`          | Concourse Worker Persistent Volume Storage Class                                                                                                  | `generic`                               |
+| `postgresql.enabled`                       | Enable PostgreSQL as a chart dependency                                                                                                           | `true`                                  |
+| `postgresql.persistence.accessModes`       | Persistent Volume Access Mode                                                                                                                     | `["ReadWriteOnce"]`                     |
+| `postgresql.persistence.enabled`           | Enable PostgreSQL persistence using Persistent Volume Claims                                                                                      | `true`                                  |
+| `postgresql.persistence.size`              | Persistent Volume Storage Size                                                                                                                    | `8Gi`                                   |
+| `postgresql.persistence.storageClass`      | Concourse data Persistent Volume Storage Class                                                                                                    | `nil`                                   |
+| `postgresql.postgresqlDatabase`            | PostgreSQL Database to create                                                                                                                     | `concourse`                             |
+| `postgresql.postgresqlPassword`            | PostgreSQL Password for the new user                                                                                                              | `concourse`                             |
+| `postgresql.postgresqlUsername`            | PostgreSQL User to create                                                                                                                         | `concourse`                             |
+| `rbac.apiVersion`                          | RBAC version                                                                                                                                      | `v1beta1`                               |
+| `rbac.create`                              | Enables creation of RBAC resources                                                                                                                | `true`                                  |
+| `rbac.webServiceAccountName`               | Name of the service account to use for web pods if `rbac.create` is `false`                                                                       | `default`                               |
+| `rbac.workerServiceAccountName`            | Name of the service account to use for workers if `rbac.create` is `false`                                                                        | `default`                               |
+| `secrets.awsSecretsmanagerAccessKey`       | AWS Access Key ID for Secrets Manager access                                                                                                      | `nil`                                   |
+| `secrets.awsSecretsmanagerSecretKey`       | AWS Secret Access Key ID for Secrets Manager access                                                                                               | `nil`                                   |
+| `secrets.awsSecretsmanagerSessionToken`    | AWS Session Token for Secrets Manager access                                                                                                      | `nil`                                   |
+| `secrets.awsSsmAccessKey`                  | AWS Access Key ID for SSM access                                                                                                                  | `nil`                                   |
+| `secrets.awsSsmSecretKey`                  | AWS Secret Access Key ID for SSM access                                                                                                           | `nil`                                   |
+| `secrets.awsSsmSessionToken`               | AWS Session Token for SSM access                                                                                                                  | `nil`                                   |
+| `secrets.bitbucketCloudClientId`           | Client ID for the BitbucketCloud OAuth                                                                                                            | `nil`                                   |
+| `secrets.bitbucketCloudClientSecret`       | Client Secret for the BitbucketCloud OAuth                                                                                                        | `nil`                                   |
+| `secrets.cfCaCert`                         | CA certificate for cf auth provider                                                                                                               | `nil`                                   |
+| `secrets.cfClientId`                       | Client ID for cf auth provider                                                                                                                    | `nil`                                   |
+| `secrets.cfClientSecret`                   | Client secret for cf auth provider                                                                                                                | `nil`                                   |
+| `secrets.conjurAccount`                    | Account for Conjur auth provider                                                                                                                  | `nil`                                   |
+| `secrets.conjurAuthnLogin`                 | Host username for Conjur auth provider                                                                                                            | `nil`                                   |
+| `secrets.conjurAuthnApiKey`                | API key for host used for Conjur auth provider. Either API key or token file can be used, but not both.                                           | `nil`                                   |
+| `secrets.conjurAuthnTokenFile`             | Token file used for Conjur auth provider if running in Kubernetes or IAM. Either token file or API key can be used, but not both.                 | `nil`                                   |
+| `secrets.conjurCertFile`                   | Token file used for Conjur auth provider if running in Kubernetes or IAM                                                                          | `nil`                                   |
+| `secrets.create`                           | Create the secret resource from the following values. *See [Secrets](#secrets)*                                                                   | `true`                                  |
+| `secrets.credhubCaCert`                    | Value of PEM-encoded CA cert file to use to verify the CredHub server SSL cert.                                                                   | `nil`                                   |
+| `secrets.credhubClientId`                  | Client ID for CredHub authorization.                                                                                                              | `nil`                                   |
+| `secrets.credhubClientSecret`              | Client secret for CredHub authorization.                                                                                                          | `nil`                                   |
+| `secrets.credhubClientKey`                 | Client key for Credhub authorization.                                                                                                             | `nil`                                   |
+| `secrets.credhubClientCert`                | Client cert for Credhub authorization                                                                                                             | `nil`                                   |
+| `secrets.encryptionKey`                    | current encryption key                                                                                                                            | `nil`                                   |
+| `secrets.githubCaCert`                     | CA certificate for Enterprise Github OAuth                                                                                                        | `nil`                                   |
+| `secrets.githubClientId`                   | Application client ID for GitHub OAuth                                                                                                            | `nil`                                   |
+| `secrets.githubClientSecret`               | Application client secret for GitHub OAuth                                                                                                        | `nil`                                   |
+| `secrets.gitlabClientId`                   | Application client ID for GitLab OAuth                                                                                                            | `nil`                                   |
+| `secrets.gitlabClientSecret`               | Application client secret for GitLab OAuth                                                                                                        | `nil`                                   |
+| `secrets.hostKeyPub`                       | Concourse Host Public Key                                                                                                                         | *See [values.yaml](values.yaml)*        |
+| `secrets.hostKey`                          | Concourse Host Private Key                                                                                                                        | *See [values.yaml](values.yaml)*        |
+| `secrets.influxdbPassword`                 | Password used to authenticate with influxdb                                                                                                       | `nil`                                   |
+| `secrets.ldapCaCert`                       | CA Certificate for LDAP                                                                                                                           | `nil`                                   |
+| `secrets.localUsers`                       | Create concourse local users. Default username and password are `test:test`                                                                       | *See [values.yaml](values.yaml)*        |
+| `secrets.microsoftClientId`                | Client ID for Microsoft authorization.                                                                                                            | `nil `                                  |
+| `secrets.microsoftClientSecret`            | Client secret for Microsoft authorization.                                                                                                        | `nil`                                   |
+| `secrets.oauthCaCert`                      | CA certificate for Generic OAuth                                                                                                                  | `nil`                                   |
+| `secrets.oauthClientId`                    | Application client ID for Generic OAuth                                                                                                           | `nil`                                   |
+| `secrets.oauthClientSecret`                | Application client secret for Generic OAuth                                                                                                       | `nil`                                   |
+| `secrets.oidcCaCert`                       | CA certificate for OIDC Oauth                                                                                                                     | `nil`                                   |
+| `secrets.oidcClientId`                     | Application client ID for OIDI OAuth                                                                                                              | `nil`                                   |
+| `secrets.oidcClientSecret`                 | Application client secret for OIDC OAuth                                                                                                          | `nil`                                   |
+| `secrets.oldEncryptionKey`                 | old encryption key, used for key rotation                                                                                                         | `nil`                                   |
+| `secrets.postgresCaCert`                   | PostgreSQL CA certificate                                                                                                                         | `nil`                                   |
+| `secrets.postgresClientCert`               | PostgreSQL Client certificate                                                                                                                     | `nil`                                   |
+| `secrets.postgresClientKey`                | PostgreSQL Client key                                                                                                                             | `nil`                                   |
+| `secrets.postgresPassword`                 | PostgreSQL User Password                                                                                                                          | `nil`                                   |
+| `secrets.postgresUser`                     | PostgreSQL User Name                                                                                                                              | `nil`                                   |
+| `secrets.sessionSigningKey`                | Concourse Session Signing Private Key                                                                                                             | *See [values.yaml](values.yaml)*        |
+| `secrets.syslogCaCert`                     | SSL certificate to verify Syslog server                                                                                                           | `nil`                                   |
+| `secrets.teamAuthorizedKeys`               | Array of team names and worker public keys for external workers                                                                                   | `nil`                                   |
+| `secrets.vaultAuthParam`                   | Paramter to pass when logging in via the backend                                                                                                  | `nil`                                   |
+| `secrets.vaultCaCert`                      | CA certificate use to verify the vault server SSL cert                                                                                            | `nil`                                   |
+| `secrets.vaultClientCert`                  | Vault Client Certificate                                                                                                                          | `nil`                                   |
+| `secrets.vaultClientKey`                   | Vault Client Key                                                                                                                                  | `nil`                                   |
+| `secrets.vaultClientToken`                 | Vault periodic client token                                                                                                                       | `nil`                                   |
+| `secrets.webTlsCert`                       | TLS certificate for the web component to terminate TLS connections                                                                                | `nil`                                   |
+| `secrets.webTlsKey`                        | An RSA private key, used to encrypt HTTPS traffic                                                                                                 | `nil`                                   |
+| `secrets.workerKeyPub`                     | Concourse Worker Public Key                                                                                                                       | *See [values.yaml](values.yaml)*        |
+| `secrets.workerKey`                        | Concourse Worker Private Key                                                                                                                      | *See [values.yaml](values.yaml)*        |
+| `web.additionalAffinities`                 | Additional affinities to apply to web pods. E.g: node affinity                                                                                    | `{}`                                    |
+| `web.additionalVolumeMounts`               | VolumeMounts to be added to the web pods                                                                                                          | `nil`                                   |
+| `web.additionalVolumes`                    | Volumes to be added to the web pods                                                                                                               | `nil`                                   |
+| `web.annotations`                          | Annotations to be added to the web pods                                                                                                           | `{}`                                    |
+| `web.authSecretsPath`                      | Specify the mount directory of the web auth secrets                                                                                               | `/concourse-auth`                       |
+| `web.credhubSecretsPath`                   | Specify the mount directory of the web credhub secrets                                                                                            | `/concourse-credhub`                    |
+| `web.datadog.agentHostUseHostIP`           | Use IP of Pod's node overrides `agentHost`                                                                                                        | `false`                                 |
+| `web.datadog.agentHost`                    | Datadog Agent host                                                                                                                                | `127.0.0.1`                             |
+| `web.datadog.agentPort`                    | Datadog Agent port                                                                                                                                | `8125`                                  |
+| `web.datadog.enabled`                      | Enable or disable Datadog metrics                                                                                                                 | `false`                                 |
+| `web.datadog.prefix`                       | Prefix for emitted metrics                                                                                                                        | `"concourse.ci"`                        |
+| `web.enabled`                              | Enable or disable the web component                                                                                                               | `true`                                  |
+| `web.env`                                  | Configure additional environment variables for the web containers                                                                                 | `[]`                                    |
+| `web.ingress.annotations`                  | Concourse Web Ingress annotations                                                                                                                 | `{}`                                    |
+| `web.ingress.enabled`                      | Enable Concourse Web Ingress                                                                                                                      | `false`                                 |
+| `web.ingress.hosts`                        | Concourse Web Ingress Hostnames                                                                                                                   | `[]`                                    |
+| `web.ingress.tls`                          | Concourse Web Ingress TLS configuration                                                                                                           | `[]`                                    |
+| `web.keySecretsPath`                       | Specify the mount directory of the web keys secrets                                                                                               | `/concourse-keys`                       |
+| `web.labels`                               | Additional labels to be added to the worker pods                                                                                                  | `{}`                                    |
+| `web.livenessProbe.failureThreshold`       | Minimum consecutive failures for the probe to be considered failed after having succeeded                                                         | `5`                                     |
+| `web.livenessProbe.httpGet.path`           | Path to access on the HTTP server when performing the healthcheck                                                                                 | `/api/v1/info`                          |
+| `web.livenessProbe.httpGet.port`           | Name or number of the port to access on the container                                                                                             | `atc`                                   |
+| `web.livenessProbe.initialDelaySeconds`    | Number of seconds after the container has started before liveness probes are initiated                                                            | `10`                                    |
+| `web.livenessProbe.periodSeconds`          | How often (in seconds) to perform the probe                                                                                                       | `15`                                    |
+| `web.livenessProbe.timeoutSeconds`         | Number of seconds after which the probe times out                                                                                                 | `3`                                     |
+| `web.nameOverride`                         | Override the Concourse Web components name                                                                                                        | `nil`                                   |
+| `web.nodeSelector`                         | Node selector for web nodes                                                                                                                       | `{}`                                    |
+| `web.postgresqlSecretsPath`                | Specify the mount directory of the web postgresql secrets                                                                                         | `/concourse-postgresql`                 |
 | `web.prometheus.enabled` | Enable the Prometheus metrics endpoint | `false` |
 | `web.prometheus.bindIp` | IP to listen on to expose Prometheus metrics | `0.0.0.0` |
 | `web.prometheus.bindPort` | Port to listen on to expose Prometheus metrics | `9391` |
 | `web.prometheus.ServiceMonitor.enabled` | Enable the creation of a serviceMonitor object for the Prometheus operator | `false` |
 | `web.prometheus.ServiceMonitor.interval` | The interval the Prometheus endpoint is scraped | `30s` |
 | `web.prometheus.ServiceMonitor.namespace` | The namespace where the serviceMonitor object has to be created | `nil` |
-| `web.readinessProbe.httpGet.path` | Path to access on the HTTP server when performing the healthcheck | `/api/v1/info` |
-| `web.readinessProbe.httpGet.port` | Name or number of the port to access on the container | `atc` |
-| `web.replicas` | Number of Concourse Web replicas | `1` |
-| `web.resources.requests.cpu` | Minimum amount of cpu resources requested | `100m` |
-| `web.resources.requests.memory` | Minimum amount of memory resources requested | `128Mi` |
-| `web.service.annotations` | Concourse Web Service annotations | `nil` |
-| `web.service.atcNodePort` | Sets the nodePort for atc when using `NodePort` | `nil` |
-| `web.service.atcTlsNodePort` | Sets the nodePort for atc tls when using `NodePort` | `nil` |
-| `web.service.labels` | Additional concourse web service labels | `nil` |
-| `web.service.loadBalancerIP` | The IP to use when web.service.type is LoadBalancer | `nil` |
-| `web.service.loadBalancerSourceRanges` | Concourse Web Service Load Balancer Source IP ranges | `nil` |
-| `web.service.tsaNodePort` | Sets the nodePort for tsa when using `NodePort` | `nil` |
-| `web.service.type` | Concourse Web service type | `ClusterIP` |
-| `web.sidecarContainers` | Array of extra containers to run alongside the Concourse web container | `nil` |
-| `web.strategy` | Strategy for updates to deployment. | `{}` |
-| `web.syslogSecretsPath` | Specify the mount directory of the web syslog secrets | `/concourse-syslog` |
-| `web.tlsSecretsPath` | Where in the container the web TLS secrets should be mounted | `/concourse-web-tls` |
-| `web.tolerations` | Tolerations for the web nodes | `[]` |
-| `web.vaultSecretsPath` | Specify the mount directory of the web vault secrets | `/concourse-vault` |
-| `worker.additionalAffinities` | Additional affinities to apply to worker pods. E.g: node affinity | `{}` |
-| `worker.additionalVolumeMounts` | VolumeMounts to be added to the worker pods | `nil` |
-| `worker.additionalVolumes` | Volumes to be added to the worker pods | `nil` |
-| `worker.annotations` | Annotations to be added to the worker pods | `{}` |
-| `worker.cleanUpWorkDirOnStart` | Removes any previous state created in `concourse.worker.workDir` | `true` |
-| `worker.emptyDirSize` | When persistance is disabled this value will be used to limit the emptyDir volume size | `nil` |
-| `worker.enabled` | Enable or disable the worker component. You should set postgres.enabled=false in order not to get an unnecessary Postgres chart deployed | `true` |
-| `worker.env` | Configure additional environment variables for the worker container(s) | `[]` |
-| `worker.hardAntiAffinity` | Should the workers be forced (as opposed to preferred) to be on different nodes? | `false` |
-| `worker.hardAntiAffinityLabels` | Set of labels used for hard anti affinity rule | `{}` |
-| `worker.keySecretsPath` | Specify the mount directory of the worker keys secrets | `/concourse-keys` |
-| `worker.livenessProbe.failureThreshold` | Minimum consecutive failures for the probe to be considered failed after having succeeded | `5` |
-| `worker.livenessProbe.httpGet.path` | Path to access on the HTTP server when performing the healthcheck | `/` |
-| `worker.livenessProbe.httpGet.port` | Name or number of the port to access on the container | `worker-hc` |
-| `worker.livenessProbe.initialDelaySeconds` | Number of seconds after the container has started before liveness probes are initiated | `10` |
-| `worker.livenessProbe.periodSeconds` | How often (in seconds) to perform the probe | `15` |
-| `worker.livenessProbe.timeoutSeconds` | Number of seconds after which the probe times out | `3` |
-| `worker.minAvailable` | Minimum number of workers available after an eviction | `1` |
-| `worker.nameOverride` | Override the Concourse Worker components name | `nil` |
-| `worker.nodeSelector` | Node selector for worker nodes | `{}` |
-| `worker.podManagementPolicy` | `OrderedReady` or `Parallel` (requires Kubernetes >= 1.7) | `Parallel` |
-| `worker.readinessProbe` | Periodic probe of container service readiness | `{}` |
-| `worker.replicas` | Number of Concourse Worker replicas | `2` |
-| `worker.resources.requests.cpu` | Minimum amount of cpu resources requested | `100m` |
-| `worker.resources.requests.memory` | Minimum amount of memory resources requested | `512Mi` |
-| `worker.sidecarContainers` | Array of extra containers to run alongside the Concourse worker container | `nil` |
-| `worker.terminationGracePeriodSeconds` | Upper bound for graceful shutdown to allow the worker to drain its tasks | `60` |
-| `worker.tolerations` | Tolerations for the worker nodes | `[]` |
-| `worker.updateStrategy` | `OnDelete` or `RollingUpdate` (requires Kubernetes >= 1.7) | `RollingUpdate` |
+| `web.readinessProbe.httpGet.path`          | Path to access on the HTTP server when performing the healthcheck                                                                                 | `/api/v1/info`                          |
+| `web.readinessProbe.httpGet.port`          | Name or number of the port to access on the container                                                                                             | `atc`                                   |
+| `web.replicas`                             | Number of Concourse Web replicas                                                                                                                  | `1`                                     |
+| `web.resources.requests.cpu`               | Minimum amount of cpu resources requested                                                                                                         | `100m`                                  |
+| `web.resources.requests.memory`            | Minimum amount of memory resources requested                                                                                                      | `128Mi`                                 |
+| `web.service.annotations`                  | Concourse Web Service annotations                                                                                                                 | `nil`                                   |
+| `web.service.atcNodePort`                  | Sets the nodePort for atc when using `NodePort`                                                                                                   | `nil`                                   |
+| `web.service.atcTlsNodePort`               | Sets the nodePort for atc tls when using `NodePort`                                                                                               | `nil`                                   |
+| `web.service.labels`                       | Additional concourse web service labels                                                                                                           | `nil`                                   |
+| `web.service.loadBalancerIP`               | The IP to use when web.service.type is LoadBalancer                                                                                               | `nil`                                   |
+| `web.service.loadBalancerSourceRanges`     | Concourse Web Service Load Balancer Source IP ranges                                                                                              | `nil`                                   |
+| `web.service.tsaNodePort`                  | Sets the nodePort for tsa when using `NodePort`                                                                                                   | `nil`                                   |
+| `web.service.type`                         | Concourse Web service type                                                                                                                        | `ClusterIP`                             |
+| `web.sidecarContainers`                    | Array of extra containers to run alongside the Concourse web container                                                                            | `nil`                                   |
+| `web.strategy`                             | Strategy for updates to deployment.                                                                                                               | `{}`                                    |
+| `web.syslogSecretsPath`                    | Specify the mount directory of the web syslog secrets                                                                                             | `/concourse-syslog`                     |
+| `web.tlsSecretsPath`                       | Where in the container the web TLS secrets should be mounted                                                                                      | `/concourse-web-tls`                    |
+| `web.tolerations`                          | Tolerations for the web nodes                                                                                                                     | `[]`                                    |
+| `web.vaultSecretsPath`                     | Specify the mount directory of the web vault secrets                                                                                              | `/concourse-vault`                      |
+| `worker.additionalAffinities`              | Additional affinities to apply to worker pods. E.g: node affinity                                                                                 | `{}`                                    |
+| `worker.additionalVolumeMounts`            | VolumeMounts to be added to the worker pods                                                                                                       | `nil`                                   |
+| `worker.additionalVolumes`                 | Volumes to be added to the worker pods                                                                                                            | `nil`                                   |
+| `worker.annotations`                       | Annotations to be added to the worker pods                                                                                                        | `{}`                                    |
+| `worker.cleanUpWorkDirOnStart`             | Removes any previous state created in `concourse.worker.workDir`                                                                                  | `true`                                  |
+| `worker.emptyDirSize`                      | When persistance is disabled this value will be used to limit the emptyDir volume size                                                            | `nil`                                   |
+| `worker.enabled`                           | Enable or disable the worker component. You should set postgres.enabled=false in order not to get an unnecessary Postgres chart deployed          | `true`                                  |
+| `worker.env`                               | Configure additional environment variables for the worker container(s)                                                                            | `[]`                                    |
+| `worker.hardAntiAffinity`                  | Should the workers be forced (as opposed to preferred) to be on different nodes?                                                                  | `false`                                 |
+| `worker.hardAntiAffinityLabels`            | Set of labels used for hard anti affinity rule                                                                                                    | `{}`                                    |
+| `worker.keySecretsPath`                    | Specify the mount directory of the worker keys secrets                                                                                            | `/concourse-keys`                       |
+| `worker.livenessProbe.failureThreshold`    | Minimum consecutive failures for the probe to be considered failed after having succeeded                                                         | `5`                                     |
+| `worker.livenessProbe.httpGet.path`        | Path to access on the HTTP server when performing the healthcheck                                                                                 | `/`                                     |
+| `worker.livenessProbe.httpGet.port`        | Name or number of the port to access on the container                                                                                             | `worker-hc`                             |
+| `worker.livenessProbe.initialDelaySeconds` | Number of seconds after the container has started before liveness probes are initiated                                                            | `10`                                    |
+| `worker.livenessProbe.periodSeconds`       | How often (in seconds) to perform the probe                                                                                                       | `15`                                    |
+| `worker.livenessProbe.timeoutSeconds`      | Number of seconds after which the probe times out                                                                                                 | `3`                                     |
+| `worker.minAvailable`                      | Minimum number of workers available after an eviction                                                                                             | `1`                                     |
+| `worker.nameOverride`                      | Override the Concourse Worker components name                                                                                                     | `nil`                                   |
+| `worker.nodeSelector`                      | Node selector for worker nodes                                                                                                                    | `{}`                                    |
+| `worker.podManagementPolicy`               | `OrderedReady` or `Parallel` (requires Kubernetes >= 1.7)                                                                                         | `Parallel`                              |
+| `worker.readinessProbe`                    | Periodic probe of container service readiness                                                                                                     | `{}`                                    |
+| `worker.replicas`                          | Number of Concourse Worker replicas                                                                                                               | `2`                                     |
+| `worker.resources.requests.cpu`            | Minimum amount of cpu resources requested                                                                                                         | `100m`                                  |
+| `worker.resources.requests.memory`         | Minimum amount of memory resources requested                                                                                                      | `512Mi`                                 |
+| `worker.sidecarContainers`                 | Array of extra containers to run alongside the Concourse worker container                                                                         | `nil`                                   |
+| `worker.terminationGracePeriodSeconds`     | Upper bound for graceful shutdown to allow the worker to drain its tasks                                                                          | `60`                                    |
+| `worker.tolerations`                       | Tolerations for the worker nodes                                                                                                                  | `[]`                                    |
+| `worker.updateStrategy`                    | `OnDelete` or `RollingUpdate` (requires Kubernetes >= 1.7)                                                                                        | `RollingUpdate`                         |
 
 For configurable Concourse parameters, refer to [`values.yaml`](values.yaml)' `concourse` section. All parameters under this section are strictly mapped from the `concourse` binary commands.
 

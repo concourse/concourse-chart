@@ -1,0 +1,6 @@
+dependencies:
+- name: postgresql
+  repository: https://jhvhs.github.io/concourse-chart
+  version: 9.0.0
+digest: sha256:b90e52640e4a8200fce91ea0724b99cd405dc2e4f474bcb098f495158c093a04
+generated: "2020-01-20T17:59:39.607344Z"

@@ -1,6 +1,7 @@
-apiVersion: v1
+apiVersion: v2
 name: concourse
-version: 9.1.0
+type: application
+version: 9.2.0
 appVersion: 5.8.0
 description: Concourse is a simple and scalable CI system.
 icon: https://avatars1.githubusercontent.com/u/7809479
@@ -21,4 +22,8 @@ maintainers:
   email: byoussef@pivotal.io
 - name: taylorsilva
   email: tsilva@pivotal.io
-engine: gotpl
+dependencies:
+- name: postgresql
+  version: 9.0.0
+  repository: https://jhvhs.github.io/concourse-chart
+  condition: postgresql.enabled
