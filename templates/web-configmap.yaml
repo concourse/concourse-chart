@@ -8,5 +8,5 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
-  main-team.yml: {{ .Values.concourse.web.auth.mainTeam.config | quote }}
-  config-rbac.yml: {{ .Values.concourse.web.configRBAC | quote }}
+  main-team.yml: {{ .Values.concourse.web.auth.mainTeam.config | default "" | quote }}
+  config-rbac.yml: {{ .Values.concourse.web.configRBAC | default "" | quote }}
