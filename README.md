@@ -272,17 +272,31 @@ Be careful with introducing trailing newline characters; following the steps bel
 #
 mkdir concourse-secrets
 cd concourse-secrets
+```
 
-# Generate the files for the secrets that are required:
-# - web key pair,
-# - worker key pair, and
-# - the session signing token.
-#
-ssh-keygen -t rsa -f host-key  -N ''
+Concourse needs three sets of key-pairs in order to work:
+- web key pair,
+- worker key pair, and
+- the session signing token.
+
+You can generate all three key-pairs by following either of these two methods:
+
+##### Concourse Binary
+
+```sh
+docker run -v $PWD:/keys --rm -it concourse/concourse generate-key -t rsa -f /keys/session-signing-key
+docker run -v $PWD:/keys --rm -it concourse/concourse generate-key -t ssh -f /keys/worker-key
+docker run -v $PWD:/keys --rm -it concourse/concourse generate-key -t ssh -f /keys/host-key
+```
+
+##### ssh-keygen
+
+```sh
+ssh-keygen -t rsa -f host-key  -N '' -m PEM
 mv host-key.pub host-key-pub
-ssh-keygen -t rsa -f worker-key  -N ''
+ssh-keygen -t rsa -f worker-key  -N '' -m PEM
 mv worker-key.pub worker-key-pub
-ssh-keygen -t rsa -f session-signing-key  -N ''
+ssh-keygen -t rsa -f session-signing-key  -N '' -m PEM
 rm session-signing-key.pub
 printf "%s:%s" "concourse" "$(openssl rand -base64 24)" > local-users
 ```
@@ -290,8 +304,6 @@ printf "%s:%s" "concourse" "$(openssl rand -base64 24)" > local-users
 All the worker-specific secrets, namely, `workerKey`, `workerKeyPub`, `hostKeyPub` are to be added to a separate Kubernetes secrets object with the name [release name]-worker.
 
 All other secrets are to be added to a secrets object with the name `[release name]-web`.
-
-For the time being, the secret `workerKeyPub` is to be added to both the worker and the web secret objects, until investigated within issue #13019.
 
 You'll also need to create/copy secret values for optional features. See [templates/web-secrets.yaml](templates/web-secrets.yaml) and [templates/web-secrets.yaml](templates/web-secrets.yaml)  for possible values.
 
