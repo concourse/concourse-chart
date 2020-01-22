@@ -70,3 +70,23 @@ Please see `README.md` for examples.
 
 {{- end }}
 {{- end }}
+{{- if .Values.image -}}
+*******************
+******WARNING******
+*******************
+
+The use of the `image` property for locating the docker image is deprecated. Please use `images.concourse` instead.
+See https://github.com/helm/helm/issues/7154 for more details. For example, old setting:
+
+...
+image: my.registry.local/myrepo/myconcourse
+...
+
+New setting:
+...
+images:
+  concourse:
+    registry: my.registry.local
+    namespace: myrepo
+    name: myconcourse
+{{- end -}}

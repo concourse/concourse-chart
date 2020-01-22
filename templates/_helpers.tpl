@@ -109,11 +109,21 @@ The most complete image reference, including the
 registry address, repository, tag and digest when available.
 */}}
 {{- define "concourse.imageReference" -}}
+{{- if .values.image  -}}
+{{- printf "%s" .values.image -}}
+{{- if .values.imageTag -}}
+{{- printf ":%s" .values.imageTag -}}
+{{- end -}}
+{{- if .values.imageDigest -}}
+{{- printf "@%s" .values.imageDigest -}}
+{{- end -}}
+{{- else -}}
 {{- $registry := coalesce .image.registry .values.global.imageRegistry "docker.io" -}}
 {{- $namespace := coalesce .image.namespace .values.imageNamespace .values.global.imageNamespace "concourse" -}}
 {{- printf "%s/%s/%s:%s" $registry $namespace .image.name .image.tag -}}
 {{- if .image.digest -}}
 {{- printf "@%s" .image.digest -}}
+{{- end -}}
 {{- end -}}
 {{- end -}}
 
