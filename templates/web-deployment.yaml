@@ -155,6 +155,22 @@ spec:
             - name: CONCOURSE_AWS_SSM_REGION
               value: {{ .Values.concourse.web.awsSsm.region | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.tracing.jaegerEndpoint }}
+            - name: CONCOURSE_TRACING_JAEGER_ENDPOINT
+              value: {{ .Values.concourse.web.tracing.jaegerEndpoint | quote }}
+            {{-end }}
+            {{- if .Values.concourse.web.tracing.jaegerTags }}
+            - name: CONCOURSE_TRACING_JAEGER_TAGS
+              value: {{ .Values.concourse.web.tracing.jaegerTags | quote }}
+            {{-end }}
+            {{- if .Values.concourse.web.tracing.jaegerService }}
+            - name: CONCOURSE_TRACING_JAEGER_SERVICE
+              value: {{ .Values.concourse.web.tracing.jaegerService | quote }}
+            {{-end }}
+            {{- if .Values.concourse.web.tracing.stackdriverProjectId }}
+            - name: CONCOURSE_TRACING_STACKDRIVER_PROJECTID
+              value: {{ .Values.concourse.web.tracing.stackdriverProjectId | quote }}
+            {{-end }}
             {{- if .Values.concourse.web.metrics.bufferSize }}
             - name: CONCOURSE_METRICS_BUFFER_SIZE
               value: {{ .Values.concourse.web.metrics.bufferSize | quote }}

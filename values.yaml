@@ -535,6 +535,31 @@ concourse:
       ##
       resource:
 
+    tracing:
+      ## Jaeger's HTTP-based Thrift collector endpoint.
+      #
+      ## Example: "http://jaeger:14268/api/traces"
+      ##
+      jaegerEndpoint:
+
+      ## Tags to include to components
+      ##
+      ## Example: "foo:bar,caz:zaz"
+      ##
+      jaegerTags:
+
+      ## Name of the service being traced
+      ##
+      ## Example: "web"
+      ##
+      jaegerService:
+
+      ## GCP's Project ID
+      ##
+      ## Example: "my-projectid"
+      ##
+      stackdriverProjectId:
+
     metrics:
       ## Host string to attach to emitted metrics.
       ##
