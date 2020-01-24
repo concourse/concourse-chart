@@ -517,10 +517,6 @@ concourse:
       teamSecretTemplate:
       secretTemplate:
 
-    ## Don't actually do any automatic scheduling or checking.
-    ##
-    noop: false
-
     staticWorker:
       ## Enables the direct registration of a worker that has its properties
       ## hardcoded.
