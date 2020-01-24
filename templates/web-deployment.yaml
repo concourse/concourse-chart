@@ -63,9 +63,13 @@ spec:
             - name: CONCOURSE_CLUSTER_NAME
               value: {{ .Values.concourse.web.clusterName | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.maxConns }}
-            - name: CONCOURSE_MAX_CONNS
-              value: {{ .Values.concourse.web.maxConns | quote }}
+            {{- if .Values.concourse.web.apiMaxConns }}
+            - name: CONCOURSE_API_MAX_CONNS
+              value: {{ .Values.concourse.web.apiMaxConns | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.backendMaxConns }}
+            - name: CONCOURSE_BACKEND_MAX_CONNS
+              value: {{ .Values.concourse.web.backendMaxConns | quote }}
             {{- end }}
             {{- if .Values.concourse.web.enableGlobalResources }}
             - name: CONCOURSE_ENABLE_GLOBAL_RESOURCES
