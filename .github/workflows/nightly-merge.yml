@@ -1,0 +1,26 @@
+name: 'Merge master into dev'
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  nightly-merge:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Merge master into dev
+      uses: robotology/gh-action-nightly-merge@v1.2.0
+      with:
+        stable_branch: 'master'
+        development_branch: 'dev'
+        allow_ff: false
+        user_name: "Github Action"
+        user_email: "concourse@pivotal.io"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
