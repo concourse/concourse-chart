@@ -69,6 +69,10 @@ concourse:
     ##
     enableGlobalResources: true
 
+    ## Maximum number of jobs to be scheduling at the same time.
+    ##
+    jobSchedulingMaxInFlight:
+
     ## Interval on which the resource scanner will run to see if new checks need
     ## to be scheduled.
     ##
