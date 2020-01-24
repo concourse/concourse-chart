@@ -65,10 +65,6 @@ concourse:
     ##
     enableGlobalResources: true
 
-    ## The Future™ of resource checking.
-    ##
-    enableLidar:
-
     ## Interval on which the resource scanner will run to see if new checks need
     ## to be scheduled.
     ##

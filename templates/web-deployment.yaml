@@ -71,10 +71,6 @@ spec:
             - name: CONCOURSE_ENABLE_GLOBAL_RESOURCES
               value: {{ .Values.concourse.web.enableGlobalResources | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.enableLidar }}
-            - name: CONCOURSE_ENABLE_LIDAR
-              value: {{ .Values.concourse.web.enableLidar | quote }}
-            {{- end }}
             {{- if .Values.concourse.web.lidarScannerInterval }}
             - name: CONCOURSE_LIDAR_SCANNER_INTERVAL
               value: {{ .Values.concourse.web.lidarScannerInterval | quote }}
