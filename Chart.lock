@@ -1,6 +1,6 @@
 dependencies:
 - name: postgresql
   repository: https://jhvhs.github.io/concourse-chart
-  version: 9.0.0
-digest: sha256:b90e52640e4a8200fce91ea0724b99cd405dc2e4f474bcb098f495158c093a04
-generated: "2020-01-20T17:59:39.607344Z"
+  version: 8.2.3
+digest: sha256:7e3d860777666d527be657b8421066969acd1150c9ef55df6e084edda6d58b2b
+generated: "2020-02-04T13:49:57.721444Z"

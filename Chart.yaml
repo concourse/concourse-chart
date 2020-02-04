@@ -24,6 +24,6 @@ maintainers:
   email: tsilva@pivotal.io
 dependencies:
 - name: postgresql
-  version: 9.0.0
+  version: 8.2.3
   repository: https://jhvhs.github.io/concourse-chart
   condition: postgresql.enabled
