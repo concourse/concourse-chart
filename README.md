@@ -305,7 +305,7 @@ All the worker-specific secrets, namely, `workerKey`, `workerKeyPub`, `hostKeyPu
 
 All other secrets are to be added to a secrets object with the name `[release name]-web`.
 
-You'll also need to create/copy secret values for optional features. See [templates/web-secrets.yaml](templates/web-secrets.yaml) and [templates/web-secrets.yaml](templates/web-secrets.yaml)  for possible values.
+You'll also need to create/copy secret values for optional features. See [templates/web-secrets.yaml](templates/web-secrets.yaml) and [templates/worker-secrets.yaml](templates/worker-secrets.yaml)  for possible values.
 
 In the example below, we are not using the [PostgreSQL](#postgresql) chart dependency, and so we must set `postgresql-user` and `postgresql-password` secrets.
 
@@ -419,8 +419,7 @@ By default, this chart uses a PostgreSQL database deployed as a chart dependency
 
 You can also bring your own PostgreSQL. To do so, set `postgresql.enabled` to `false`, and then configure Concourse's `postgres` values (`concourse.web.postgres.*`).
 
-Note that some values get set in the form of secrets, like `postgresql-user`, `postgresql-password`, and others (see [templates/secrets.yaml](templates/secrets.yaml) for possible values and the [secrets section](#secrets) on this README for guidance on how to set those secrets).
-
+Note that some values get set in the form of secrets, like `postgresql-user`, `postgresql-password`, and others (see [templates/web-secrets.yaml](templates/web-secrets.yaml) for possible values and the [secrets section](#secrets) on this README for guidance on how to set those secrets).
 
 ### Credential Management
 
