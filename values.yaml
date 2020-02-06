@@ -668,6 +668,13 @@ concourse:
       ##
       bindPort: 9391
 
+      ## If Prometheus operator is used, also create a servicemonitor object
+      serviceMonitor:
+        enabled: false
+        interval: "30s"
+        # Namespace the servicemonitor object should be in
+        namespace: 
+
     riemann:
       enabled: false
 
