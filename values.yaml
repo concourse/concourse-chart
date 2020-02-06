@@ -713,7 +713,7 @@ concourse:
 
     ## Customize RBAC role-action mapping.
     ##
-    configRBAC:
+    configRBAC: ""
 
     auth:
       ## Force sending secure flag on http cookies
@@ -728,7 +728,7 @@ concourse:
         ## Configuration file for specifying team params.
         ## Ref: https://concourse-ci.org/managing-teams.html#setting-roles
         ##
-        config:
+        config: ""
 
         ## List of local Concourse users to be included as members of the `main` team.
         ## Make sure you have local users support enabled (`concourse.web.localAuth.enabled`) and
