@@ -1,3 +1,5 @@
+{{- if .Values.web.enabled -}}
+{{- if or .Values.concourse.web.auth.mainTeam.config .Values.concourse.web.configRBAC -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -8,5 +10,11 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
+  {{- if .Values.concourse.web.auth.mainTeam.config }}
   main-team.yml: {{ .Values.concourse.web.auth.mainTeam.config | quote }}
+  {{- end -}}
+  {{- if .Values.concourse.web.configRBAC }}
   config-rbac.yml: {{ .Values.concourse.web.configRBAC | quote }}
+  {{- end -}}
+{{- end -}}
+{{- end -}}
