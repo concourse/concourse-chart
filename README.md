@@ -191,6 +191,12 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.nameOverride` | Override the Concourse Web components name | `nil` |
 | `web.nodeSelector` | Node selector for web nodes | `{}` |
 | `web.postgresqlSecretsPath` | Specify the mount directory of the web postgresql secrets | `/concourse-postgresql` |
+| `web.prometheus.enabled` | Enable the Prometheus metrics endpoint | `false` |
+| `web.prometheus.bindIp` | IP to listen on to expose Prometheus metrics | `0.0.0.0` |
+| `web.prometheus.bindPort` | Port to listen on to expose Prometheus metrics | `9391` |
+| `web.prometheus.ServiceMonitor.enabled` | Enable the creation of a serviceMonitor object for the Prometheus operator | `false` |
+| `web.prometheus.ServiceMonitor.interval` | The interval the Prometheus endpoint is scraped | `30s` |
+| `web.prometheus.ServiceMonitor.namespace` | The namespace where the serviceMonitor object has to be created | `nil` |
 | `web.readinessProbe.httpGet.path` | Path to access on the HTTP server when performing the healthcheck | `/api/v1/info` |
 | `web.readinessProbe.httpGet.port` | Name or number of the port to access on the container | `atc` |
 | `web.replicas` | Number of Concourse Web replicas | `1` |

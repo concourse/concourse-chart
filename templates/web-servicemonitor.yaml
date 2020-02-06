@@ -1,0 +1,24 @@
+{{- if and .Values.concourse.web.prometheus.serviceMonitor.enabled .Values.concourse.web.prometheus.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "concourse.web.fullname" . }}
+  {{- if .Values.concourse.web.prometheus.serviceMonitor.namespace }}
+  namespace: {{ .Values.concourse.web.prometheus.serviceMonitor.namespace }}
+  {{- end }}
+  labels:
+    app: {{ template "concourse.web.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  endpoints:
+  - interval: {{ .Values.concourse.web.prometheus.serviceMonitor.interval }}
+    port: prometheus
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      app: {{ template "concourse.web.fullname" . }}
+{{- end }}
