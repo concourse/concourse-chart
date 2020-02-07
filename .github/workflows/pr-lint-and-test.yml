@@ -1,4 +1,4 @@
-name: Lint and Test Charts
+name: Lint and Test Chart
 
 on: pull_request
 
@@ -8,7 +8,7 @@ jobs:
     container: alpine/helm:3.0.3
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           path: charts
 
@@ -19,14 +19,12 @@ jobs:
 
         #- name: Check for version bump
 
-#      - name: Run chart-testing (lint)
-#        id: lint
-#        uses: helm/chart-testing-action@v1.0.0-alpha.3
-#        with:
-#          command: lint
-#          image: quay.io/helmpack/chart-testing:v3.0.0-beta.1
-#        env:
-#          CT_CHART_DIRS: "."
+      - name: Run chart-testing (lint)
+        id: lint
+        uses: helm/chart-testing-action@v1.0.0-alpha.3
+        with:
+          command: lint
+          image: quay.io/helmpack/chart-testing:v3.0.0-beta.1
 
 #      - name: Create kind cluster
 #        uses: helm/kind-action@v1.0.0-alpha.3
