@@ -21,7 +21,7 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
-          helm install .
+          helm install simple-concourse .
 
   version-bump:
     runs-on: ubuntu-latest
