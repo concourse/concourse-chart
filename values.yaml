@@ -1203,7 +1203,7 @@ concourse:
 
     ## Duration after which the registration should be swapped to another random SSH gateway.
     ##
-    rebalanceInterval:
+    rebalanceInterval: 4h
 
     ## Duration after which a worker should give up draining forwarded connections on shutdown.
     ##
