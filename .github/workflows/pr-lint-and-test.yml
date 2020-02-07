@@ -5,18 +5,11 @@ on: pull_request
 jobs:
   lint-test:
     runs-on: ubuntu-latest
-    container: alpine/helm:3.0.3
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           path: charts
-
-      - name: Lint chart
-        run: |
-          helm lint charts
-
-        #- name: Check for version bump
 
       - name: Run chart-testing (lint)
         id: lint
