@@ -5,18 +5,20 @@ on: pull_request
 jobs:
   lint-test:
     runs-on: ubuntu-latest
+    container: alpine/helm:3.0.3
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          path: charts
 
-      - name: Run chart-testing (lint)
-        id: lint
-        uses: helm/chart-testing-action@v1.0.0-alpha.3
-        with:
-          command: lint
-          image: quay.io/helmpack/chart-testing:v3.0.0-beta.1
+      - name: Lint chart
+        run: |
+          helm lint
+
+      - name: Check for version bump
+        run: |
+          git diff --name-only origin/master HEAD | grep values.yaml
+
+
 
 #      - name: Create kind cluster
 #        uses: helm/kind-action@v1.0.0-alpha.3
