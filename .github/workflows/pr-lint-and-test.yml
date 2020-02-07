@@ -14,8 +14,8 @@ jobs:
 
       - name: Lint chart
         run: |
-          helm lint
-          ls -la
+          ls -la chart
+          helm lint chart
 
         #- name: Check for version bump
 
