@@ -19,4 +19,6 @@ maintainers:
   email: will@autonomic.ai
 - name: YoussB
   email: byoussef@pivotal.io
+- name: taylorsilva
+  email: tsilva@pivotal.io
 engine: gotpl
