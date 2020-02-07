@@ -3,7 +3,7 @@ name: Lint and Test Chart
 on: pull_request
 
 jobs:
-  lint-test:
+  lint-and-install:
     runs-on: ubuntu-latest
     container: alpine/helm:3.0.3
     steps:
@@ -13,6 +13,15 @@ jobs:
       - name: Lint chart
         run: |
           helm lint
+
+      - name: Create kind cluster
+        uses: helm/kind-action@v1.0.0-alpha.3
+        with:
+          install_local_path_provisioner: true
+
+      - name: Run chart-testing (install)
+        run: |
+          helm install .
 
   version-bump:
     runs-on: ubuntu-latest
@@ -25,20 +34,3 @@ jobs:
       - name: Check for version bump
         run: |
           git diff origin/master HEAD -- Chart.yaml | egrep '\+version: [0-9]+\.[0-9]+\.[0-9]+'
-
-
-
-#      - name: Create kind cluster
-#        uses: helm/kind-action@v1.0.0-alpha.3
-#        with:
-#          install_local_path_provisioner: true
-#        # Only build a kind cluster if there are chart changes to test.
-#        # if: steps.lint.outputs.changed == 'true'
-#
-#      - name: Run chart-testing (install)
-#        uses: helm/chart-testing-action@v1.0.0-alpha.3
-#        with:
-#          command: install
-#          image: quay.io/helmpack/chart-testing:v3.0.0-beta.1
-#        env:
-#          CT_CHART_DIRS: "."
