@@ -14,6 +14,12 @@ jobs:
         run: |
           helm lint
 
+  version-bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Check for version bump
         run: |
           newversion=git diff --name-only origin/master HEAD -- Chart.yaml | egrep '\+version: [0-9]+\.[0-9]+\.[0-9]+'
