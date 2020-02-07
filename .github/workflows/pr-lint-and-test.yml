@@ -19,15 +19,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: git fetch --no-tags --prune --depth=1 origin master
+      - name: Fetch master
+        run: git fetch --no-tags --prune --depth=1 origin master
 
       - name: Check for version bump
         run: |
-          newversion=$(git diff origin/master HEAD -- Chart.yaml | egrep '\+version: [0-9]+\.[0-9]+\.[0-9]+')
-          if [[ -z "${newversion}" ]]; then
-            echo "Version not bumped"
-            exit 1
-          fi
+          git diff origin/master HEAD -- Chart.yaml | egrep '\+version: [0-9]+\.[0-9]+\.[0-9]+'
 
 
 
