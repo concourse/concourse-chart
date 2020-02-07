@@ -22,7 +22,7 @@ jobs:
 
       - name: Check for version bump
         run: |
-          newversion=git diff origin/master HEAD -- Chart.yaml | egrep '\+version: [0-9]+\.[0-9]+\.[0-9]+'
+          newversion=$(git diff origin/master HEAD -- Chart.yaml | egrep '\+version: [0-9]+\.[0-9]+\.[0-9]+')
           if [[ -z "${newversion}" ]]; then
             echo "Version not bumped"
             exit 1
