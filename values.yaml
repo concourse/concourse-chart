@@ -10,6 +10,10 @@ nameOverride:
 ##
 fullnameOverride:
 
+## Release namespace provided by the user.By default no release namespace will be created. Set value to true to create release namespace.
+##
+createReleaseNamespace:
+
 ## Concourse image to use in both Web and Worker containers.
 ##
 image: concourse/concourse
