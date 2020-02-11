@@ -1,0 +1,11 @@
+{{- if and .Release.Namespace (.Values.createReleaseNamespace | default false) -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Release.Namespace }}
+  labels:
+    app: {{ template "concourse.web.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+{{- end -}}
