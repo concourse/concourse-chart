@@ -752,7 +752,7 @@ concourse:
     ##   member:
     ##   - CreateBuild
     ##
-    configRBAC:
+    configRBAC: ""
 
     auth:
       ## Force sending secure flag on http cookies
@@ -777,7 +777,7 @@ concourse:
         ##     local:
         ##       users: ["test"]
         ##
-        config:
+        config: ""
 
         ## List of local Concourse users to be included as members of the `main` team.
         ## Make sure you have local users support enabled (`concourse.web.localAuth.enabled`) and
