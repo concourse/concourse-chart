@@ -18,7 +18,6 @@ global:
   ##    - myRegistryKeySecretName
   ##
   imagePullSecrets: []
-  imageRegistry: docker.io
 
 
 ## Provide a name in place of `concourse` for `app:` labels
@@ -34,7 +33,7 @@ fullnameOverride:
 images:
   concourse:
     name: concourse
-    namespace: concourse
+    originalNamespace: concourse
     ## Concourse image tag.
     ##
     tag: "5.8.0"

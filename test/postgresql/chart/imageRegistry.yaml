@@ -1,0 +1,2 @@
+postgresql:
+  imageRegistry: smashed-noodles.io

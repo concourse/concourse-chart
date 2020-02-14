@@ -1,0 +1,7 @@
+imageDigest: sha3-512:7865fd90d87d7a09a8d7d98d98f7c87a90d8f7fc0978e8e7d8d8c8d8e8d8ca
+
+# Fix the tag and digest, pretending they are coming from values.yaml
+images:
+  concourse:
+    tag: some-tag
+    digest: sha256:169c211fa7df59a053f5260996c2ea8539ca0a50b4211f5ffd924ba826a88f48

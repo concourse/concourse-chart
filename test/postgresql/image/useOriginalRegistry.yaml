@@ -1,0 +1,4 @@
+postgresql:
+  images:
+    postgresql:
+      useOriginalRegistry: true

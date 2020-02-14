@@ -1,0 +1,3 @@
+images:
+  concourse:
+    namespace: concourse-image-namespace

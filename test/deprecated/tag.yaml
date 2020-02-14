@@ -1,0 +1,7 @@
+imageTag: port-royal
+
+# Fix the tag and digest, pretending they are coming from values.yaml
+images:
+  concourse:
+    tag: some-tag
+    digest: sha256:169c211fa7df59a053f5260996c2ea8539ca0a50b4211f5ffd924ba826a88f48

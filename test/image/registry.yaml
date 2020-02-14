@@ -1,0 +1,3 @@
+images:
+  concourse:
+    registry: image.local

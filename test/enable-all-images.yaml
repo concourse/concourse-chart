@@ -1,0 +1,6 @@
+postgresql:
+  metrics:
+    enabled: true
+  postgresqlDatabase: blah
+  replication:
+    enabled: true

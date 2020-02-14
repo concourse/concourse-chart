@@ -1,4 +1,3 @@
-0
 * Concourse can be accessed:
 
   * Within your cluster, at the following DNS name at port {{ .Values.concourse.web.bindPort }}:
@@ -70,14 +69,16 @@ Please see `README.md` for examples.
 
 {{- end }}
 {{- end }}
-{{- if .Values.image -}}
+{{- if (or .Values.image .Values.imageTag .Values.imageDigest) }}
 
 *******************
 ******WARNING******
 *******************
 
-The use of the `image` property for locating the docker image is deprecated. Please use `images.concourse` instead.
-See https://github.com/helm/helm/issues/7154 for more details. For example, old setting:
+The use of the `image`, `imageTag` and `imageDigest` properties for specifying the docker image is deprecated.
+Please use `images.concourse` instead. See https://github.com/helm/helm/issues/7154 for more details.
+
+For example, old setting:
 
 ...
 image: my.registry.local/myrepo/myconcourse

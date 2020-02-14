@@ -1,0 +1,4 @@
+postgresql:
+  images:
+    metrics:
+      registry: ubi.est.altus

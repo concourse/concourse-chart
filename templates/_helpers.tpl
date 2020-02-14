@@ -101,7 +101,10 @@ Includes the `image` and `imagePullPolicy` keys.
 */}}
 {{- define "concourse.registryImage" -}}
 image: {{ include "concourse.imageReference" . }}
-{{ include "concourse.imagePullPolicy" . }}
+{{- $pullPolicy := include "concourse.imagePullPolicy" . -}}
+{{- if $pullPolicy }}
+{{ $pullPolicy }}
+{{- end -}}
 {{- end -}}
 
 {{/*
@@ -109,31 +112,85 @@ The most complete image reference, including the
 registry address, repository, tag and digest when available.
 */}}
 {{- define "concourse.imageReference" -}}
-{{- if .values.image  -}}
-{{- printf "%s" .values.image -}}
-{{- if .values.imageTag -}}
-{{- printf ":%s" .values.imageTag -}}
-{{- end -}}
-{{- if .values.imageDigest -}}
-{{- printf "@%s" .values.imageDigest -}}
-{{- end -}}
+{{- if (or .values.image .values.imageTag .values.imageDigest) -}}
+{{ include "concourse.deprecatedImageReference" . }}
 {{- else -}}
-{{- $registry := coalesce .image.registry .values.global.imageRegistry "docker.io" -}}
-{{- $namespace := coalesce .image.namespace .values.imageNamespace .values.global.imageNamespace "concourse" -}}
-{{- printf "%s/%s/%s:%s" $registry $namespace .image.name .image.tag -}}
+{{ include "concourse.conventionalImageReference" . }}
+{{- end -}}
+{{- end -}}
+
+{{- define "concourse.conventionalImageReference" -}}
+{{ include "concourse.conventionalImagePath" . }}
+{{- if .image.tag -}}
+{{- printf ":%s" .image.tag -}}
+{{- end -}}
 {{- if .image.digest -}}
 {{- printf "@%s" .image.digest -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "concourse.conventionalImagePath" -}}
+{{- $registry := include "concourse.imageRegistry" . -}}
+{{- $namespace := include "concourse.imageNamespace" . -}}
+{{- printf "%s/%s/%s" $registry $namespace .image.name -}}
+{{- end -}}
+
+{{- define "concourse.deprecatedImageReference" -}}
+{{- if (or .values.image .values.imageTag .values.imageDigest) -}}
+{{- coalesce .values.image (include "concourse.conventionalImagePath" .) -}}
+{{- $tag := coalesce .values.imageTag .image.tag -}}
+{{- if $tag -}}
+{{- printf ":%s" $tag -}}
+{{- end -}}
+{{- $digest := coalesce .values.imageDigest .image.digest -}}
+{{- if $digest -}}
+{{- printf "@%s" $digest -}}
+{{- end -}}
+{{- else -}}
+{{- include "concourse.conventionalImageReference" . -}}
+{{- end -}}
+{{- end -}}
+
+
+{{- define "concourse.imageRegistry" -}}
+{{- if or (and .image.useOriginalRegistry (empty .image.registry)) (and .values.useOriginalRegistry (empty .values.imageRegistry)) -}}
+{{- include "concourse.originalImageRegistry" . -}}
+{{- else -}}
+{{- include "concourse.customImageRegistry" . -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "concourse.originalImageRegistry" -}}
+{{- printf (coalesce .image.originalRegistry .values.originalImageRegistry "docker.io") -}}
+{{- end -}}
+
+{{- define "concourse.customImageRegistry" -}}
+{{- printf (coalesce .image.registry .values.imageRegistry .values.global.imageRegistry (include "concourse.originalImageRegistry" .)) -}}
+{{- end -}}
+
+{{- define "concourse.imageNamespace" -}}
+{{- if or (and .image.useOriginalNamespace (empty .image.namespace)) (and .values.useOriginalNamespace (empty .values.imageNamespace)) -}}
+{{- include "concourse.originalImageNamespace" . -}}
+{{- else -}}
+{{- include "concourse.customImageNamespace" . -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "concourse.originalImageNamespace" -}}
+{{- printf (coalesce .image.originalNamespace .values.originalImageNamespace "library") -}}
+{{- end -}}
+
+{{- define "concourse.customImageNamespace" -}}
+{{- printf (coalesce .image.namespace .values.imageNamespace .values.global.imageNamespace (include "concourse.originalImageNamespace" .)) -}}
 {{- end -}}
 
 {{/*
 Specify the image pull policy
 */}}
 {{- define "concourse.imagePullPolicy" -}}
-{{- $policy := coalesce .image.pullPolicy .values.global.imagePullPolicy -}}
+{{- $policy := coalesce .values.imagePullPolicy .image.pullPolicy .values.global.imagePullPolicy -}}
 {{- if $policy -}}
-imagePullPolicy: "{{ printf "%s" $policy -}}"
+imagePullPolicy: "{{- $policy -}}"
 {{- end -}}
 {{- end -}}
 
@@ -142,12 +199,19 @@ Use the image pull secrets. All of the specified secrets will be used
 */}}
 {{- define "concourse.imagePullSecrets" -}}
 {{- $secrets := .Values.global.imagePullSecrets -}}
+{{- range $_, $chartSecret := .Values.imagePullSecrets -}}
+{{- if $secrets -}}
+{{- $secrets = append $secrets $chartSecret -}}
+{{- else -}}
+{{- $secrets = list $chartSecret -}}
+{{- end -}}
+{{- end -}}
 {{- range $_, $image := .Values.images -}}
 {{- range $_, $s := $image.pullSecrets -}}
-{{- if not $secrets -}}
-{{- $secrets = list $s -}}
-{{- else -}}
+{{- if $secrets -}}
 {{- $secrets = append $secrets $s -}}
+{{- else -}}
+{{- $secrets = list $s -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
