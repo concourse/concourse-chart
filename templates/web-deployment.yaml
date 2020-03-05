@@ -185,10 +185,12 @@ spec:
             {{- if .Values.concourse.web.tls.enabled }}
             - name: CONCOURSE_TLS_BIND_PORT
               value: {{ .Values.concourse.web.tls.bindPort | quote }}
+            {{- if not .Values.concourse.web.letsEncrypt.enabled }}
             - name: CONCOURSE_TLS_CERT
               value: "{{ .Values.web.tlsSecretsPath }}/client.cert"
             - name: CONCOURSE_TLS_KEY
               value: "{{ .Values.web.tlsSecretsPath }}/client.key"
+            {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.tls.enabled }}
             - name: CONCOURSE_EXTERNAL_URL
@@ -1229,9 +1231,11 @@ spec:
               readOnly: true
             {{- end }}
             {{- if .Values.concourse.web.tls.enabled }}
+            {{- if not .Values.concourse.web.letsEncrypt.enabled }}
             - name: web-tls
               mountPath: {{ .Values.web.tlsSecretsPath | quote }}
               readOnly: true
+            {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.vault.enabled }}
             - name: vault-keys
@@ -1297,6 +1301,7 @@ spec:
             {{- end }}
         {{- end }}
         {{- if .Values.concourse.web.tls.enabled }}
+        {{- if not .Values.concourse.web.letsEncrypt.enabled }}
         - name: web-tls
           secret:
             secretName: {{ template "concourse.web.fullname" . }}
@@ -1306,6 +1311,7 @@ spec:
                 path: client.cert
               - key: web-tls-key
                 path: client.key
+        {{- end }}
         {{- end }}
         {{- if .Values.concourse.web.vault.enabled }}
         - name: vault-keys
