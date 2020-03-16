@@ -1317,6 +1317,10 @@ concourse:
       ##
       useHoudini:
 
+      ## Use the experimental Containerd Garden backend.
+      ##
+      useContainerd:
+
       ## How long to wait for requests to Garden to complete. 0 means no timeout.
       ##
       requestTimeout:
