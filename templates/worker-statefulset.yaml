@@ -14,7 +14,7 @@ spec:
   selector:
     matchLabels:
       app: {{ template "concourse.worker.fullname" . }}
-      release: {{ .Release.Name }}  
+      release: {{ .Release.Name }}
   template:
     metadata:
       labels:
@@ -200,6 +200,10 @@ spec:
             {{- if .Values.concourse.worker.garden.useHoudini }}
             - name: CONCOURSE_GARDEN_USE_HOUDINI
               value: {{ .Values.concourse.worker.garden.useHoudini | quote }}
+            {{- end }}
+            {{- if .Values.concourse.worker.garden.useContainerd }}
+            - name: CONCOURSE_GARDEN_USE_CONTAINERD
+              value: {{ .Values.concourse.worker.garden.useContainerd | quote }}
             {{- end }}
             {{- if .Values.concourse.worker.garden.bin }}
             - name: CONCOURSE_GARDEN_BIN
