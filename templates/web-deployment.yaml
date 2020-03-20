@@ -67,6 +67,10 @@ spec:
             - name: CONCOURSE_ENABLE_GLOBAL_RESOURCES
               value: {{ .Values.concourse.web.enableGlobalResources | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.disableListAllJobs }}
+            - name: CONCOURSE_DISABLE_LIST_ALL_JOBS
+              value: {{ .Values.concourse.web.disableListAllJobs | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.enableBuildAuditing }}
             - name: CONCOURSE_ENABLE_BUILD_AUDITING
               value: {{ .Values.concourse.web.enableBuildAuditing | quote }}

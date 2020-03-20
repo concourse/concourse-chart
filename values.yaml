@@ -65,6 +65,10 @@ concourse:
     ##
     enableGlobalResources: true
 
+    ## Disable /api/v1/jobs endpoint, which is known to have performance issues.
+    ##
+    disableListAllJobs:
+
     ## Enable auditing for all api requests connected to builds.
     ##
     enableBuildAuditing: false
