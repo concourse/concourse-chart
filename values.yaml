@@ -675,25 +675,6 @@ concourse:
         # Namespace the servicemonitor object should be in
         namespace: 
 
-    riemann:
-      enabled: false
-
-      ## Riemann server address to emit metrics to.
-      ##
-      host:
-
-      ## Port of the Riemann server to emit metrics to.
-      ##
-      port: 5555
-
-      ## An optional prefix for emitted Riemann services
-      ##
-      servicePrefix:
-
-      ## Tag to attach to emitted metrics. Can be specified multiple times.
-      ##
-      tag:
-
     ## The value to set for X-Frame-Options. If omitted, the header is not set.
     ##
     xFrameOptions:

@@ -683,24 +683,6 @@ spec:
             - name: CONCOURSE_PROMETHEUS_BIND_PORT
               value: {{ .Values.concourse.web.prometheus.bindPort | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.riemann.enabled }}
-            {{- if .Values.concourse.web.riemann.host }}
-            - name: CONCOURSE_RIEMANN_HOST
-              value: {{ .Values.concourse.web.riemann.host | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.riemann.port }}
-            - name: CONCOURSE_RIEMANN_PORT
-              value: {{ .Values.concourse.web.riemann.port | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.riemann.servicePrefix }}
-            - name: CONCOURSE_RIEMANN_SERVICE_PREFIX
-              value: {{ .Values.concourse.web.riemann.servicePrefix | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.riemann.tag }}
-            - name: CONCOURSE_RIEMANN_TAG
-              value: {{ .Values.concourse.web.riemann.tag | quote }}
-            {{- end }}
-            {{- end }}
             {{- if .Values.concourse.web.xFrameOptions }}
             - name: CONCOURSE_X_FRAME_OPTIONS
               value: {{ .Values.concourse.web.xFrameOptions | quote }}
