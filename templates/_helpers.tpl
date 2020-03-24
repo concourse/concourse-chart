@@ -66,11 +66,13 @@ Creates the address of the TSA service.
 Determine version of Kubernetes cluster
 */}}
 {{- define "concourse.kubeVersion" -}}
-{{- printf "%s.%s" .Capabilities.KubeVersion.Major .Capabilities.KubeVersion.Minor  -}}
+{{- print (.Capabilities.KubeVersion.GitVersion | replace "v" "") -}}
 {{- end -}}
 
 {{/*
 Return the appropriate apiVersion for deployment.
+Sometimes GitVersion will contain a `v` so we need
+to strip that out.
 */}}
 {{- define "concourse.deployment.apiVersion" -}}
 {{- $version := include "concourse.kubeVersion" . -}}
