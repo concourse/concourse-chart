@@ -56,6 +56,13 @@ concourse:
     ##
     clusterName:
 
+    ## Interval on which runners are kicked off for builds, locks, scans, and
+    ## checks.
+    ##
+    ## Example: 10s
+    ##
+    runnerInterval:
+
     ## The maximum number of open connections for the API connection pool.
     ##
     apiMaxConns:
@@ -223,10 +230,6 @@ concourse:
     ## Interval on which to check for new versions of resources.
     ##
     resourceCheckingInterval: 1m
-
-    ## Interval on which to check for new versions of resource types.
-    ##
-    resourceTypeCheckingInterval: 1m
 
     ## Method by which a worker is selected during container placement.
     ## Possible values: volume-locality | random | fewest-build-containers| limit-active-tasks

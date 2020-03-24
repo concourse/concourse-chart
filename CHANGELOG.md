@@ -17,7 +17,7 @@
 
 # v10.0.0:
 
-- web: removed `concourse.web.enableLidar`
+- web: removed `concourse.web.enableLidar` and `concourse.web.resourceTypeCheckingInterval`
 
 with 6.0, lidar is enabled by default (there's no radar anymore!)
 

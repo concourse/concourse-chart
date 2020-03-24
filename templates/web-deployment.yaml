@@ -63,6 +63,10 @@ spec:
             - name: CONCOURSE_CLUSTER_NAME
               value: {{ .Values.concourse.web.clusterName | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.runnerInterval }}
+            - name: CONCOURSE_RUNNER_INTERVAL
+              value: {{ .Values.concourse.web.runnerInterval | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.apiMaxConns }}
             - name: CONCOURSE_API_MAX_CONNS
               value: {{ .Values.concourse.web.apiMaxConns | quote }}
@@ -252,10 +256,6 @@ spec:
             {{- if .Values.concourse.web.resourceCheckingInterval }}
             - name: CONCOURSE_RESOURCE_CHECKING_INTERVAL
               value: {{ .Values.concourse.web.resourceCheckingInterval | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.resourceTypeCheckingInterval }}
-            - name: CONCOURSE_RESOURCE_TYPE_CHECKING_INTERVAL
-              value: {{ .Values.concourse.web.resourceTypeCheckingInterval | quote }}
             {{- end }}
             {{- if .Values.concourse.web.containerPlacementStrategy }}
             - name: CONCOURSE_CONTAINER_PLACEMENT_STRATEGY
