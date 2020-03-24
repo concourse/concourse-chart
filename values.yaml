@@ -56,6 +56,13 @@ concourse:
     ##
     clusterName:
 
+    ## Interval on which runners are kicked off for builds, locks, scans, and
+    ## checks.
+    ##
+    ## Example: 10s
+    ##
+    runnerInterval:
+
     ## The maximum number of open connections for the API connection pool.
     ##
     apiMaxConns:

@@ -63,6 +63,10 @@ spec:
             - name: CONCOURSE_CLUSTER_NAME
               value: {{ .Values.concourse.web.clusterName | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.runnerInterval }}
+            - name: CONCOURSE_RUNNER_INTERVAL
+              value: {{ .Values.concourse.web.runnerInterval | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.apiMaxConns }}
             - name: CONCOURSE_API_MAX_CONNS
               value: {{ .Values.concourse.web.apiMaxConns | quote }}
