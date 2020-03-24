@@ -197,6 +197,10 @@ spec:
             - name: CONCOURSE_EXTERNAL_GARDEN_URL
               value: {{ .Values.concourse.worker.externalGardenUrl | quote }}
             {{- end }}
+            {{- if .Values.concourse.worker.garden.useContainerd }}
+            - name: CONCOURSE_GARDEN_USE_CONTAINERD
+              value: {{ .Values.concourse.worker.garden.useContainerd | quote }}
+            {{- end }}
             {{- if .Values.concourse.worker.garden.useHoudini }}
             - name: CONCOURSE_GARDEN_USE_HOUDINI
               value: {{ .Values.concourse.worker.garden.useHoudini | quote }}

@@ -19,7 +19,7 @@ image: concourse/concourse
 ##      of `concourse/concourse`.
 ## Ref: https://hub.docker.com/r/concourse/concourse/tags/
 ##
-imageTag: "5.8.0"
+imageTag: "6.0.0"
 
 ## Specific image digest to use in place of a tag.
 ## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
@@ -56,18 +56,22 @@ concourse:
     ##
     clusterName:
 
-    ## The maximum number of open connections for a connection pool
+    ## The maximum number of open connections for the API connection pool.
     ##
-    maxConns:
+    apiMaxConns:
+
+    ## The maximum number of open connections for the backend connection pool.
+    ##
+    backendMaxConns:
 
     ## Enable equivalent resources across pipelines and teams to share a single version history.
     ## Ref: https://concourse-ci.org/global-resources.html
     ##
     enableGlobalResources: true
 
-    ## The Future™ of resource checking.
+    ## Maximum number of jobs to be scheduling at the same time.
     ##
-    enableLidar:
+    jobSchedulingMaxInFlight:
 
     ## Interval on which the resource scanner will run to see if new checks need
     ## to be scheduled.
@@ -513,10 +517,6 @@ concourse:
       teamSecretTemplate:
       secretTemplate:
 
-    ## Don't actually do any automatic scheduling or checking.
-    ##
-    noop: false
-
     staticWorker:
       ## Enables the direct registration of a worker that has its properties
       ## hardcoded.
@@ -674,25 +674,6 @@ concourse:
         interval: "30s"
         # Namespace the servicemonitor object should be in
         namespace: 
-
-    riemann:
-      enabled: false
-
-      ## Riemann server address to emit metrics to.
-      ##
-      host:
-
-      ## Port of the Riemann server to emit metrics to.
-      ##
-      port: 5555
-
-      ## An optional prefix for emitted Riemann services
-      ##
-      servicePrefix:
-
-      ## Tag to attach to emitted metrics. Can be specified multiple times.
-      ##
-      tag:
 
     ## The value to set for X-Frame-Options. If omitted, the header is not set.
     ##
@@ -1318,9 +1299,12 @@ concourse:
     externalGardenUrl:
 
     garden:
-      ## Path to the 'gdn' executable (or leave as 'gdn' to find it in $PATH)
+      ## Path to the executable to run the garden backend ('gdn' or
+      ## 'containerd').
       ##
-      bin: gdn
+      ## If not specified, the right binary will be search in $PATH.
+      ##
+      bin:
 
       ## Path to a config file to use for Garden in INI format.
       ##
@@ -1342,7 +1326,7 @@ concourse:
       ##
       useHoudini:
 
-      ## Use the experimental Containerd Garden backend.
+      ## Use the experimental containerd garden backend.
       ##
       useContainerd:
 
