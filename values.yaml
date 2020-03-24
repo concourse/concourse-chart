@@ -231,10 +231,6 @@ concourse:
     ##
     resourceCheckingInterval: 1m
 
-    ## Interval on which to check for new versions of resource types.
-    ##
-    resourceTypeCheckingInterval: 1m
-
     ## Method by which a worker is selected during container placement.
     ## Possible values: volume-locality | random | fewest-build-containers| limit-active-tasks
     containerPlacementStrategy: volume-locality

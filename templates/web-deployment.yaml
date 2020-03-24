@@ -257,10 +257,6 @@ spec:
             - name: CONCOURSE_RESOURCE_CHECKING_INTERVAL
               value: {{ .Values.concourse.web.resourceCheckingInterval | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.resourceTypeCheckingInterval }}
-            - name: CONCOURSE_RESOURCE_TYPE_CHECKING_INTERVAL
-              value: {{ .Values.concourse.web.resourceTypeCheckingInterval | quote }}
-            {{- end }}
             {{- if .Values.concourse.web.containerPlacementStrategy }}
             - name: CONCOURSE_CONTAINER_PLACEMENT_STRATEGY
               value: {{ .Values.concourse.web.containerPlacementStrategy | quote }}
