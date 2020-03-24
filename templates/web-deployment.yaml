@@ -63,17 +63,21 @@ spec:
             - name: CONCOURSE_CLUSTER_NAME
               value: {{ .Values.concourse.web.clusterName | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.maxConns }}
-            - name: CONCOURSE_MAX_CONNS
-              value: {{ .Values.concourse.web.maxConns | quote }}
+            {{- if .Values.concourse.web.apiMaxConns }}
+            - name: CONCOURSE_API_MAX_CONNS
+              value: {{ .Values.concourse.web.apiMaxConns | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.backendMaxConns }}
+            - name: CONCOURSE_BACKEND_MAX_CONNS
+              value: {{ .Values.concourse.web.backendMaxConns | quote }}
             {{- end }}
             {{- if .Values.concourse.web.enableGlobalResources }}
             - name: CONCOURSE_ENABLE_GLOBAL_RESOURCES
               value: {{ .Values.concourse.web.enableGlobalResources | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.enableLidar }}
-            - name: CONCOURSE_ENABLE_LIDAR
-              value: {{ .Values.concourse.web.enableLidar | quote }}
+            {{- if .Values.concourse.web.jobSchedulingMaxInFlight }}
+            - name: CONCOURSE_JOB_SCHEDULING_MAX_IN_FLIGHT
+              value: {{ .Values.concourse.web.jobSchedulingMaxInFlight | quote }}
             {{- end }}
             {{- if .Values.concourse.web.lidarScannerInterval }}
             - name: CONCOURSE_LIDAR_SCANNER_INTERVAL
@@ -582,10 +586,6 @@ spec:
               value: {{ .Values.concourse.web.conjur.secretTemplate | quote }}
             {{- end }}
 
-            {{- if .Values.concourse.web.noop }}
-            - name: CONCOURSE_NOOP
-              value: {{ .Values.concourse.web.noop | quote }}
-            {{- end }}
             {{- if .Values.concourse.web.staticWorker.enabled }}
             {{- if .Values.concourse.web.staticWorker.gardenUrl }}
             - name: CONCOURSE_WORKER_GARDEN_URL
@@ -682,24 +682,6 @@ spec:
               value: {{ .Values.concourse.web.prometheus.bindIp | quote }}
             - name: CONCOURSE_PROMETHEUS_BIND_PORT
               value: {{ .Values.concourse.web.prometheus.bindPort | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.riemann.enabled }}
-            {{- if .Values.concourse.web.riemann.host }}
-            - name: CONCOURSE_RIEMANN_HOST
-              value: {{ .Values.concourse.web.riemann.host | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.riemann.port }}
-            - name: CONCOURSE_RIEMANN_PORT
-              value: {{ .Values.concourse.web.riemann.port | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.riemann.servicePrefix }}
-            - name: CONCOURSE_RIEMANN_SERVICE_PREFIX
-              value: {{ .Values.concourse.web.riemann.servicePrefix | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.riemann.tag }}
-            - name: CONCOURSE_RIEMANN_TAG
-              value: {{ .Values.concourse.web.riemann.tag | quote }}
-            {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.xFrameOptions }}
             - name: CONCOURSE_X_FRAME_OPTIONS
