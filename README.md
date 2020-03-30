@@ -211,6 +211,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.service.tsaNodePort` | Sets the nodePort for tsa when using `NodePort` | `nil` |
 | `web.service.type` | Concourse Web service type | `ClusterIP` |
 | `web.sidecarContainers` | Array of extra containers to run alongside the Concourse web container | `nil` |
+| `web.extraInitContainers` | Array of extra init containers to run before the Concourse web container | `nil` |
 | `web.strategy` | Strategy for updates to deployment. | `{}` |
 | `web.syslogSecretsPath` | Specify the mount directory of the web syslog secrets | `/concourse-syslog` |
 | `web.tlsSecretsPath` | Where in the container the web TLS secrets should be mounted | `/concourse-web-tls` |
@@ -242,6 +243,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.resources.requests.cpu` | Minimum amount of cpu resources requested | `100m` |
 | `worker.resources.requests.memory` | Minimum amount of memory resources requested | `512Mi` |
 | `worker.sidecarContainers` | Array of extra containers to run alongside the Concourse worker container | `nil` |
+| `worker.extraInitContainers` | Array of extra init containers to run before the Concourse worker container | `nil` |
 | `worker.terminationGracePeriodSeconds` | Upper bound for graceful shutdown to allow the worker to drain its tasks | `60` |
 | `worker.tolerations` | Tolerations for the worker nodes | `[]` |
 | `worker.updateStrategy` | `OnDelete` or `RollingUpdate` (requires Kubernetes >= 1.7) | `RollingUpdate` |
