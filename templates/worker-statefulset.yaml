@@ -48,6 +48,9 @@ spec:
       {{- end }}
       {{- if .Values.worker.cleanUpWorkDirOnStart }}
       initContainers:
+      {{- if .Values.worker.extraInitContainers }}
+      {{- toYaml .Values.worker.extraInitContainers | nindent 8 }}
+      {{- end }}
         - name: {{ template "concourse.worker.fullname" . }}-init-rm
           {{- if .Values.imageDigest }}
           image: "{{ .Values.image }}@{{ .Values.imageDigest }}"
