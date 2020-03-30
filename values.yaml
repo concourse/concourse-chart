@@ -1686,7 +1686,7 @@ worker:
   ##
   sidecarContainers: []
 
-  ## Array of extra initContainers to run alongside the Concourse Web
+  ## Array of extra initContainers to run alongside the Concourse worker
   ## container.
   ##
   ## Example:
