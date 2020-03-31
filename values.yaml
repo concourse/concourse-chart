@@ -696,6 +696,11 @@ concourse:
       ##
       missingGracePeriod: 5m
 
+      ## Period after which hijacked containers will be garbage collected
+      ##
+      hijackGracePeriod:
+
+
       ## Period after which to reap checks that are completed.
       ##
       checkRecyclePeriod:
