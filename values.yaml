@@ -676,7 +676,7 @@ concourse:
         enabled: false
         interval: "30s"
         # Namespace the servicemonitor object should be in
-        namespace: 
+        namespace:
 
     ## The value to set for X-Frame-Options. If omitted, the header is not set.
     ##
@@ -1230,6 +1230,7 @@ concourse:
     no_proxy:
 
     ## If set, the worker will be immediately removed upon stalling.
+    ## Ignored for kind: Deployment and set to "true"
     ##
     ephemeral:
 
@@ -1663,6 +1664,12 @@ worker:
   ##
   enabled: true
 
+  ## Selects kind of Deployment. Valid Options are: StatefulSet | Deployment
+  ## Using Deployment leads to ephemeral workers. Meaning workers do not
+  ## share state between restarts
+  ##
+  kind: StatefulSet
+
   ## Override the components name (defaults to worker).
   ##
   nameOverride:
@@ -1846,7 +1853,14 @@ worker:
   ## Strategy for StatefulSet updates (requires Kubernetes 1.6+)
   ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset
   ##
-  updateStrategy: RollingUpdate
+  ## Strategy for Deployment updates
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+  ##
+  updateStrategy:
+    type: RollingUpdate
+#    rollingUpdate:
+#      maxSurge: 25%
+#      maxUnavailable: 1
 
   ## Pod Management strategy (requires Kubernetes 1.7+)
   ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
@@ -1854,6 +1868,7 @@ worker:
   ## "OrderedReady" is default. "Parallel" means worker pods will launch or terminate
   ## in parallel.
   ##
+  ## Ignored for Kind Deployment
   podManagementPolicy: Parallel
 
   ## When persistance is disabled this value will be used to limit the emptyDir volume size
@@ -1868,6 +1883,7 @@ worker:
 ##
 persistence:
   ## Enable persistence using Persistent Volume Claims.
+  ## Ignored for Kind: Deployment. If persistence is needed use kind: StatefulSet
   ##
   enabled: true
 
