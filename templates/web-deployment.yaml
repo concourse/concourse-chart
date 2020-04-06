@@ -25,8 +25,10 @@ spec:
         {{- with .Values.web.labels }}
 {{ toYaml . | trim | indent 8 }}
         {{- end }}
-      {{- if .Values.web.annotations }}
       annotations:
+        checksum/secrets: {{ include (print $.Template.BasePath "/web-secrets.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/web-configmap.yaml") . | sha256sum }}
+      {{- if .Values.web.annotations }}
 {{ toYaml .Values.web.annotations | indent 8 }}
       {{- end }}
     spec:
