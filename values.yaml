@@ -1388,6 +1388,34 @@ concourse:
       ##
       reapInterval: 10s
 
+    ## Enable Horizontal Pod Autoscaling
+    ## to use this, ephemeral worker with
+    ## worker.kind: Deployment are recommended
+    ##
+    ## see. https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+    ## for custom metrics see.
+    ##   https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-custom-metrics
+    ##
+    autoscaling: { }
+      # maxReplicas is required to for auto scaling
+#      maxReplicas: 1
+#      minReplica: 1
+#      buildInMetrics:
+#        - type: Resource
+#          resource:
+#            name: cpu
+#            target:
+#              type: Utilization
+#              averageUtilization: 80
+#      customMetrics:
+#        - type: Pods
+#          pods:
+#            metric:
+#              name: concourse_workers_containers
+#            target:
+#              type: AverageValue
+#              averageValue: {{ .Values.concourse.worker.autoscaling.targetAverageWorkerContainers }}
+
 ## Configuration values for Concourse Web components.
 ## For more information regarding the characteristics of
 ## Concourse Web nodes, see https://concourse-ci.org/concourse-web.html.

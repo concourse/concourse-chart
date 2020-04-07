@@ -1,0 +1,95 @@
+suite: test worker horizontal pod autoscaler
+templates:
+  - worker-horizontal-pod-autoscaler.yaml
+tests:
+  - it: should not have HPA
+    asserts:
+      - hasDocuments:
+        count: 0
+  - it: should not have HPA if maxReplica is empty
+    set:
+      concourse.worker.autoscaling.minReplicas: 1
+    asserts:
+      - hasDocuments:
+        count: 0
+  - it: should have HPA in v1 enabled
+    set:
+      concourse.worker.autoscaling.maxReplicas: 1
+    asserts:
+      - isKind:
+          of: HorizontalPodAutoscaler
+      - isAPIVersion:
+          of: autoscaling/v1
+      - equal:
+          path: spec.maxReplicas
+          value: 1
+      - equal:
+          path: metadata
+          value:
+            name: RELEASE-NAME-worker
+            labels:
+              app: RELEASE-NAME-worker
+              chart: "concourse-10.0.1"
+              release: "RELEASE-NAME"
+              heritage: "Tiller"
+
+  - it: should have HPA in v1 enabled for build in metrics
+    values:
+      - ./values/hpa-build-in-metrics-values.yaml
+    asserts:
+      - isKind:
+          of: HorizontalPodAutoscaler
+      - isAPIVersion:
+          of: autoscaling/v1
+      - equal:
+          path: spec.metrics[0].type
+          value: Resource
+      - equal:
+          path: spec.metrics[0].resource.name
+          value: cpu
+      - isNull:
+          path: spec.minReplicas
+
+  - it: should have HPA in v2 enabled for custom metrics
+    values:
+      - ./values/hpa-custom-metrics-values.yaml
+    asserts:
+      - isKind:
+          of: HorizontalPodAutoscaler
+      - isAPIVersion:
+          of: autoscaling/v2beta2
+      - equal:
+          path: spec.metrics[0].type
+          value: Pods
+      - equal:
+          path: spec.metrics[0].pods.metric.name
+          value: concourse_workers_containers
+      - isNull:
+          path: spec.minReplicas
+
+  - it: should have HPA in v2 enabled for custom metrics adn build in metrics
+    values:
+      - ./values/hpa-custom-metrics-values.yaml
+      - ./values/hpa-build-in-metrics-values.yaml
+    asserts:
+      - isKind:
+          of: HorizontalPodAutoscaler
+      - isAPIVersion:
+          of: autoscaling/v2beta2
+      - equal:
+          path: spec.metrics[0].type
+          value: Resource
+      - equal:
+          path: spec.metrics[0].resource.name
+          value: cpu
+      - isNull:
+          path: spec.minReplicas
+      - equal:
+          path: spec.metrics[1].type
+          value: Pods
+      - equal:
+          path: spec.metrics[1].pods.metric.name
+          value: concourse_workers_containers
+      - isNull:
+          path: spec.minReplicas
+

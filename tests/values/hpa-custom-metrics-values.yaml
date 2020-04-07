@@ -1,0 +1,12 @@
+concourse:
+  worker:
+    autoscaling:
+      maxReplicas: 1
+      customMetrics:
+        - type: Pods
+          pods:
+            metric:
+              name: concourse_workers_containers
+            target:
+              type: AverageValue
+              averageValue: 42
