@@ -5,13 +5,13 @@ tests:
   - it: should not have HPA
     asserts:
       - hasDocuments:
-        count: 0
+         count: 0
   - it: should not have HPA if maxReplica is empty
     set:
       concourse.worker.autoscaling.minReplicas: 1
     asserts:
       - hasDocuments:
-        count: 0
+          count: 0
   - it: should have HPA in v1 enabled
     set:
       concourse.worker.autoscaling.maxReplicas: 1
