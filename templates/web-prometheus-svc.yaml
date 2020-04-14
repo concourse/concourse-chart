@@ -1,0 +1,28 @@
+{{- if and .Values.concourse.web.prometheus.enabled .Values.web.enabled}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "concourse.web.fullname" . }}-prometheus
+  labels:
+    app: {{ template "concourse.web.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    {{- range $key, $value := .Values.web.service.prometheus.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: {{ .Values.concourse.web.prometheus.bindPort | quote }}
+    {{- range $key, $value := .Values.web.service.prometheus.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  type: ClusterIp
+  ports:
+    - name: prometheus
+      port: {{ .Values.concourse.web.prometheus.bindPort }}
+      targetPort: prometheus
+  selector:
+    app: {{ template "concourse.web.fullname" . }}
+{{- end }}

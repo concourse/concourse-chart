@@ -209,14 +209,25 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.replicas` | Number of Concourse Web replicas | `1` |
 | `web.resources.requests.cpu` | Minimum amount of cpu resources requested | `100m` |
 | `web.resources.requests.memory` | Minimum amount of memory resources requested | `128Mi` |
-| `web.service.annotations` | Concourse Web Service annotations | `nil` |
-| `web.service.atcNodePort` | Sets the nodePort for atc when using `NodePort` | `nil` |
-| `web.service.atcTlsNodePort` | Sets the nodePort for atc tls when using `NodePort` | `nil` |
-| `web.service.labels` | Additional concourse web service labels | `nil` |
-| `web.service.loadBalancerIP` | The IP to use when web.service.type is LoadBalancer | `nil` |
-| `web.service.loadBalancerSourceRanges` | Concourse Web Service Load Balancer Source IP ranges | `nil` |
-| `web.service.tsaNodePort` | Sets the nodePort for tsa when using `NodePort` | `nil` |
-| `web.service.type` | Concourse Web service type | `ClusterIP` |
+
+| `web.service.atc.annotations` | Concourse Web ATC Service annotations | `nil` |
+| `web.service.atc.NodePort` | Sets the nodePort for atc when using `NodePort` | `nil` |
+| `web.service.atc.tlsNodePort` | Sets the nodePort for atc tls when using `NodePort` | `nil` |
+| `web.service.atc.labels` | Additional concourse web atc service labels | `nil` |
+| `web.service.atc.loadBalancerIP` | The IP to use when web.service.atc.type is LoadBalancer | `nil` |
+| `web.service.atc.loadBalancerSourceRanges` | Concourse Web ATC Service Load Balancer Source IP ranges | `nil` |
+| `web.service.atc.type` | Concourse Web ATC service type | `ClusterIP` |
+
+| `web.service.tsa.annotations` | Concourse Web TSA Service annotations | `nil` |
+| `web.service.tsa.labels` | Additional concourse web tsa service labels | `nil` |
+| `web.service.tsa.loadBalancerIP` | The IP to use when web.service.tsa.type is LoadBalancer | `nil` |
+| `web.service.tsa.loadBalancerSourceRanges` | Concourse Web TSA Service Load Balancer Source IP ranges | `nil` |
+| `web.service.tsa.NodePort` | Sets the nodePort for tsa when using `NodePort` | `nil` |
+| `web.service.tsa.type` | Concourse Web TSA service type | `ClusterIP` |
+
+| `web.service.prometheus.annotations` | Concourse Web Prometheus Service annotations | `nil` |
+| `web.service.prometheus.labels` | Additional concourse web prometheus service labels | `nil` |
+
 | `web.sidecarContainers` | Array of extra containers to run alongside the Concourse web container | `nil` |
 | `web.extraInitContainers` | Array of extra init containers to run before the Concourse web container | `nil` |
 | `web.strategy` | Strategy for updates to deployment. | `{}` |

@@ -1674,50 +1674,98 @@ web:
     ## For minikube, set this to ClusterIP, elsewhere use LoadBalancer or NodePort
     ## Ref: https://kubernetes.io/docs/user-guide/services/#publishing-services---service-types
     ##
-    type: ClusterIP
 
-    ## When using `web.service.type: LoadBalancer`, sets the user-specified load balancer IP.
-    ## Example: 172.217.1.174
-    ##
-    loadBalancerIP:
+    atc:
+      type: ClusterIP
+      ## When using `web.service.atc.type: LoadBalancer`, sets the user-specified load balancer IP.
+      ## Example: 172.217.1.174
+      ##
+      loadBalancerIP:
 
-    ## Additional Labels to be added to the web service.
-    ##
-    labels:
+      ## Additional Labels to be added to the web atc service.
+      ##
+      labels:
 
-    ## Annotations to be added to the web service.
-    ##
-    ## Example:
-    ##
-    ##   prometheus.io/probe: "true"
-    ##   prometheus.io/probe_path: "/"
-    ##
-    ## When using `web.service.type: LoadBalancer` in AWS, enable HTTPS with an ACM cert:
-    ##
-    ##   service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:eu-west-1:123456789:certificate/abc123-abc123-abc123-abc123"
-    ##   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
-    ##   service.beta.kubernetes.io/aws-load-balancer-backend-port: "atc"
-    ##   service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
-    ##
-    annotations: {}
+      ## Annotations to be added to the web atc service.
+      ##
+      ##
+      ## When using `web.service.type: LoadBalancer` in AWS, enable HTTPS with an ACM cert:
+      ##
+      ##   service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:eu-west-1:123456789:certificate/abc123-abc123-abc123-abc123"
+      ##   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+      ##   service.beta.kubernetes.io/aws-load-balancer-backend-port: "atc"
+      ##   service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+      ##
+      annotations: {}
 
-    ## When using `web.service.type: LoadBalancer`, whitelist the load balancer to particular IPs
-    ## Example:
-    ##   - 192.168.1.10/32
-    ##
-    loadBalancerSourceRanges:
+      ## When using `web.service.atc.type: LoadBalancer`, whitelist the load balancer to particular IPs
+      ## Example:
+      ##   - 192.168.1.10/32
+      ##
+      loadBalancerSourceRanges:
 
-    ## When using `web.service.type: NodePort`, sets the nodePort for atc
-    ##
-    atcNodePort:
+      ## When using `web.service.atc.ype: NodePort`, sets the nodePort for atc
+      ##
+      NodePort:
 
-    ## When using `web.service.type: NodePort`, sets the nodePort for atc tls
-    ##
-    atcTlsNodePort:
+      ## When using `web.service.atc.type: NodePort`, sets the nodePort for atc tls
+      ##
+      tlsNodePort:
 
-    ## When using `web.service.type: NodePort`, sets the nodePort for tsa
-    ##
-    tsaNodePort:
+
+
+
+    tsa:
+      type: ClusterIP
+      ## When using `web.service.tsa.type: LoadBalancer`, sets the user-specified load balancer IP.
+      ## Example: 172.217.1.174
+      ##
+      loadBalancerIP:
+
+      ## Additional Labels to be added to the web tsa service.
+      ##
+      labels:
+
+      ## Annotations to be added to the web tsa service.
+      ##
+      ## When using `web.service.type: LoadBalancer` in AWS, enable HTTPS with an ACM cert:
+      ##
+      ##   service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:eu-west-1:123456789:certificate/abc123-abc123-abc123-abc123"
+      ##   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+      ##   service.beta.kubernetes.io/aws-load-balancer-backend-port: "atc"
+      ##   service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+      ##
+      annotations: {}
+
+      ## When using `web.service.tsa.type: LoadBalancer`, whitelist the load balancer to particular IPs
+      ## Example:
+      ##   - 192.168.1.10/32
+      ##
+      loadBalancerSourceRanges:
+
+      ## When using `web.service.tsa.type: NodePort`, sets the nodePort for tsa
+      ##
+      NodePort:
+
+
+
+    prometheus:
+      ## Additional Labels to be added to the web service.
+      ##
+      labels:
+
+      ## Annotations to be added to the web service.
+      ##
+      ## Example:
+      ##
+      ##   prometheus.io/probe: "true"
+      ##   prometheus.io/probe_path: "/"
+      ##
+      ##
+      annotations: {}
+
+
+
 
   ## Ingress configuration.
   ## Ref: https://kubernetes.io/docs/user-guide/ingress/
