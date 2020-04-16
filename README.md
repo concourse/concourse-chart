@@ -176,6 +176,8 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.datadog.prefix` | Prefix for emitted metrics | `"concourse.ci"` |
 | `web.enabled` | Enable or disable the web component | `true` |
 | `web.env` | Configure additional environment variables for the web containers | `[]` |
+| `web.command` | Override the docker image command | `nil` |
+| `web.args` | Docker image command arguments | `["web"]` |
 | `web.ingress.annotations` | Concourse Web Ingress annotations | `{}` |
 | `web.ingress.enabled` | Enable Concourse Web Ingress | `false` |
 | `web.ingress.hosts` | Concourse Web Ingress Hostnames | `[]` |

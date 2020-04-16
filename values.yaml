@@ -1418,6 +1418,14 @@ web:
   ##
   replicas: 1
 
+  ## Startup command for the web component.
+  ## Allows to override the docker image command
+  # command: ["dumb-init", "/usr/local/concourse/bin/concourse"]
+
+  ## Args of the startup command for the web component.
+  ##
+  args: ["web"]
+
   ## Array of extra containers to run alongside the Concourse Web
   ## container.
   ##
