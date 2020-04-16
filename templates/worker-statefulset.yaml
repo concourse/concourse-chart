@@ -23,9 +23,10 @@ spec:
         {{- with .Values.worker.labels }}
 {{ toYaml . | trim | indent 8 }}
         {{- end }}
-      {{- if .Values.worker.annotations }}
       annotations:
-{{ toYaml .Values.worker.annotations | indent 8 }}
+        checksum/secrets: {{ include (print $.Template.BasePath "/worker-secrets.yaml") . | sha256sum }}
+  {{- if .Values.worker.annotations }}
+  {{ toYaml .Values.worker.annotations | indent 8 }}
       {{- end }}
     spec:
     {{- if .Values.worker.nodeSelector }}
