@@ -705,6 +705,10 @@ spec:
             - name: CONCOURSE_GC_MISSING_GRACE_PERIOD
               value: {{ .Values.concourse.web.gc.missingGracePeriod | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.gc.hijackGracePeriod }}
+            - name: CONCOURSE_GC_HIJACK_GRACE_PERIOD
+              value: {{ .Values.concourse.web.gc.hijackGracePeriod | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.gc.checkRecyclePeriod }}
             - name: CONCOURSE_GC_CHECK_RECYCLE_PERIOD
               value: {{ .Values.concourse.web.gc.checkRecyclePeriod | quote }}
