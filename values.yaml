@@ -61,7 +61,7 @@ concourse:
     ##
     ## Example: 10s
     ##
-    runnerInterval:
+    componentRunnerInterval:
 
     ## The maximum number of open connections for the API connection pool.
     ##
@@ -676,7 +676,7 @@ concourse:
         enabled: false
         interval: "30s"
         # Namespace the servicemonitor object should be in
-        namespace: 
+        namespace:
 
     ## The value to set for X-Frame-Options. If omitted, the header is not set.
     ##
