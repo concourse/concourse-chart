@@ -71,6 +71,10 @@ spec:
             - name: CONCOURSE_DISABLE_LIST_ALL_JOBS
               value: {{ .Values.concourse.web.disableListAllJobs | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.concurrentRequestLimits }}
+            - name: CONCOURSE_CONCURRENT_REQUEST_LIMIT
+              value: {{ .Values.concourse.web.concurrentRequestLimits | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.enableBuildAuditing }}
             - name: CONCOURSE_ENABLE_BUILD_AUDITING
               value: {{ .Values.concourse.web.enableBuildAuditing | quote }}

@@ -69,6 +69,10 @@ concourse:
     ##
     disableListAllJobs:
 
+    ## Limit the number of concurrent requests to an API endpoint (Example: ListAllJobs:5)
+    ##
+    concurrentRequestLimits:
+
     ## Enable auditing for all api requests connected to builds.
     ##
     enableBuildAuditing: false
