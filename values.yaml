@@ -1390,17 +1390,21 @@ concourse:
 
     ## Enable Horizontal Pod Autoscaling
     ## to use this, ephemeral worker with
-    ## worker.kind: Deployment are recommended
+    ## worker.kind: Deployment is recommended
     ##
     ## see. https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
     ## for custom metrics see.
     ##   https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-custom-metrics
     ##
+    ## To disable autoscaling set it to an empty map: { }
     autoscaling: { }
       # maxReplicas is required to for auto scaling
+      # see the following example for scaling on CPU_Utilization and on
+      # a custom metric 'concourse_workers_containers'
+      # for this to work you need to configure the metric eg. with prometheus adapter
 #      maxReplicas: 1
 #      minReplica: 1
-#      buildInMetrics:
+#      builtInMetrics:
 #        - type: Resource
 #          resource:
 #            name: cpu
@@ -1414,7 +1418,7 @@ concourse:
 #              name: concourse_workers_containers
 #            target:
 #              type: AverageValue
-#              averageValue: {{ .Values.concourse.worker.autoscaling.targetAverageWorkerContainers }}
+#              averageValue: 180 
 
 ## Configuration values for Concourse Web components.
 ## For more information regarding the characteristics of

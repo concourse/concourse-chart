@@ -68,7 +68,7 @@ Check the output of `fly workers`, and if a worker is [`stalled`](https://concou
 > **TIP**: you can download `fly` either from https://concourse-ci.org/download.html or the home page of your Concourse installation.
 
 When using ephemeral workers with `worker.kind: Deployment` and spawning a lot of (new) workers, you might run into [issue 3091](https://github.com/concourse/concourse/issues/3091).
-As workaround you could start a `worker.extraInitContainers` to cleanup unused loopback devices. 
+As a workaround you could start a `worker.extraInitContainers` to cleanup unused loopback devices. 
 
 ### Worker Liveness Probe
 

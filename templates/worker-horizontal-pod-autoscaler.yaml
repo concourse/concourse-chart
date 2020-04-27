@@ -1,10 +1,6 @@
 {{- if  .Values.concourse.worker.autoscaling }}
   {{- if .Values.concourse.worker.autoscaling.maxReplicas }}
-    {{- if .Values.concourse.worker.autoscaling.customMetrics }}
 apiVersion: autoscaling/v2beta2
-    {{- else }}
-apiVersion: autoscaling/v1
-    {{- end }}
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ template "concourse.worker.fullname" . }}
@@ -17,8 +13,8 @@ spec:
   minReplicas: {{ .Values.concourse.worker.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.concourse.worker.autoscaling.maxReplicas }}
   metrics:
-    {{- if .Values.concourse.worker.autoscaling.buildInMetrics }}
-{{ toYaml .Values.concourse.worker.autoscaling.buildInMetrics | indent 4 }}
+    {{- if .Values.concourse.worker.autoscaling.builtInMetrics }}
+{{ toYaml .Values.concourse.worker.autoscaling.builtInMetrics | indent 4 }}
     {{- end }}
     {{- if .Values.concourse.worker.autoscaling.customMetrics }}
 {{ toYaml .Values.concourse.worker.autoscaling.customMetrics | indent 4 }}
