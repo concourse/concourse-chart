@@ -19,7 +19,7 @@ image: concourse/concourse
 ##      of `concourse/concourse`.
 ## Ref: https://hub.docker.com/r/concourse/concourse/tags/
 ##
-imageTag: "6.0.0"
+imageTag: "6.1.0"
 
 ## Specific image digest to use in place of a tag.
 ## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
@@ -56,6 +56,15 @@ concourse:
     ##
     clusterName:
 
+    ## Enable this flag in order to customize the `client_id` and
+    ## `client_secret` used when logging into the Concourse UI.
+    ##
+    ## Enabling this requires setting `secrets.clientId` and #
+    ## `secrets.clientSecret` (or filling the equivalent fields in the Secret).
+    ##
+    clientConfig:
+      enabled: false
+
     ## Interval on which runners are kicked off for builds, locks, scans, and
     ## checks.
     ##
@@ -76,6 +85,10 @@ concourse:
     ##
     enableGlobalResources: true
 
+    ## Enable pipeline archiving functionality in the API
+    ##
+    enableArchivePipeline: false
+    #
     ## Maximum number of jobs to be scheduling at the same time.
     ##
     jobSchedulingMaxInFlight:
@@ -230,6 +243,15 @@ concourse:
     ## Interval on which to check for new versions of resources.
     ##
     resourceCheckingInterval: 1m
+
+    ## Interval on which to check for new versions of any resources that have
+    ## configured a webhook token
+    ##
+    resourceWithWebhookCheckingInterval: 1m
+
+    ## Compression to use when streaming artifacts (values: zstd, gzip)
+    ##
+    streamingArtifactsCompression:
 
     ## Method by which a worker is selected during container placement.
     ## Possible values: volume-locality | random | fewest-build-containers| limit-active-tasks
@@ -700,6 +722,9 @@ concourse:
       ##
       hijackGracePeriod:
 
+      ## Period after which failed containers will be garbage collected
+      ##
+      failedGracePeriod:
 
       ## Period after which to reap checks that are completed.
       ##
@@ -1124,6 +1149,15 @@ concourse:
         onlySecurityGroups:
 
     tsa:
+      ## Enable this flag in order to customize the `client_id` and
+      ## `client_secret` used when the TSA needs to communicate with the ATC.
+      ##
+      ## Enabling this requires setting `secrets.tsaClientId` and
+      ## `secrets.tsaClientSecret` (or filling the equivalent fields in the Secret).
+      ##
+      clientConfig:
+        enabled: false
+
       ## Minimum level of logs to see. Possible values: debug, info, error.
       ##
       logLevel: info
@@ -1155,10 +1189,6 @@ concourse:
       ## ATC API endpoints to which workers will be registered.
       ##
       atcUrl:
-
-      ## Path to private key to use when signing tokens in reqests to the ATC during registration.
-      ##
-      sessionSigningKey:
 
       ## Interval on which to heartbeat workers to the ATC.
       ##
@@ -1282,6 +1312,10 @@ concourse:
     ##
     volumeSweeperMaxInFlight: 5
 
+    ## Network pool to use for garden containers
+    ##
+    containerNetworkPool:
+
     tsa:
 
       ## TSA host(s) to forward the worker through.
@@ -1329,6 +1363,10 @@ concourse:
       ## Enable a proxy DNS server for Garden
       ##
       dnsProxyEnable:
+
+      ## Custom DNS server to use for garden containers
+      ##
+      dnsServer:
 
       ## Use the insecure Houdini Garden backend.
       ##
@@ -2039,7 +2077,7 @@ secrets:
     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYBQ9fG6IML+qsFaMh1Pl+81wyUwRilHdfhItAiAsLVQsOwI5+V4pn5aLhHPBuRQqIqYmbkZ7I1VUIN1+90PVJ3X7l9qqanb85AHMtLujw1j9u0zDyH2XHgpUloknUQzUSLIZjjU3Hn3Uo/XikF+vT8104isO7Ym8Xp7sIcRuvOQ3nuRsFVCRogxpLTVHD/k57rwYVqWWLaKLwvx01ZVXOq4GHk/BVaKa9ODC/dNgbZMfwvVVXuf7/NFGmSMyXb49Si4aoP4Gn7jAX6GngBbm/bgKqO0skQy/ggQm/YVF+s5q4EhleMBLVJKD1VpM5LeLDFpiu/y4bVd8wUcgK+QQ9 Concourse
 
   ## Concourse Session Signing Keys.
-  ## Ref: https://concourse-ci.org/install.html#generating-keys
+  ## Ref: https://concourse-ci.org/concourse-generate-key.html
   ##
   sessionSigningKey: |-
     -----BEGIN RSA PRIVATE KEY-----
@@ -2071,7 +2109,7 @@ secrets:
     -----END RSA PRIVATE KEY-----
 
   ## Concourse Worker Keys.
-  ## Ref: https://concourse-ci.org/install.html#generating-keys
+  ## Ref: https://concourse-ci.org/concourse-generate-key.html
   ##
   workerKey: |-
     -----BEGIN RSA PRIVATE KEY-----
@@ -2104,6 +2142,17 @@ secrets:
 
   workerKeyPub: |-
     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC496FSYFcBAKgDtMsBAJiF/6/NxlXKP5UZecyEsedYuTt1GOgJTwaA1qZ1LmHsbfLDE68oDdiM4uvxfI4wtLhz57w3u0jOUxZ2JeF7SVwEf1nVqLn4Gh/f8GUNQGSyIp1zUD5Bx9fq0PAyQ47mt7Ufi84rcf8LKl7nzAIHTcdg2BvTkQN9bUGPaq/Pb1W2bKPAQy4OzXTSIyrAJ89TH2jFeaZfyxQFGbD9jVHH/yl0oiMrDeaRYgccE5II+KY7WoLjsBry/9Qf2ERELKTK4UeIGIqWci9lab1ti+GxFPPiC3krNFjo4jShV4eUs4cNIrjwNrxVaKPXmU6o7Y3Hpayx Concourse
+
+
+  ## Secrets for web interface login
+  ##
+  clientId:
+  clientSecret:
+
+  ## Secrets for tsa login
+  ##
+  tsaClientId:
+  tsaClientSecret:
 
   ## Secrets for DB access
   ##
