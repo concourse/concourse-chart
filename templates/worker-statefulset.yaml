@@ -26,7 +26,7 @@ spec:
       annotations:
         checksum/secrets: {{ include (print $.Template.BasePath "/worker-secrets.yaml") . | sha256sum }}
   {{- if .Values.worker.annotations }}
-  {{ toYaml .Values.worker.annotations | indent 8 }}
+{{ toYaml .Values.worker.annotations | indent 8 }}
       {{- end }}
     spec:
     {{- if .Values.worker.nodeSelector }}
