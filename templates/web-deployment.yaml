@@ -105,7 +105,7 @@ spec:
             {{- end }}
             {{- if .Values.concourse.web.concurrentRequestLimits }}
             - name: CONCOURSE_CONCURRENT_REQUEST_LIMIT
-              value: {{ .Values.concourse.web.concurrentRequestLimits | quote }}
+              value: "{{- $local := dict "first" true -}}{{- range $k, $v := .Values.concourse.web.concurrentRequestLimits -}}{{- if not $local.first -}},{{- end -}}{{- $k -}}:{{- $v -}}{{- $_ := set $local "first" false -}}{{- end -}}"
             {{- end }}
             {{- if .Values.concourse.web.enableBuildAuditing }}
             - name: CONCOURSE_ENABLE_BUILD_AUDITING
