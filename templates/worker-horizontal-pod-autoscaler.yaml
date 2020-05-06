@@ -20,7 +20,7 @@ spec:
 {{ toYaml .Values.concourse.worker.autoscaling.customMetrics | indent 4 }}
     {{- end }}
   scaleTargetRef:
-    apiVersion: apps/v1
+    apiVersion: {{ template "concourse.deployment.apiVersion" . }}
     kind: {{ .Values.worker.kind }}
     name: {{ template "concourse.worker.fullname" . }}
   {{- end }}

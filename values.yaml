@@ -1403,7 +1403,7 @@ concourse:
       # a custom metric 'concourse_workers_containers'
       # for this to work you need to configure the metric eg. with prometheus adapter
 #      maxReplicas: 1
-#      minReplica: 1
+#      minReplicas: 1
 #      builtInMetrics:
 #        - type: Resource
 #          resource:
