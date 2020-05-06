@@ -635,6 +635,11 @@ concourse:
     newrelic:
       enabled: false
 
+      ## New Relic Insights API base Url
+      ## For more info:
+      ## https://docs.newrelic.com/docs/using-new-relic/welcome-new-relic/getting-started/introduction-eu-region-data-center#endpoints
+      url: https://insights-collector.newrelic.com
+
       ## New Relic Account ID
       ##
       accountId:
