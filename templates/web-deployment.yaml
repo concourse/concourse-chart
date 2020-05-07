@@ -285,7 +285,7 @@ spec:
             {{- end }}
             {{- if .Values.concourse.web.resourceWithWebhookCheckingInterval }}
             - name: CONCOURSE_RESOURCE_WITH_WEBHOOK_CHECKING_INTERVAL
-              value: {{ .Values.concourse.web.resourceCheckingInterval | quote }}
+              value: {{ .Values.concourse.web.resourceWithWebhookCheckingInterval | quote }}
             {{- end }}
             {{- if .Values.concourse.web.containerPlacementStrategy }}
             - name: CONCOURSE_CONTAINER_PLACEMENT_STRATEGY
