@@ -85,6 +85,10 @@ spec:
             - name: CONCOURSE_ENABLE_GLOBAL_RESOURCES
               value: {{ .Values.concourse.web.enableGlobalResources | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.enableArchivePipeline }}
+            - name: CONCOURSE_ENABLE_ARCHIVE_PIPELINE
+              value: {{ .Values.concourse.web.enableArchivePipeline | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.jobSchedulingMaxInFlight }}
             - name: CONCOURSE_JOB_SCHEDULING_MAX_IN_FLIGHT
               value: {{ .Values.concourse.web.jobSchedulingMaxInFlight | quote }}
@@ -212,6 +216,18 @@ spec:
                   name: {{ template "concourse.web.fullname" . }}
                   key: local-users
             {{- end }}
+            {{- if .Values.concourse.web.clientConfig.enabled }}
+            - name: CONCOURSE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: client-id
+            - name: CONCOURSE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: client-secret
+            {{- end }}
             {{- if .Values.concourse.web.tls.enabled }}
             - name: CONCOURSE_TLS_BIND_PORT
               value: {{ .Values.concourse.web.tls.bindPort | quote }}
@@ -243,6 +259,10 @@ spec:
                   name: {{ template "concourse.web.fullname" . }}
                   key: old-encryption-key
             {{- end }}
+            {{- if .Values.concourse.web.streamingArtifactsCompression }}
+            - name: CONCOURSE_STREAMING_ARTIFACTS_COMPRESSION
+              value: {{ .Values.concourse.web.streamingArtifactsCompression | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.debugBindIp }}
             - name: CONCOURSE_DEBUG_BIND_IP
               value: {{ .Values.concourse.web.debugBindIp | quote }}
@@ -262,6 +282,10 @@ spec:
             {{- if .Values.concourse.web.resourceCheckingInterval }}
             - name: CONCOURSE_RESOURCE_CHECKING_INTERVAL
               value: {{ .Values.concourse.web.resourceCheckingInterval | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.resourceWithWebhookCheckingInterval }}
+            - name: CONCOURSE_RESOURCE_WITH_WEBHOOK_CHECKING_INTERVAL
+              value: {{ .Values.concourse.web.resourceWithWebhookCheckingInterval | quote }}
             {{- end }}
             {{- if .Values.concourse.web.containerPlacementStrategy }}
             - name: CONCOURSE_CONTAINER_PLACEMENT_STRATEGY
@@ -712,6 +736,10 @@ spec:
             {{- if .Values.concourse.web.gc.checkRecyclePeriod }}
             - name: CONCOURSE_GC_CHECK_RECYCLE_PERIOD
               value: {{ .Values.concourse.web.gc.checkRecyclePeriod | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.gc.failedGracePeriod }}
+            - name: CONCOURSE_GC_FAILED_GRACE_PERIOD
+              value: {{ .Values.concourse.web.gc.failedGracePeriod | quote }}
             {{- end }}
             {{- if .Values.concourse.web.syslog.enabled }}
             {{- if .Values.concourse.web.syslog.hostname }}
@@ -1164,13 +1192,21 @@ spec:
             - name: CONCOURSE_TSA_ATC_URL
               value: {{ .Values.concourse.web.tsa.atcUrl | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.tsa.sessionSigningKey }}
-            - name: CONCOURSE_TSA_SESSION_SIGNING_KEY
-              value: {{ .Values.concourse.web.tsa.sessionSigningKey | quote }}
-            {{- end }}
             {{- if .Values.concourse.web.tsa.heartbeatInterval }}
             - name: CONCOURSE_TSA_HEARTBEAT_INTERVAL
               value: {{ .Values.concourse.web.tsa.heartbeatInterval | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.tsa.clientConfig.enabled }}
+            - name: CONCOURSE_TSA_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: tsa-client-id
+            - name: CONCOURSE_TSA_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: tsa-client-secret
             {{- end }}
             {{- if .Values.concourse.web.letsEncrypt.enabled }}
             - name: CONCOURSE_ENABLE_LETS_ENCRYPT
