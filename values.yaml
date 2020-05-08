@@ -635,6 +635,13 @@ concourse:
     newrelic:
       enabled: false
 
+      ## New Relic Insights Insert API base Url
+      ## For configuring EU data centers refer to:
+      ## https://docs.newrelic.com/docs/using-new-relic/welcome-new-relic/getting-started/introduction-eu-region-data-center#endpoints
+      ## For default values refer to: https://github.com/concourse/concourse/blob/bc2ff0c9a606814a0a5d6338f44d5cd942b74456/atc/metric/emitter/newrelic.go#L43
+      ##
+      url:
+
       ## New Relic Account ID
       ##
       accountId:
