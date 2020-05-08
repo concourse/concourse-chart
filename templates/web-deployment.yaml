@@ -682,6 +682,10 @@ spec:
               value: {{ .Values.concourse.web.emitToLogs | quote }}
             {{- end }}
             {{- if .Values.concourse.web.newrelic.enabled }}
+            {{- if .Values.concourse.web.newrelic.url }}
+            - name: CONCOURSE_NEWRELIC_INSIGHTS_API_URL
+              value: {{ .Values.concourse.web.newrelic.url | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.newrelic.accountId }}
             - name: CONCOURSE_NEWRELIC_ACCOUNT_ID
               value: {{ .Values.concourse.web.newrelic.accountId | quote }}
