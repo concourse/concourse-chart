@@ -1,0 +1,28 @@
+{{- if  .Values.concourse.worker.autoscaling }}
+  {{- if .Values.concourse.worker.autoscaling.maxReplicas }}
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "concourse.worker.fullname" . }}
+  labels:
+    app: {{ template "concourse.worker.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  minReplicas: {{ .Values.concourse.worker.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.concourse.worker.autoscaling.maxReplicas }}
+  metrics:
+    {{- if .Values.concourse.worker.autoscaling.builtInMetrics }}
+{{ toYaml .Values.concourse.worker.autoscaling.builtInMetrics | indent 4 }}
+    {{- end }}
+    {{- if .Values.concourse.worker.autoscaling.customMetrics }}
+{{ toYaml .Values.concourse.worker.autoscaling.customMetrics | indent 4 }}
+    {{- end }}
+  scaleTargetRef:
+    apiVersion: {{ template "concourse.deployment.apiVersion" . }}
+    kind: {{ .Values.worker.kind }}
+    name: {{ template "concourse.worker.fullname" . }}
+  {{- end }}
+{{- end }}
+
