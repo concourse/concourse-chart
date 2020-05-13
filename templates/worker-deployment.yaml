@@ -1,7 +1,7 @@
 {{- if .Values.worker.enabled -}}
-{{- if eq .Values.worker.kind "StatefulSet" }}
-apiVersion: {{ template "concourse.statefulset.apiVersion" . }}
-kind: StatefulSet
+{{- if eq .Values.worker.kind "Deployment" }}
+apiVersion: {{ template "concourse.deployment.apiVersion" . }}
+kind: Deployment
 metadata:
   name: {{ template "concourse.worker.fullname" . }}
   labels:
@@ -10,12 +10,11 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
-  serviceName: {{ template "concourse.worker.fullname" . }}
   replicas: {{ .Values.worker.replicas }}
   selector:
     matchLabels:
       app: {{ template "concourse.worker.fullname" . }}
-      release: {{ .Release.Name }}
+      release: "{{ .Release.Name }}"
   template:
     metadata:
       labels:
@@ -24,9 +23,8 @@ spec:
         {{- with .Values.worker.labels }}
 {{ toYaml . | trim | indent 8 }}
         {{- end }}
+      {{- if .Values.worker.annotations }}
       annotations:
-        checksum/secrets: {{ include (print $.Template.BasePath "/worker-secrets.yaml") . | sha256sum }}
-  {{- if .Values.worker.annotations }}
 {{ toYaml .Values.worker.annotations | indent 8 }}
       {{- end }}
     spec:
@@ -48,32 +46,9 @@ spec:
       {{- if .Values.worker.terminationGracePeriodSeconds }}
       terminationGracePeriodSeconds: {{ .Values.worker.terminationGracePeriodSeconds }}
       {{- end }}
-      {{- if .Values.worker.cleanUpWorkDirOnStart }}
       initContainers:
       {{- if .Values.worker.extraInitContainers }}
       {{- toYaml .Values.worker.extraInitContainers | nindent 8 }}
-      {{- end }}
-        - name: {{ template "concourse.worker.fullname" . }}-init-rm
-          {{- if .Values.imageDigest }}
-          image: "{{ .Values.image }}@{{ .Values.imageDigest }}"
-          {{- else }}
-          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-          {{- end }}
-          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-          securityContext:
-            privileged: true
-          command:
-            - /bin/bash
-          args:
-            - -ce
-            - |-
-              for v in $((btrfs subvolume list --sort=-ogen "{{ .Values.concourse.worker.workDir }}" || true) | awk '{print $9}'); do
-                (btrfs subvolume show "{{ .Values.concourse.worker.workDir }}/$v" && btrfs subvolume delete "{{ .Values.concourse.worker.workDir }}/$v") || true
-              done
-              rm -rf "{{ .Values.concourse.worker.workDir }}/*"
-          volumeMounts:
-            - name: concourse-work-dir
-              mountPath: {{ .Values.concourse.worker.workDir | quote }}
       {{- end }}
       containers:
       {{- if .Values.worker.sidecarContainers }}
@@ -102,7 +77,7 @@ spec:
                 command:
                   - "/bin/bash"
                   - "/pre-stop-hook.sh"
-          env:
+          env: 
 {{- include "concourse.worker.env" . | indent 12 }}
 {{- if .Values.worker.env }}
 {{ toYaml .Values.worker.env | indent 12 }}
@@ -120,8 +95,6 @@ spec:
             - name: concourse-keys
               mountPath: {{ .Values.worker.keySecretsPath | quote }}
               readOnly: true
-            - name: concourse-work-dir
-              mountPath: {{ .Values.concourse.worker.workDir | quote }}
             - name: pre-stop-hook
               mountPath: /pre-stop-hook.sh
               subPath: pre-stop-hook.sh
@@ -171,38 +144,9 @@ spec:
                 path: host_key.pub
               - key: worker-key
                 path: worker_key
-  {{- if .Values.persistence.enabled }}
-  volumeClaimTemplates:
-    - metadata:
-        name: concourse-work-dir
-      spec:
-        accessModes:
-          - {{ .Values.persistence.worker.accessMode | quote }}
-        resources:
-          requests:
-            storage: {{ .Values.persistence.worker.size | quote }}
-      {{- if .Values.persistence.worker.storageClass }}
-      {{- if (eq "-" .Values.persistence.worker.storageClass) }}
-        storageClassName: ""
-      {{- else }}
-        storageClassName: "{{ .Values.persistence.worker.storageClass }}"
-      {{- end }}
-      {{- end }}
-  {{- else }}
-      {{ if include "concourse.are-there-additional-volumes.with-the-name.concourse-work-dir" . | not }}
-        - name: concourse-work-dir
-          emptyDir:
-            {{- if .Values.worker.emptyDirSize }}
-            sizeLimit: {{ .Values.worker.emptyDirSize | quote }}
-            {{- end }}
-      {{- end }}
-  {{- end }}
-  {{- if semverCompare "^1.7-0" .Capabilities.KubeVersion.GitVersion }}
-  updateStrategy:
+      {{- if semverCompare "^1.7-0" .Capabilities.KubeVersion.GitVersion }}
+  strategy:
 {{ toYaml .Values.worker.updateStrategy | indent 4 }}
-  {{- end }}
-  {{- if .Values.worker.podManagementPolicy }}
-  podManagementPolicy: {{ .Values.worker.podManagementPolicy }}
-  {{- end }}
+      {{- end }}
 {{- end }}
 {{- end }}
