@@ -1272,6 +1272,7 @@ concourse:
     no_proxy:
 
     ## If set, the worker will be immediately removed upon stalling.
+    ## Ignored for kind: Deployment and set to "true"
     ##
     ephemeral:
 
@@ -1436,6 +1437,38 @@ concourse:
       ## Interval on which to reap expired volumes.
       ##
       reapInterval: 10s
+
+    ## Enable Horizontal Pod Autoscaling
+    ## to use this, ephemeral worker with
+    ## worker.kind: Deployment is recommended
+    ##
+    ## see. https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+    ## for custom metrics see.
+    ##   https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-custom-metrics
+    ##
+    ## To disable autoscaling set it to an empty map: { }
+    autoscaling: { }
+      # maxReplicas is required to for auto scaling
+      # see the following example for scaling on CPU_Utilization and on
+      # a custom metric 'concourse_workers_containers'
+      # for this to work you need to configure the metric eg. with prometheus adapter
+#      maxReplicas: 1
+#      minReplicas: 1
+#      builtInMetrics:
+#        - type: Resource
+#          resource:
+#            name: cpu
+#            target:
+#              type: Utilization
+#              averageUtilization: 80
+#      customMetrics:
+#        - type: Pods
+#          pods:
+#            metric:
+#              name: concourse_workers_containers
+#            target:
+#              type: AverageValue
+#              averageValue: 180 
 
 ## Configuration values for Concourse Web components.
 ## For more information regarding the characteristics of
@@ -1713,6 +1746,12 @@ worker:
   ##
   enabled: true
 
+  ## Selects kind of Deployment. Valid Options are: StatefulSet | Deployment
+  ## Using Deployment leads to ephemeral workers. Meaning workers do not
+  ## share state between restarts
+  ##
+  kind: StatefulSet
+
   ## Override the components name (defaults to worker).
   ##
   nameOverride:
@@ -1896,7 +1935,14 @@ worker:
   ## Strategy for StatefulSet updates (requires Kubernetes 1.6+)
   ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset
   ##
-  updateStrategy: RollingUpdate
+  ## Strategy for Deployment updates
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+  ##
+  updateStrategy:
+    type: RollingUpdate
+#    rollingUpdate:
+#      maxSurge: 25%
+#      maxUnavailable: 1
 
   ## Pod Management strategy (requires Kubernetes 1.7+)
   ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
@@ -1904,6 +1950,7 @@ worker:
   ## "OrderedReady" is default. "Parallel" means worker pods will launch or terminate
   ## in parallel.
   ##
+  ## Ignored for Kind Deployment
   podManagementPolicy: Parallel
 
   ## When persistance is disabled this value will be used to limit the emptyDir volume size
@@ -1918,6 +1965,7 @@ worker:
 ##
 persistence:
   ## Enable persistence using Persistent Volume Claims.
+  ## Ignored for Kind: Deployment. If persistence is needed use kind: StatefulSet
   ##
   enabled: true
 
