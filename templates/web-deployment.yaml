@@ -62,8 +62,10 @@ spec:
           image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-          args:
-            - web
+          {{- if .Values.web.command }}
+          command: {{ toJson .Values.web.command }}
+          {{- end }}
+          args: {{ toJson .Values.web.args }}
           env:
             {{- if .Values.concourse.web.clusterName }}
             - name: CONCOURSE_CLUSTER_NAME
