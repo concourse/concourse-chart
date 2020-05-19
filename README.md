@@ -301,23 +301,19 @@ You can generate all three key-pairs by following either of these two methods:
 docker run -v $PWD:/keys --rm -it concourse/concourse generate-key -t rsa -f /keys/session-signing-key
 docker run -v $PWD:/keys --rm -it concourse/concourse generate-key -t ssh -f /keys/worker-key
 docker run -v $PWD:/keys --rm -it concourse/concourse generate-key -t ssh -f /keys/host-key
+rm session-signing-key.pub
 ```
 
 ##### ssh-keygen
 
 ```sh
 ssh-keygen -t rsa -f host-key  -N '' -m PEM
-mv host-key.pub host-key-pub
 ssh-keygen -t rsa -f worker-key  -N '' -m PEM
-mv worker-key.pub worker-key-pub
 ssh-keygen -t rsa -f session-signing-key  -N '' -m PEM
 rm session-signing-key.pub
-printf "%s:%s" "concourse" "$(openssl rand -base64 24)" > local-users
 ```
 
-All the worker-specific secrets, namely, `workerKey`, `workerKeyPub`, `hostKeyPub` are to be added to a separate Kubernetes secrets object with the name [release name]-worker.
-
-All other secrets are to be added to a secrets object with the name `[release name]-web`.
+#### Optional Features
 
 You'll also need to create/copy secret values for optional features. See [templates/web-secrets.yaml](templates/web-secrets.yaml) and [templates/worker-secrets.yaml](templates/worker-secrets.yaml)  for possible values.
 
@@ -341,12 +337,42 @@ printf "%s" "$(pbpaste)" > github-client-secret
 # Set an encryption key for DB encryption at rest
 #
 printf "%s" "$(openssl rand -base64 24)" > encryption-key
+
+# Create a local user for concourse.
+#
+printf "%s:%s" "concourse" "$(openssl rand -base64 24)" > local-users
 ```
 
-Then create a secret called `[release-name]-concourse` from all the secret value files in the current folder:
+#### Creating the Secrets
+
+Make a directory for each secret and then move generated credentials into appropriate directories.
+```console
+mkdir concourse web worker
+
+# worker secrets
+mv host-key.pub worker/host-key-pub
+mv worker-key.pub worker/worker-key-pub
+mv worker-key worker/worker-key
+
+# web secrets
+mv session-signing-key web/session-signing-key
+mv host-key web/host-key
+cp worker/worker-key-pub web/worker-key-pub
+
+# other concourse secrets (there may be more than the 3 listed below)
+mv encryption-key concourse/encryption-key
+mv postgresql-password concourse/postgresql-password
+mv postgresql-user concourse/postgresql-user
+```
+
+Then create the secrets from each of the 3 directories:
 
 ```console
-kubectl create secret generic my-release-concourse --from-file=.
+kubectl create secret generic [my-release]-worker --from-file=worker/
+
+kubectl create secret generic [my-release]-web --from-file=web/
+
+kubectl create secret generic [my-release]-concourse --from-file=concourse/
 ```
 
 Make sure you clean up after yourself.
