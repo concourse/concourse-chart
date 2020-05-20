@@ -259,11 +259,13 @@ spec:
                 secretKeyRef:
                   name: {{ template "concourse.web.fullname" . }}
                   key: encryption-key
+            {{- if .Values.secrets.oldEncryptionKey }}
             - name: CONCOURSE_OLD_ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ template "concourse.web.fullname" . }}
                   key: old-encryption-key
+            {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.streamingArtifactsCompression }}
             - name: CONCOURSE_STREAMING_ARTIFACTS_COMPRESSION
