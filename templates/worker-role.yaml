@@ -1,5 +1,6 @@
 {{- if .Values.worker.enabled -}}
 {{- if .Values.rbac.create -}}
+{{- if .Values.podSecurityPolicy.create -}}
 apiVersion: rbac.authorization.k8s.io/{{ .Values.rbac.apiVersion }}
 kind: Role
 metadata:
@@ -15,8 +16,9 @@ rules:
   resources:
   - podsecuritypolicies
   resourceNames:
-  - privileged
+  - {{ template "concourse.worker.fullname" . }}
   verbs:
   - use
+{{- end -}}
 {{- end -}}
 {{- end }}

@@ -1,5 +1,6 @@
 {{- if .Values.worker.enabled -}}
 {{- if .Values.rbac.create -}}
+{{- if .Values.podSecurityPolicy.create -}}
 apiVersion: rbac.authorization.k8s.io/{{ .Values.rbac.apiVersion }}
 kind: RoleBinding
 metadata:
@@ -16,5 +17,6 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ template "concourse.worker.fullname" . }}
+{{- end -}}
 {{- end -}}
 {{- end }}

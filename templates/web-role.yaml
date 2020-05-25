@@ -1,6 +1,7 @@
 {{- if .Values.web.enabled -}}
 {{- if .Values.rbac.create -}}
-{{- if .Values.concourse.web.kubernetes.enabled -}}
+{{- if .Values.concourse.web.kubernetes.enabled }}
+---
 apiVersion: rbac.authorization.k8s.io/{{ .Values.rbac.apiVersion }}
 kind: ClusterRole
 metadata:
@@ -14,6 +15,24 @@ rules:
 - apiGroups: [""]
   resources: ["secrets"]
   verbs: ["get"]
-{{- end -}}
+{{- end }}
+{{- if .Values.podSecurityPolicy.create }}
+---
+apiVersion: rbac.authorization.k8s.io/{{ .Values.rbac.apiVersion }}
+kind: ClusterRole
+metadata:
+  name: {{ template "concourse.web.fullname" . }}-psp
+  labels:
+    app: {{ template "concourse.web.fullname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+rules:
+- apiGroups: ['policy']
+  resources: ['podsecuritypolicies']
+  verbs:     ['use']
+  resourceNames:
+  - {{ template "concourse.web.fullname" . }}
+{{- end }}
 {{- end -}}
 {{- end -}}
