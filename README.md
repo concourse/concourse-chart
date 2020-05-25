@@ -104,9 +104,9 @@ The following table lists the configurable parameters of the Concourse chart and
 | `rbac.create` | Enables creation of RBAC resources | `true` |
 | `rbac.webServiceAccountName` | Name of the service account to use for web pods if `rbac.create` is `false` | `default` |
 | `rbac.workerServiceAccountName` | Name of the service account to use for workers if `rbac.create` is `false` | `default` |
-| `podSecurityPolicy.create` | Enables creation of podsecuritypolicy resources | `false` |
-| `podSecurityPolicy.allowedWorkerVolumes` | List of volumes allowed by the podsecuritypolicy for the worker pods | *See [values.yaml](values.yaml)* |
-| `podSecurityPolicy.allowedWebVolumes` | List of volumes allowed by the podsecuritypolicy for the web pods | *See [values.yaml](values.yaml)* |
+| `podSecurityPolicy.create` | Enables creation of podSecurityPolicy resources | `false` |
+| `podSecurityPolicy.allowedWorkerVolumes` | List of volumes allowed by the podSecurityPolicy for the worker pods | *See [values.yaml](values.yaml)* |
+| `podSecurityPolicy.allowedWebVolumes` | List of volumes allowed by the podSecurityPolicy for the web pods | *See [values.yaml](values.yaml)* |
 | `secrets.awsSecretsmanagerAccessKey` | AWS Access Key ID for Secrets Manager access | `nil` |
 | `secrets.awsSecretsmanagerSecretKey` | AWS Secret Access Key ID for Secrets Manager access | `nil` |
 | `secrets.awsSecretsmanagerSessionToken` | AWS Session Token for Secrets Manager access | `nil` |
