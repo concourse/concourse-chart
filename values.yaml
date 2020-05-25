@@ -2086,6 +2086,38 @@ rbac:
   ##
   workerServiceAccountName: default
 
+## For managing podSecurityPolicies. To make sure rbac objects are also created
+## for the use of the podsecuritypolicy objects, 
+## set rbac.create to 'true' (this is the default value)
+##
+podSecurityPolicy:
+  ## Create podSecurityPolicy objects for concourse. Set this to false if 
+  ## objects are not needed, or if they are managed outside helm.
+  ##
+  create: false
+
+  ## By default use the recommended minimum set of volumes in kubernetes.
+  ## Possible to overwrite if other types are used.
+  ##
+  allowedWorkerVolumes:
+  - 'secret'
+  - 'persistentVolumeClaim'
+  - 'configMap'
+  - 'downwardAPI'
+  - 'emptyDir'
+  - 'projected'
+  
+  ## By default use the recommended minimum set of volumes in kubernetes. 
+  ## Possible to overwrite if other types are used.
+  ##
+  allowedWebVolumes:
+  - 'secret'
+  - 'persistentVolumeClaim'
+  - 'configMap'
+  - 'downwardAPI'
+  - 'emptyDir'
+  - 'projected'
+
 ## For managing secrets using Helm
 ##
 secrets:
