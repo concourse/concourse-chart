@@ -67,6 +67,8 @@ Check the output of `fly workers`, and if a worker is [`stalled`](https://concou
 
 > **TIP**: you can download `fly` either from https://concourse-ci.org/download.html or the home page of your Concourse installation.
 
+When using ephemeral workers with `worker.kind: Deployment` and spawning a lot of (new) workers, you might run into [issue 3091](https://github.com/concourse/concourse/issues/3091).
+As a workaround you could start a `worker.extraInitContainers` to cleanup unused loopback devices. 
 
 ### Worker Liveness Probe
 
@@ -104,6 +106,9 @@ The following table lists the configurable parameters of the Concourse chart and
 | `rbac.create` | Enables creation of RBAC resources | `true` |
 | `rbac.webServiceAccountName` | Name of the service account to use for web pods if `rbac.create` is `false` | `default` |
 | `rbac.workerServiceAccountName` | Name of the service account to use for workers if `rbac.create` is `false` | `default` |
+| `podSecurityPolicy.create` | Enables creation of podSecurityPolicy resources | `false` |
+| `podSecurityPolicy.allowedWorkerVolumes` | List of volumes allowed by the podSecurityPolicy for the worker pods | *See [values.yaml](values.yaml)* |
+| `podSecurityPolicy.allowedWebVolumes` | List of volumes allowed by the podSecurityPolicy for the web pods | *See [values.yaml](values.yaml)* |
 | `secrets.awsSecretsmanagerAccessKey` | AWS Access Key ID for Secrets Manager access | `nil` |
 | `secrets.awsSecretsmanagerSecretKey` | AWS Secret Access Key ID for Secrets Manager access | `nil` |
 | `secrets.awsSecretsmanagerSessionToken` | AWS Session Token for Secrets Manager access | `nil` |
@@ -176,6 +181,8 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.datadog.prefix` | Prefix for emitted metrics | `"concourse.ci"` |
 | `web.enabled` | Enable or disable the web component | `true` |
 | `web.env` | Configure additional environment variables for the web containers | `[]` |
+| `web.command` | Override the docker image command | `nil` |
+| `web.args` | Docker image command arguments | `["web"]` |
 | `web.ingress.annotations` | Concourse Web Ingress annotations | `{}` |
 | `web.ingress.enabled` | Enable Concourse Web Ingress | `false` |
 | `web.ingress.hosts` | Concourse Web Ingress Hostnames | `[]` |
@@ -228,6 +235,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.additionalVolumeMounts` | VolumeMounts to be added to the worker pods | `nil` |
 | `worker.additionalVolumes` | Volumes to be added to the worker pods | `nil` |
 | `worker.annotations` | Annotations to be added to the worker pods | `{}` |
+| `worker.autoscaling` | Enable and configure pod autoscaling | `{}` |
 | `worker.cleanUpWorkDirOnStart` | Removes any previous state created in `concourse.worker.workDir` | `true` |
 | `worker.emptyDirSize` | When persistance is disabled this value will be used to limit the emptyDir volume size | `nil` |
 | `worker.enabled` | Enable or disable the worker component. You should set postgres.enabled=false in order not to get an unnecessary Postgres chart deployed | `true` |
@@ -235,6 +243,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.hardAntiAffinity` | Should the workers be forced (as opposed to preferred) to be on different nodes? | `false` |
 | `worker.hardAntiAffinityLabels` | Set of labels used for hard anti affinity rule | `{}` |
 | `worker.keySecretsPath` | Specify the mount directory of the worker keys secrets | `/concourse-keys` |
+| `worker.kind` | Choose between `StatefulSet` to preserve state or `Deployment` for ephemeral workers | `StatefulSet` | 
 | `worker.livenessProbe.failureThreshold` | Minimum consecutive failures for the probe to be considered failed after having succeeded | `5` |
 | `worker.livenessProbe.httpGet.path` | Path to access on the HTTP server when performing the healthcheck | `/` |
 | `worker.livenessProbe.httpGet.port` | Name or number of the port to access on the container | `worker-hc` |
@@ -302,23 +311,19 @@ You can generate all three key-pairs by following either of these two methods:
 docker run -v $PWD:/keys --rm -it concourse/concourse generate-key -t rsa -f /keys/session-signing-key
 docker run -v $PWD:/keys --rm -it concourse/concourse generate-key -t ssh -f /keys/worker-key
 docker run -v $PWD:/keys --rm -it concourse/concourse generate-key -t ssh -f /keys/host-key
+rm session-signing-key.pub
 ```
 
 ##### ssh-keygen
 
 ```sh
 ssh-keygen -t rsa -f host-key  -N '' -m PEM
-mv host-key.pub host-key-pub
 ssh-keygen -t rsa -f worker-key  -N '' -m PEM
-mv worker-key.pub worker-key-pub
 ssh-keygen -t rsa -f session-signing-key  -N '' -m PEM
 rm session-signing-key.pub
-printf "%s:%s" "concourse" "$(openssl rand -base64 24)" > local-users
 ```
 
-All the worker-specific secrets, namely, `workerKey`, `workerKeyPub`, `hostKeyPub` are to be added to a separate Kubernetes secrets object with the name [release name]-worker.
-
-All other secrets are to be added to a secrets object with the name `[release name]-web`.
+#### Optional Features
 
 You'll also need to create/copy secret values for optional features. See [templates/web-secrets.yaml](templates/web-secrets.yaml) and [templates/worker-secrets.yaml](templates/worker-secrets.yaml)  for possible values.
 
@@ -342,12 +347,42 @@ printf "%s" "$(pbpaste)" > github-client-secret
 # Set an encryption key for DB encryption at rest
 #
 printf "%s" "$(openssl rand -base64 24)" > encryption-key
+
+# Create a local user for concourse.
+#
+printf "%s:%s" "concourse" "$(openssl rand -base64 24)" > local-users
 ```
 
-Then create a secret called `[release-name]-concourse` from all the secret value files in the current folder:
+#### Creating the Secrets
+
+Make a directory for each secret and then move generated credentials into appropriate directories.
+```console
+mkdir concourse web worker
+
+# worker secrets
+mv host-key.pub worker/host-key-pub
+mv worker-key.pub worker/worker-key-pub
+mv worker-key worker/worker-key
+
+# web secrets
+mv session-signing-key web/session-signing-key
+mv host-key web/host-key
+cp worker/worker-key-pub web/worker-key-pub
+
+# other concourse secrets (there may be more than the 3 listed below)
+mv encryption-key concourse/encryption-key
+mv postgresql-password concourse/postgresql-password
+mv postgresql-user concourse/postgresql-user
+```
+
+Then create the secrets from each of the 3 directories:
 
 ```console
-kubectl create secret generic my-release-concourse --from-file=.
+kubectl create secret generic [my-release]-worker --from-file=worker/
+
+kubectl create secret generic [my-release]-web --from-file=web/
+
+kubectl create secret generic [my-release]-concourse --from-file=concourse/
 ```
 
 Make sure you clean up after yourself.

@@ -1,6 +1,6 @@
 {{- if .Values.web.enabled -}}
 {{- if .Values.rbac.create -}}
-{{- if .Values.concourse.web.kubernetes.enabled -}}
+{{- if and .Values.concourse.web.kubernetes.enabled .Values.concourse.web.kubernetes.createTeamNamespaces -}}
 {{- range .Values.concourse.web.kubernetes.teams }}
 ---
 apiVersion: rbac.authorization.k8s.io/{{ $.Values.rbac.apiVersion }}
@@ -22,6 +22,26 @@ subjects:
   name: {{ template "concourse.web.fullname" $ }}
   namespace: {{ $.Release.Namespace }}
 {{- end }}
-{{- end -}}
+{{- end }}
+{{- if .Values.podSecurityPolicy.create }}
+---
+apiVersion: rbac.authorization.k8s.io/{{ .Values.rbac.apiVersion }}
+kind: RoleBinding
+metadata:
+  name: {{ template "concourse.web.fullname" . }}-psp
+  labels:
+    app: {{ template "concourse.web.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ template "concourse.web.fullname" . }}-psp
+subjects:
+- kind: ServiceAccount
+  name: {{ template "concourse.web.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+{{- end }}
 {{- end -}}
 {{- end -}}

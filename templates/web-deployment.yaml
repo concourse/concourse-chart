@@ -25,8 +25,10 @@ spec:
         {{- with .Values.web.labels }}
 {{ toYaml . | trim | indent 8 }}
         {{- end }}
-      {{- if .Values.web.annotations }}
       annotations:
+        checksum/secrets: {{ include (print $.Template.BasePath "/web-secrets.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/web-configmap.yaml") . | sha256sum }}
+      {{- if .Values.web.annotations }}
 {{ toYaml .Values.web.annotations | indent 8 }}
       {{- end }}
     spec:
@@ -60,16 +62,18 @@ spec:
           image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
-          args:
-            - web
+          {{- if .Values.web.command }}
+          command: {{ toJson .Values.web.command }}
+          {{- end }}
+          args: {{ toJson .Values.web.args }}
           env:
             {{- if .Values.concourse.web.clusterName }}
             - name: CONCOURSE_CLUSTER_NAME
               value: {{ .Values.concourse.web.clusterName | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.runnerInterval }}
-            - name: CONCOURSE_RUNNER_INTERVAL
-              value: {{ .Values.concourse.web.runnerInterval | quote }}
+            {{- if .Values.concourse.web.componentRunnerInterval }}
+            - name: CONCOURSE_COMPONENT_RUNNER_INTERVAL
+              value: {{ .Values.concourse.web.componentRunnerInterval | quote }}
             {{- end }}
             {{- if .Values.concourse.web.apiMaxConns }}
             - name: CONCOURSE_API_MAX_CONNS
@@ -83,6 +87,10 @@ spec:
             - name: CONCOURSE_ENABLE_GLOBAL_RESOURCES
               value: {{ .Values.concourse.web.enableGlobalResources | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.enableArchivePipeline }}
+            - name: CONCOURSE_ENABLE_ARCHIVE_PIPELINE
+              value: {{ .Values.concourse.web.enableArchivePipeline | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.jobSchedulingMaxInFlight }}
             - name: CONCOURSE_JOB_SCHEDULING_MAX_IN_FLIGHT
               value: {{ .Values.concourse.web.jobSchedulingMaxInFlight | quote }}
@@ -94,6 +102,10 @@ spec:
             {{- if .Values.concourse.web.lidarCheckerInterval }}
             - name: CONCOURSE_LIDAR_CHECKER_INTERVAL
               value: {{ .Values.concourse.web.lidarCheckerInterval | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.concurrentRequestLimits }}
+            - name: CONCOURSE_CONCURRENT_REQUEST_LIMIT
+              value: "{{- $local := dict "first" true -}}{{- range $k, $v := .Values.concourse.web.concurrentRequestLimits -}}{{- if not $local.first -}},{{- end -}}{{- $k -}}:{{- $v -}}{{- $_ := set $local "first" false -}}{{- end -}}"
             {{- end }}
             {{- if .Values.concourse.web.enableBuildAuditing }}
             - name: CONCOURSE_ENABLE_BUILD_AUDITING
@@ -210,6 +222,18 @@ spec:
                   name: {{ template "concourse.web.fullname" . }}
                   key: local-users
             {{- end }}
+            {{- if .Values.concourse.web.clientConfig.enabled }}
+            - name: CONCOURSE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: client-id
+            - name: CONCOURSE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: client-secret
+            {{- end }}
             {{- if .Values.concourse.web.tls.enabled }}
             - name: CONCOURSE_TLS_BIND_PORT
               value: {{ .Values.concourse.web.tls.bindPort | quote }}
@@ -241,6 +265,10 @@ spec:
                   name: {{ template "concourse.web.fullname" . }}
                   key: old-encryption-key
             {{- end }}
+            {{- if .Values.concourse.web.streamingArtifactsCompression }}
+            - name: CONCOURSE_STREAMING_ARTIFACTS_COMPRESSION
+              value: {{ .Values.concourse.web.streamingArtifactsCompression | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.debugBindIp }}
             - name: CONCOURSE_DEBUG_BIND_IP
               value: {{ .Values.concourse.web.debugBindIp | quote }}
@@ -260,6 +288,10 @@ spec:
             {{- if .Values.concourse.web.resourceCheckingInterval }}
             - name: CONCOURSE_RESOURCE_CHECKING_INTERVAL
               value: {{ .Values.concourse.web.resourceCheckingInterval | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.resourceWithWebhookCheckingInterval }}
+            - name: CONCOURSE_RESOURCE_WITH_WEBHOOK_CHECKING_INTERVAL
+              value: {{ .Values.concourse.web.resourceWithWebhookCheckingInterval | quote }}
             {{- end }}
             {{- if .Values.concourse.web.containerPlacementStrategy }}
             - name: CONCOURSE_CONTAINER_PLACEMENT_STRATEGY
@@ -656,6 +688,10 @@ spec:
               value: {{ .Values.concourse.web.emitToLogs | quote }}
             {{- end }}
             {{- if .Values.concourse.web.newrelic.enabled }}
+            {{- if .Values.concourse.web.newrelic.url }}
+            - name: CONCOURSE_NEWRELIC_INSIGHTS_API_URL
+              value: {{ .Values.concourse.web.newrelic.url | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.newrelic.accountId }}
             - name: CONCOURSE_NEWRELIC_ACCOUNT_ID
               value: {{ .Values.concourse.web.newrelic.accountId | quote }}
@@ -703,9 +739,17 @@ spec:
             - name: CONCOURSE_GC_MISSING_GRACE_PERIOD
               value: {{ .Values.concourse.web.gc.missingGracePeriod | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.gc.hijackGracePeriod }}
+            - name: CONCOURSE_GC_HIJACK_GRACE_PERIOD
+              value: {{ .Values.concourse.web.gc.hijackGracePeriod | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.gc.checkRecyclePeriod }}
             - name: CONCOURSE_GC_CHECK_RECYCLE_PERIOD
               value: {{ .Values.concourse.web.gc.checkRecyclePeriod | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.gc.failedGracePeriod }}
+            - name: CONCOURSE_GC_FAILED_GRACE_PERIOD
+              value: {{ .Values.concourse.web.gc.failedGracePeriod | quote }}
             {{- end }}
             {{- if .Values.concourse.web.syslog.enabled }}
             {{- if .Values.concourse.web.syslog.hostname }}
@@ -1158,13 +1202,21 @@ spec:
             - name: CONCOURSE_TSA_ATC_URL
               value: {{ .Values.concourse.web.tsa.atcUrl | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.tsa.sessionSigningKey }}
-            - name: CONCOURSE_TSA_SESSION_SIGNING_KEY
-              value: {{ .Values.concourse.web.tsa.sessionSigningKey | quote }}
-            {{- end }}
             {{- if .Values.concourse.web.tsa.heartbeatInterval }}
             - name: CONCOURSE_TSA_HEARTBEAT_INTERVAL
               value: {{ .Values.concourse.web.tsa.heartbeatInterval | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.tsa.clientConfig.enabled }}
+            - name: CONCOURSE_TSA_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: tsa-client-id
+            - name: CONCOURSE_TSA_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "concourse.web.fullname" . }}
+                  key: tsa-client-secret
             {{- end }}
             {{- if .Values.concourse.web.letsEncrypt.enabled }}
             - name: CONCOURSE_ENABLE_LETS_ENCRYPT
