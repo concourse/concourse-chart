@@ -33,3 +33,6 @@ previously, there was a single `maxConns` configuration flag that'd be used to s
 
 in concourse/concourse#5141 (part of 6.0), riemann was completely removed, making those variables unecessary.
 
+# v11.0.0:
+
+- All settings that were under `web.service` have been moved to three sub-keys: `web.service.api`, `web.service.workerGateway`, and `web.service.prometheus`. This allows users to, for example, expose the `api` component via an ingress while exposing the `workerGateway` via a `LoadBalancer` for registering external workers. Any values previously set under `web.service` should now be moved to `web.service.workerGateway` and `web.service.api`. Any `labels` or `annotations` should be copied to all three sub-keys, `web`, `workerGateway`, and `prometheus`.

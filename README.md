@@ -209,14 +209,21 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.replicas` | Number of Concourse Web replicas | `1` |
 | `web.resources.requests.cpu` | Minimum amount of cpu resources requested | `100m` |
 | `web.resources.requests.memory` | Minimum amount of memory resources requested | `128Mi` |
-| `web.service.annotations` | Concourse Web Service annotations | `nil` |
-| `web.service.atcNodePort` | Sets the nodePort for atc when using `NodePort` | `nil` |
-| `web.service.atcTlsNodePort` | Sets the nodePort for atc tls when using `NodePort` | `nil` |
-| `web.service.labels` | Additional concourse web service labels | `nil` |
-| `web.service.loadBalancerIP` | The IP to use when web.service.type is LoadBalancer | `nil` |
-| `web.service.loadBalancerSourceRanges` | Concourse Web Service Load Balancer Source IP ranges | `nil` |
-| `web.service.tsaNodePort` | Sets the nodePort for tsa when using `NodePort` | `nil` |
-| `web.service.type` | Concourse Web service type | `ClusterIP` |
+| `web.service.api.annotations` | Concourse Web API Service annotations | `nil` |
+| `web.service.api.NodePort` | Sets the nodePort for api when using `NodePort` | `nil` |
+| `web.service.api.labels` | Additional concourse web api service labels | `nil` |
+| `web.service.api.loadBalancerIP` | The IP to use when web.service.api.type is LoadBalancer | `nil` |
+| `web.service.api.loadBalancerSourceRanges` | Concourse Web API Service Load Balancer Source IP ranges | `nil` |
+| `web.service.api.tlsNodePort` | Sets the nodePort for api tls when using `NodePort` | `nil` |
+| `web.service.api.type` | Concourse Web API service type | `ClusterIP` |
+| `web.service.workerGateway.annotations` | Concourse Web workerGateway Service annotations | `nil` |
+| `web.service.workerGateway.labels` | Additional concourse web workerGateway service labels | `nil` |
+| `web.service.workerGateway.loadBalancerIP` | The IP to use when web.service.workerGateway.type is LoadBalancer | `nil` |
+| `web.service.workerGateway.loadBalancerSourceRanges` | Concourse Web workerGateway Service Load Balancer Source IP ranges | `nil` |
+| `web.service.workerGateway.NodePort` | Sets the nodePort for workerGateway when using `NodePort` | `nil` |
+| `web.service.workerGateway.type` | Concourse Web workerGateway service type | `ClusterIP` |
+| `web.service.prometheus.annotations` | Concourse Web Prometheus Service annotations | `nil` |
+| `web.service.prometheus.labels` | Additional concourse web prometheus service labels | `nil` |
 | `web.sidecarContainers` | Array of extra containers to run alongside the Concourse web container | `nil` |
 | `web.extraInitContainers` | Array of extra init containers to run before the Concourse web container | `nil` |
 | `web.strategy` | Strategy for updates to deployment. | `{}` |

@@ -1,0 +1,49 @@
+{{- if .Values.web.enabled -}}
+{{- $root := . -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "concourse.web.fullname" . }}
+  labels:
+    app: {{ template "concourse.web.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    {{- range $key, $value := .Values.web.service.api.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- if .Values.web.service.api.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.web.service.api.annotations }}
+    {{ $key }}: {{ tpl $value $root | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  type: {{ .Values.web.service.api.type }}
+  {{- if .Values.web.service.api.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+    {{- range .Values.web.service.api.loadBalancerSourceRanges }}
+    - {{ . }}
+    {{- end }}
+  {{- end }}
+  {{- if and (eq "LoadBalancer" .Values.web.service.api.type) .Values.web.service.api.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.web.service.api.loadBalancerIP }}
+  {{- end }}
+  ports:
+  - name: atc
+    port: {{ .Values.concourse.web.bindPort }}
+    targetPort: atc
+    {{- if and (eq "NodePort" .Values.web.service.api.type) .Values.web.service.api.atcNodePort }}
+    nodePort: {{ .Values.web.service.api.NodePort}}
+    {{- end }}
+{{- if .Values.concourse.web.tls.enabled }}
+  - name: atc-tls
+    port: {{ .Values.concourse.web.tls.bindPort }}
+    targetPort: atc-tls
+    {{- if and (eq "NodePort" .Values.web.service.api.type) .Values.web.service.api.atcTlsNodePort }}
+    nodePort: {{ .Values.web.service.api.tlsNodePort}}
+    {{- end }}
+{{- end }}
+  selector:
+    app: {{ template "concourse.web.fullname" . }}
+{{- end }}
