@@ -59,7 +59,7 @@ Creates the address of the TSA service.
 */}}
 {{- define "concourse.web.tsa.address" -}}
 {{- $port := .Values.concourse.web.tsa.bindPort -}}
-{{ template "concourse.web.fullname" . }}:{{- print $port -}}
+{{ template "concourse.web.fullname" . }}-worker-gateway:{{- print $port -}}
 {{- end -}}
 
 {{/*

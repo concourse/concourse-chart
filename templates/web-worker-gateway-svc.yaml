@@ -1,0 +1,41 @@
+{{- if .Values.web.enabled -}}
+{{- $root := . -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "concourse.web.fullname" . }}-worker-gateway
+  labels:
+    app: {{ template "concourse.web.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    {{- range $key, $value := .Values.web.service.workerGateway.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- if .Values.web.service.workerGateway.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.web.service.workerGateway.annotations }}
+    {{ $key }}: {{ tpl $value $root | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  type: {{ .Values.web.service.workerGateway.type }}
+  {{- if .Values.web.service.workerGateway.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+    {{- range .Values.web.service.workerGateway.loadBalancerSourceRanges }}
+    - {{ . }}
+    {{- end }}
+  {{- end }}
+  {{- if and (eq "LoadBalancer" .Values.web.service.workerGateway.type) .Values.web.service.workerGateway.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.web.service.workerGateway.loadBalancerIP }}
+  {{- end }}
+  ports:
+    - name: worker-gateway
+      port: {{ .Values.concourse.web.tsa.bindPort }}
+      targetPort: tsa
+      {{- if and (eq "NodePort" .Values.web.service.workerGateway.type) .Values.web.service.workerGateway.NodePort }}
+      nodePort: {{ .Values.web.service.workerGateway.NodePort}}
+      {{- end }}
+  selector:
+    app: {{ template "concourse.web.fullname" . }}
+{{- end }}
