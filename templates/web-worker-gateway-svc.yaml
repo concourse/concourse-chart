@@ -20,22 +20,22 @@ metadata:
   {{- end }}
 spec:
   type: {{ .Values.web.service.workerGateway.type }}
-  {{ if .Values.web.service.workerGateway.loadBalancerSourceRanges }}
+  {{- if .Values.web.service.workerGateway.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
     {{- range .Values.web.service.workerGateway.loadBalancerSourceRanges }}
     - {{ . }}
     {{- end }}
-  {{ end }}
-  {{ if and (eq "LoadBalancer" .Values.web.service.workerGateway.type) .Values.web.service.workerGateway.loadBalancerIP }}
+  {{- end }}
+  {{- if and (eq "LoadBalancer" .Values.web.service.workerGateway.type) .Values.web.service.workerGateway.loadBalancerIP }}
   loadBalancerIP: {{ .Values.web.service.workerGateway.loadBalancerIP }}
-  {{ end }}
+  {{- end }}
   ports:
     - name: worker-gateway
       port: {{ .Values.concourse.web.tsa.bindPort }}
       targetPort: tsa
-      {{ if and (eq "NodePort" .Values.web.service.workerGateway.type) .Values.web.service.workerGateway.NodePort }}
+      {{- if and (eq "NodePort" .Values.web.service.workerGateway.type) .Values.web.service.workerGateway.NodePort }}
       nodePort: {{ .Values.web.service.workerGateway.NodePort}}
-      {{ end }}
+      {{- end }}
   selector:
     app: {{ template "concourse.web.fullname" . }}
 {{- end }}
