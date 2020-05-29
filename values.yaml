@@ -1196,10 +1196,6 @@ concourse:
       ##
       hostKey:
 
-      ## Path to file containing keys to authorize, in SSH authorized_keys format (one public key per line).
-      ##
-      authorizedKeys:
-
       ## ATC API endpoints to which workers will be registered.
       ##
       atcUrl:
