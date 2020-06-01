@@ -68,7 +68,7 @@ Check the output of `fly workers`, and if a worker is [`stalled`](https://concou
 > **TIP**: you can download `fly` either from https://concourse-ci.org/download.html or the home page of your Concourse installation.
 
 When using ephemeral workers with `worker.kind: Deployment` and spawning a lot of (new) workers, you might run into [issue 3091](https://github.com/concourse/concourse/issues/3091).
-As a workaround you could start a `worker.extraInitContainers` to cleanup unused loopback devices. 
+As a workaround you could start a `worker.extraInitContainers` to cleanup unused loopback devices.
 
 ### Worker Liveness Probe
 
@@ -87,7 +87,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `imageDigest` | Specific image digest to use in place of a tag. | `nil` |
 | `imagePullPolicy` | Concourse image pull policy | `IfNotPresent` |
 | `imagePullSecrets` | Array of imagePullSecrets in the namespace for pulling images | `[]` |
-| `imageTag` | Concourse image version | `5.8.0` |
+| `imageTag` | Concourse image version | `6.1.0` |
 | `image` | Concourse image | `concourse/concourse` |
 | `nameOverride` | Provide a name in place of `concourse` for `app:` labels | `nil` |
 | `persistence.enabled` | Enable Concourse persistence using Persistent Volume Claims | `true` |
@@ -243,7 +243,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.hardAntiAffinity` | Should the workers be forced (as opposed to preferred) to be on different nodes? | `false` |
 | `worker.hardAntiAffinityLabels` | Set of labels used for hard anti affinity rule | `{}` |
 | `worker.keySecretsPath` | Specify the mount directory of the worker keys secrets | `/concourse-keys` |
-| `worker.kind` | Choose between `StatefulSet` to preserve state or `Deployment` for ephemeral workers | `StatefulSet` | 
+| `worker.kind` | Choose between `StatefulSet` to preserve state or `Deployment` for ephemeral workers | `StatefulSet` |
 | `worker.livenessProbe.failureThreshold` | Minimum consecutive failures for the probe to be considered failed after having succeeded | `5` |
 | `worker.livenessProbe.httpGet.path` | Path to access on the HTTP server when performing the healthcheck | `/` |
 | `worker.livenessProbe.httpGet.port` | Name or number of the port to access on the container | `worker-hc` |
