@@ -469,7 +469,8 @@ concourse:
 
       ## Path templates to use for credential lookup.
       ##
-      lookupTemplates: ["/{{.Team}}/{{.Pipeline}}/{{.Secret}}", "/{{.Team}}/{{.Secret}}"]
+      ## Example: ["/{{.Team}}/{{.Pipeline}}/{{.Secret}}", "/{{.Team}}/{{.Secret}}"]
+      lookupTemplates: []
 
       ## if the Vault server is using a self-signed certificate, set this to true,
       ## and provide a value for the cert in secrets (field `vault-ca-cert`).
