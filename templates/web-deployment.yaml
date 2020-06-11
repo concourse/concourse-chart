@@ -291,6 +291,10 @@ spec:
             - name: CONCOURSE_GLOBAL_RESOURCE_CHECK_TIMEOUT
               value: {{ .Values.concourse.web.globalResourceCheckTimeout | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.maxChecksPerSecond }}
+            - name: CONCOURSE_MAX_CHECKS_PER_SECOND
+              value: {{ .Values.concourse.web.maxChecksPerSecond | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.resourceCheckingInterval }}
             - name: CONCOURSE_RESOURCE_CHECKING_INTERVAL
               value: {{ .Values.concourse.web.resourceCheckingInterval | quote }}
