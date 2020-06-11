@@ -253,6 +253,12 @@ concourse:
     ##
     globalResourceCheckTimeout: 1h
 
+    ## Maximum number of checks that can run in one second. If not specified,
+    ## this will be calculated as (# of resources)/(resource checking interval).
+    ## -1 value will remove this maximum limit of checks per second.
+    ##
+    maxChecksPerSecond: 0
+
     ## Interval on which to check for new versions of resources.
     ##
     resourceCheckingInterval: 1m
