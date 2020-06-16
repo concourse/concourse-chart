@@ -15,10 +15,15 @@ spec:
   endpoints:
   - interval: {{ .Values.concourse.web.prometheus.serviceMonitor.interval }}
     port: prometheus
+  {{- if .Values.concourse.web.prometheus.serviceMonitor.metricRelabelings }}
+    metricRelabelings:
+      {{ toYaml .Values.concourse.web.prometheus.serviceMonitor.metricRelabelings | nindent 6 }}
+  {{- end }}
   namespaceSelector:
     matchNames:
     - {{ .Release.Namespace }}
   selector:
     matchLabels:
       app: {{ template "concourse.web.fullname" . }}
+
 {{- end }}

@@ -724,6 +724,8 @@ concourse:
         interval: "30s"
         # Namespace the servicemonitor object should be in
         namespace:
+        # Relabel Metrics - https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_configs
+        metricRelabelings:
 
     ## The value to set for X-Frame-Options. If omitted, the header is not set.
     ##
