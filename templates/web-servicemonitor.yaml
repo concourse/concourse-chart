@@ -25,5 +25,4 @@ spec:
   selector:
     matchLabels:
       app: {{ template "concourse.web.fullname" . }}
-
 {{- end }}
