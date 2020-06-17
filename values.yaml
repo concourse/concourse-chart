@@ -713,6 +713,16 @@ concourse:
         # Namespace the servicemonitor object should be in
         namespace:
 
+        ## Relabel Metrics
+        ## https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_configs
+        ## Example that consolidates duplicate metrics when web is running in HA:
+        ## metricRelabelings:
+        ##   - regex: 'instance'
+        ##     action: labeldrop
+        ##   - regex: 'pod'
+        ##     action: labeldrop
+        metricRelabelings:
+
     ## The value to set for X-Frame-Options. If omitted, the header is not set.
     ##
     xFrameOptions:
