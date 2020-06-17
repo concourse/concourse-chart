@@ -291,6 +291,10 @@ spec:
             - name: CONCOURSE_GLOBAL_RESOURCE_CHECK_TIMEOUT
               value: {{ .Values.concourse.web.globalResourceCheckTimeout | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.maxChecksPerSecond }}
+            - name: CONCOURSE_MAX_CHECKS_PER_SECOND
+              value: {{ .Values.concourse.web.maxChecksPerSecond | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.resourceCheckingInterval }}
             - name: CONCOURSE_RESOURCE_CHECKING_INTERVAL
               value: {{ .Values.concourse.web.resourceCheckingInterval | quote }}
@@ -632,20 +636,6 @@ spec:
               value: {{ .Values.concourse.web.conjur.secretTemplate | quote }}
             {{- end }}
 
-            {{- if .Values.concourse.web.staticWorker.enabled }}
-            {{- if .Values.concourse.web.staticWorker.gardenUrl }}
-            - name: CONCOURSE_WORKER_GARDEN_URL
-              value: {{ .Values.concourse.web.staticWorker.gardenUrl | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.staticWorker.baggageclaimUrl }}
-            - name: CONCOURSE_WORKER_BAGGAGECLAIM_URL
-              value: {{ .Values.concourse.web.staticWorker.baggageclaimUrl | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.staticWorker.resource }}
-            - name: CONCOURSE_WORKER_RESOURCE
-              value: {{ .Values.concourse.web.staticWorker.resource | quote }}
-            {{- end }}
-            {{- end }}
             {{- if .Values.concourse.web.metrics.hostName }}
             - name: CONCOURSE_METRICS_HOST_NAME
               value: {{ .Values.concourse.web.metrics.hostName | quote }}

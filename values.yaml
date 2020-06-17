@@ -19,7 +19,7 @@ image: concourse/concourse
 ##      of `concourse/concourse`.
 ## Ref: https://hub.docker.com/r/concourse/concourse/tags/
 ##
-imageTag: "6.2.0"
+imageTag: "6.3.0"
 
 ## Specific image digest to use in place of a tag.
 ## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
@@ -252,6 +252,12 @@ concourse:
     ## Time limit on checking for new versions of resources.
     ##
     globalResourceCheckTimeout: 1h
+
+    ## Maximum number of checks that can be started per second. If not
+    ## specified, # this will be calculated as (# of resources)/(resource
+    ## checking interval). # -1 value will remove this maximum limit of checks
+    ## per second.
+    maxChecksPerSecond: 0
 
     ## Interval on which to check for new versions of resources.
     ##
@@ -559,24 +565,6 @@ concourse:
       pipelineSecretTemplate:
       teamSecretTemplate:
       secretTemplate:
-
-    staticWorker:
-      ## Enables the direct registration of a worker that has its properties
-      ## hardcoded.
-      ##
-      enabled: false
-
-      ## A Garden API endpoint to register as a worker.
-      ##
-      gardenUrl:
-
-      ## A Baggageclaim API endpoint to register with the worker.
-      ##
-      baggageclaimUrl:
-
-      ## A resource type to advertise for the worker. Can be specified multiple times.
-      ##
-      resource:
 
     tracing:
       ## Jaeger's HTTP-based Thrift collector endpoint.

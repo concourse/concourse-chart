@@ -87,7 +87,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `imageDigest` | Specific image digest to use in place of a tag. | `nil` |
 | `imagePullPolicy` | Concourse image pull policy | `IfNotPresent` |
 | `imagePullSecrets` | Array of imagePullSecrets in the namespace for pulling images | `[]` |
-| `imageTag` | Concourse image version | `6.2.0` |
+| `imageTag` | Concourse image version | `6.3.0` |
 | `image` | Concourse image | `concourse/concourse` |
 | `nameOverride` | Provide a name in place of `concourse` for `app:` labels | `nil` |
 | `persistence.enabled` | Enable Concourse persistence using Persistent Volume Claims | `true` |
@@ -651,3 +651,15 @@ The minimum IAM policy you need to use Secrets Manager with Concourse is:
   ]
 }
 ```
+
+## Developing
+
+- When adding a new Concourse flag, don't assign a `default` value in the `values.yml` that mirrors a default set by the Concourse binary. Instead, you may add a comment specifying the default, such as
+
+  ```
+      ## pipeline-specific template for SSM parameters, defaults to: /concourse/{{.Team}}/{{.Pipeline}}/{{.Secret}}
+      ##
+      pipelineSecretTemplate: /concourse/{{.Team}}/{{.Pipeline}}/{{.Secret}}
+
+  ``` 
+  This prevents the possibility of drift if the Concourse binary default value changes.
