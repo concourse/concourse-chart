@@ -507,7 +507,7 @@ spec:
             {{- end }}
             {{- if.Values.concourse.web.vault.lookupTemplates }}
             - name: CONCOURSE_VAULT_LOOKUP_TEMPLATES
-              value: {{ .Values.concourse.web.vault.lookupTemplates | join "," quote }}
+              value: {{ .Values.concourse.web.vault.lookupTemplates | join "," | quote }}
             {{- end }}
             - name: CONCOURSE_VAULT_AUTH_BACKEND
               value: {{ .Values.concourse.web.vault.authBackend | quote }}
