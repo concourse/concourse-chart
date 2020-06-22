@@ -204,6 +204,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.prometheus.ServiceMonitor.enabled` | Enable the creation of a serviceMonitor object for the Prometheus operator | `false` |
 | `web.prometheus.ServiceMonitor.interval` | The interval the Prometheus endpoint is scraped | `30s` |
 | `web.prometheus.ServiceMonitor.namespace` | The namespace where the serviceMonitor object has to be created | `nil` |
+| `web.prometheus.ServiceMonitor.labels` | Additional lables for the serviceMonitor object | `nil` |
 | `web.prometheus.ServiceMonitor.metricRelabelings` | Relabel metrics as defined [here](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_configs) | `nil` |
 | `web.readinessProbe.httpGet.path` | Path to access on the HTTP server when performing the healthcheck | `/api/v1/info` |
 | `web.readinessProbe.httpGet.port` | Name or number of the port to access on the container | `atc` |
