@@ -713,6 +713,16 @@ concourse:
         # Namespace the servicemonitor object should be in
         namespace:
 
+        ## Additional Labels to be added to the servicemonitor.
+        ##
+        ##
+        ## Example:
+        ##   key1: "value1"
+        ##   key2: "value2"
+        ##
+        ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+        labels: {}
+
         ## Relabel Metrics
         ## https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_configs
         ## Example that consolidates duplicate metrics when web is running in HA:
