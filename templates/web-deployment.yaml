@@ -773,6 +773,26 @@ spec:
               value: "{{ .Values.web.syslogSecretsPath }}/ca.cert"
             {{- end }}
             {{- end }}
+            {{- if .Values.concourse.web.opa.url }}
+            - name: CONCOURSE_OPA_URL
+              value: {{ .Values.concourse.web.opa.url | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.opa.timeout }}
+            - name: CONCOURSE_OPA_TIMEOUT
+              value: {{ .Values.concourse.web.opa.timeout | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.policyCheck.filterHttpMethods }}
+            - name: CONCOURSE_POLICY_CHECK_FILTER_HTTP_METHOD
+              value: {{ .Values.concourse.web.policyCheck.filterHttpMethods | join "," | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.policyCheck.filterActions }}
+            - name: CONCOURSE_POLICY_CHECK_FILTER_ACTION
+              value: {{ .Values.concourse.web.policyCheck.filterActions | join "," | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.policyCheck.skipActions }}
+            - name: CONCOURSE_POLICY_CHECK_FILTER_ACTION_SKIP
+              value: {{ .Values.concourse.web.policyCheck.skipActions | join "," | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.configRBAC }}
             - name: CONCOURSE_CONFIG_RBAC
               value: /config-rbac.yml
