@@ -964,10 +964,11 @@ spec:
             - name: CONCOURSE_LDAP_BIND_DN
               value: {{ .Values.concourse.web.auth.ldap.bindDn | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.auth.ldap.bindPw }}
             - name: CONCOURSE_LDAP_BIND_PW
-              value: {{ .Values.concourse.web.auth.ldap.bindPw | quote }}
-            {{- end }}
+              valueFrom:
+                secretKeyRef:
+                  name: concourse-ldap-bind-pw
+                  key: password
             {{- if .Values.concourse.web.auth.ldap.useCaCert }}
             - name: CONCOURSE_LDAP_CA_CERT
               value: "{{ .Values.web.authSecretsPath }}/ldap_ca.cert"
