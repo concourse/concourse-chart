@@ -7,6 +7,8 @@
 nameOverride:
 
 ## Provide a name to substitute for the full names of resources
+## ps.: You should also change the postgresql.fullnameOverride if you're using
+## that chart dependency
 ##
 fullnameOverride:
 
@@ -1490,7 +1492,7 @@ concourse:
 #              name: concourse_workers_containers
 #            target:
 #              type: AverageValue
-#              averageValue: 180 
+#              averageValue: 180
 
 ## Configuration values for Concourse Web components.
 ## For more information regarding the characteristics of
@@ -2083,6 +2085,11 @@ postgresql:
   ##
   enabled: true
 
+  ## Provide a name to substitute for the full name of postgresql resources
+  ## ps.: Resources will not be appended with "-postgresql"
+  ##
+  fullnameOverride:
+
   ### PostgreSQL User to create.
   ##
   postgresqlUsername: concourse
@@ -2145,11 +2152,11 @@ rbac:
   workerServiceAccountName: default
 
 ## For managing podSecurityPolicies. To make sure rbac objects are also created
-## for the use of the podsecuritypolicy objects, 
+## for the use of the podsecuritypolicy objects,
 ## set rbac.create to 'true' (this is the default value)
 ##
 podSecurityPolicy:
-  ## Create podSecurityPolicy objects for concourse. Set this to false if 
+  ## Create podSecurityPolicy objects for concourse. Set this to false if
   ## objects are not needed, or if they are managed outside helm.
   ##
   create: false
@@ -2164,8 +2171,8 @@ podSecurityPolicy:
   - 'downwardAPI'
   - 'emptyDir'
   - 'projected'
-  
-  ## By default use the recommended minimum set of volumes in kubernetes. 
+
+  ## By default use the recommended minimum set of volumes in kubernetes.
   ## Possible to overwrite if other types are used.
   ##
   allowedWebVolumes:
