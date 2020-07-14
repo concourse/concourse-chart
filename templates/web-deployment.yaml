@@ -28,6 +28,8 @@ spec:
       annotations:
         checksum/secrets: {{ include (print $.Template.BasePath "/web-secrets.yaml") . | sha256sum }}
         checksum/config: {{ include (print $.Template.BasePath "/web-configmap.yaml") . | sha256sum }}
+        consul.hashicorp.com/connect-inject: "true"
+        consul.hashicorp.com/connect-service: {{ template "concourse.web.fullname" . }}
       {{- if .Values.web.annotations }}
 {{ toYaml .Values.web.annotations | indent 8 }}
       {{- end }}
