@@ -21,7 +21,7 @@ image: concourse/concourse
 ##      of `concourse/concourse`.
 ## Ref: https://hub.docker.com/r/concourse/concourse/tags/
 ##
-imageTag: "6.3.0"
+imageTag: "6.4.0"
 
 ## Specific image digest to use in place of a tag.
 ## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
@@ -791,6 +791,38 @@ concourse:
       ## and provide a value for the cert in secrets (`syslog-ca-cert`).
       ##
       useCaCert: false
+
+    opa:
+      ## Open Policy Agent policy check endpoint.
+      ##
+      ## Example: https://opa.example.com:8181/v1/data/concourse/allow
+      ##
+      url:
+
+      ## Open Policy Agent API request timeout, in Go duration format.
+      ##
+      ## Example: 5s for 5 seconds
+      ##
+      timeout:
+
+    policyCheck:
+      ## Array of HTTP methods to filter through policy checking.
+      ##
+      ## Example: ["PUT", "POST"]
+      ##
+      filterHttpMethods:
+
+      ## Array of ATC API actions to filter through policy checking.
+      ##
+      ## Example: ["SaveConfig", "UseImage"]
+      ##
+      filterActions:
+
+      ## Array of ATC API actions to skip policy checking.
+      ##
+      ## Example: ["PausePipeline", "UnpausePipeline"]
+      ##
+      skipActions:
 
     ## Customize RBAC role-action mapping. Pass in as a multi-line YAML string
     ## Ref: https://concourse-ci.org/user-roles.html#configuring-rbac
