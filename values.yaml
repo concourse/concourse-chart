@@ -1380,6 +1380,12 @@ concourse:
     ##
     containerNetworkPool:
 
+    runtime:
+      ## Runtime to use with the worker. Possible values: guardian, containerd, houdini.
+      ## Please note that Houdini is insecure and doesn't run 'tasks' in containers.
+      ## Defaults to "guardian" if unset.
+      type:
+
     tsa:
 
       ## TSA host(s) to forward the worker through.
@@ -1431,14 +1437,6 @@ concourse:
       ## Custom DNS server to use for garden containers
       ##
       dnsServer:
-
-      ## Use the insecure Houdini Garden backend.
-      ##
-      useHoudini:
-
-      ## Use the experimental containerd garden backend.
-      ##
-      useContainerd:
 
       ## How long to wait for requests to Garden to complete. 0 means no timeout.
       ##

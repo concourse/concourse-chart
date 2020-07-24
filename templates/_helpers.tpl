@@ -222,17 +222,9 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_EXTERNAL_GARDEN_URL
   value: {{ .Values.concourse.worker.externalGardenUrl | quote }}
 {{- end }}
-{{- if .Values.concourse.worker.garden.useContainerd }}
-- name: CONCOURSE_GARDEN_USE_CONTAINERD
-  value: {{ .Values.concourse.worker.garden.useContainerd | quote }}
-{{- end }}
-{{- if .Values.concourse.worker.garden.useHoudini }}
-- name: CONCOURSE_GARDEN_USE_HOUDINI
-  value: {{ .Values.concourse.worker.garden.useHoudini | quote }}
-{{- end }}
-{{- if .Values.concourse.worker.garden.useContainerd }}
-- name: CONCOURSE_GARDEN_USE_CONTAINERD
-  value: {{ .Values.concourse.worker.garden.useContainerd | quote }}
+{{- if .Values.concourse.worker.runtime.type }}
+- name: CONCOURSE_RUNTIME_TYPE
+  value: {{ .Values.concourse.worker.runtime.type | quote }}
 {{- end }}
 {{- if .Values.concourse.worker.garden.bin }}
 - name: CONCOURSE_GARDEN_BIN
