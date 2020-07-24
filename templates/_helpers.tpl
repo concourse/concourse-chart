@@ -242,14 +242,6 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_GARDEN_REQUEST_TIMEOUT
   value: {{ .Values.concourse.worker.garden.requestTimeout | quote }}
 {{- end }}
-{{- if .Values.concourse.worker.garden.dnsServer }}
-- name: CONCOURSE_GARDEN_DNS_SERVER
-  value: {{ .Values.concourse.worker.garden.dnsServer | quote }}
-{{- end }}
-{{- if .Values.concourse.worker.containerNetworkPool }}
-- name: CONCOURSE_CONTAINER_NETWORK_POOL
-  value: {{ .Values.concourse.worker.containerNetworkPool | quote }}
-{{- end }}
 {{- if .Values.concourse.worker.baggageclaim.logLevel }}
 - name: CONCOURSE_BAGGAGECLAIM_LOG_LEVEL
   value: {{ .Values.concourse.worker.baggageclaim.logLevel | quote }}
