@@ -1379,7 +1379,6 @@ concourse:
     runtime:
       ## Runtime to use with the worker. Possible values: guardian, containerd, houdini.
       ## Please note that Houdini is insecure and doesn't run 'tasks' in containers.
-      ## Defaults to "guardian" if unset.
       type:
 
     tsa:
@@ -1400,11 +1399,6 @@ concourse:
       ## File containing the private key to use when authenticating to the TSA.
       ##
       workerPrivateKey:
-
-    ## API endpoint of an externally managed Garden server to use instead of
-    ## running the embedded Garden server.
-    ##
-    externalGardenUrl:
 
     # The following refers to configuration for the Guardian runtime. For historical reasons
     # it is referred to as "garden" which is the server wrapping Guardian and the interface
@@ -1433,6 +1427,47 @@ concourse:
       ## How long to wait for requests to Garden to complete. 0 means no timeout.
       ##
       requestTimeout:
+
+    containerd:
+
+      ## Path to a containerd executable (non-absolute names get resolved from $PATH)."`
+      bin:
+
+      ## Path to a config file to use for the Containerd daemon.
+      config:
+
+      ## Enable a proxy DNS server for Garden
+      dnsProxyEnable:
+
+      ## List of DNS server IP addresses to use instead of automatically determined servers.
+      ## Example:
+      ## dnsServers:
+      ##   - 1.1.1.1
+      ##   - 2.2.2.2
+      dnsServers: []
+
+      ## List of network ranges to which traffic from containers will be restricted.
+      ## Example:
+      ## restrictedNetworks:
+      ##   - 1.1.1.1
+      ##   - 2.2.2.2
+      restrictedNetworks: []
+
+      ## Max container capacity. 0 means no limit.
+      maxContainers:
+
+      ## Network range to use for dynamically allocated container subnets, defaults to "10.80.0.0/16"
+      ##
+      networkPool:
+
+      ## Time to wait for requests to Containerd to complete. 0 means no timeout.
+      requestTimeout:
+
+
+    ## API endpoint of an externally managed Garden server to use instead of
+    ## running the embedded Garden server.
+    ##
+    externalGardenUrl:
 
     baggageclaim:
       ## Minimum level of logs to see. Possible values: debug, info, error

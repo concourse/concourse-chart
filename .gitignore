@@ -1,5 +1,6 @@
 charts
 .idea
+*.iml
 # Swap
 .*.swp
 [._]*.s[a-v][a-z]

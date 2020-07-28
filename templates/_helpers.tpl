@@ -242,6 +242,42 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_GARDEN_REQUEST_TIMEOUT
   value: {{ .Values.concourse.worker.garden.requestTimeout | quote }}
 {{- end }}
+{{- if .Values.concourse.worker.containerd.bin }}
+- name: CONCOURSE_CONTAINERD_BIN
+  value: {{ .Values.concourse.worker.containerd.bin | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.containerd.config }}
+- name: CONCOURSE_CONTAINERD_CONFIG
+  value: {{ .Values.concourse.worker.containerd.config | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.containerd.dnsProxyEnable }}
+- name: CONCOURSE_CONTAINERD_DNS_PROXY_ENABLE
+  value: {{ .Values.concourse.worker.containerd.dnsProxyEnable | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.containerd.dnsServers }}
+{{- range .Values.concourse.worker.containerd.dnsServers }}
+- name: CONCOURSE_CONTAINERD_DNS_SERVER
+  value: {{ . | title | quote }}
+{{- end }}
+{{- end }}
+{{- if .Values.concourse.worker.containerd.restrictedNetworks }}
+{{- range .Values.concourse.worker.containerd.restrictedNetworks }}
+- name: CONCOURSE_CONTAINERD_RESTRICTED_NETWORK
+  value: {{ . | title | quote }}
+{{- end }}
+{{- end }}
+{{- if .Values.concourse.worker.containerd.maxContainers }}
+- name: CONCOURSE_CONTAINERD_MAX_CONTAINERS
+  value: {{ .Values.concourse.worker.containerd.maxContainers }}
+{{- end }}
+{{- if .Values.concourse.worker.containerd.networkPool }}
+- name: CONCOURSE_CONTAINERD_NETWORK_POOL
+  value: {{ .Values.concourse.worker.containerd.networkPool | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.containerd.requestTimeout }}
+- name: CONCOURSE_CONTAINERD_REQUEST_TIMEOUT
+  value: {{ .Values.concourse.worker.containerd.requestTimeout | quote }}
+{{- end }}
 {{- if .Values.concourse.worker.baggageclaim.logLevel }}
 - name: CONCOURSE_BAGGAGECLAIM_LOG_LEVEL
   value: {{ .Values.concourse.worker.baggageclaim.logLevel | quote }}
