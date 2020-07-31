@@ -87,11 +87,6 @@ concourse:
     ##
     enableGlobalResources: true
 
-    ## Enable pipeline archiving functionality in the API
-    ##
-    enableArchivePipeline: false
-    #
-
     ## Enable automatic rerunning of builds when worker disappears
     ##
     enableBuildRerunWhenWorkerDisappears: false
