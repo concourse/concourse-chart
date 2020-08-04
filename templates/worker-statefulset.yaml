@@ -86,8 +86,15 @@ spec:
           image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          command:
+            - /bin/bash
           args:
-            - worker
+            - -cex
+            - |-
+              export CONCOURSE_ID="{{ .Values.concourse.worker.workDir }}/CONCOURSE_ID"
+              [[ -f "$CONCOURSE_ID" ]] || echo $(shuf -i 1-100000 -n 1) > "$CONCOURSE_ID"
+              export CONCOURSE_NAME=$(hostname)-$(cat "$CONCOURSE_ID")
+              exec dumb-init /usr/local/bin/entrypoint.sh worker
 {{- if .Values.worker.livenessProbe }}
           livenessProbe:
 {{ toYaml .Values.worker.livenessProbe | indent 12 }}
