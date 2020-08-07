@@ -1257,6 +1257,10 @@ concourse:
       ##
       heartbeatInterval: 30s
 
+      ## How long to wait for requests to Garden to complete. 0 means no timeout.
+      ##
+      gardenRequestTimeout:
+
     letsEncrypt:
       ## Automatically configure TLS certificates via Let's Encrypt/ACME.
       ##
