@@ -222,9 +222,9 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_EXTERNAL_GARDEN_URL
   value: {{ .Values.concourse.worker.externalGardenUrl | quote }}
 {{- end }}
-{{- if .Values.concourse.worker.runtime.type }}
-- name: CONCOURSE_RUNTIME_TYPE
-  value: {{ .Values.concourse.worker.runtime.type | quote }}
+{{- if .Values.concourse.worker.runtime }}
+- name: CONCOURSE_RUNTIME
+  value: {{ .Values.concourse.worker.runtime | quote }}
 {{- end }}
 {{- if .Values.concourse.worker.garden.bin }}
 - name: CONCOURSE_GARDEN_BIN

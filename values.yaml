@@ -1376,10 +1376,9 @@ concourse:
     ##
     volumeSweeperMaxInFlight: 5
 
+    ## Runtime to use with the worker. Possible values: guardian, containerd, houdini.
+    ## Please note that Houdini is insecure and doesn't run 'tasks' in containers.
     runtime:
-      ## Runtime to use with the worker. Possible values: guardian, containerd, houdini.
-      ## Please note that Houdini is insecure and doesn't run 'tasks' in containers.
-      type:
 
     tsa:
 
