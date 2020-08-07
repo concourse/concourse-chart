@@ -265,6 +265,15 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.terminationGracePeriodSeconds` | Upper bound for graceful shutdown to allow the worker to drain its tasks | `60` |
 | `worker.tolerations` | Tolerations for the worker nodes | `[]` |
 | `worker.updateStrategy` | `OnDelete` or `RollingUpdate` (requires Kubernetes >= 1.7) | `RollingUpdate` |
+| `worker.runtime.type` | Runtime to use with the worker | `nil` |
+| `worker.containerd.bin` | Path to a containerd executable | `nil` |
+| `worker.containerd.config` | Path to a config file to use for the Containerd daemon | `nil` |
+| `worker.containerd.dnsProxyEnable` | Enable a proxy DNS server for Garden | `nil` |
+| `worker.containerd.dnsServers` | List of DNS server IP address to use instead of automatically determined servers | `nil` |
+| `worker.containerd.restrictedNetworks` | List of Network ranges to which traffic from containers will be restricted | `nil` |
+| `worker.containerd.maxContainers` | Max container capacity where 0 means no limit | `nil` |
+| `worker.containerd.networkPool` | Network range to use for dynamically allocated container subnets | `nil` |
+| `worker.containerd.requestTimeout` | Time to wait for requests to Containerd to complete | `nil` |
 
 For configurable Concourse parameters, refer to [`values.yaml`](values.yaml)' `concourse` section. All parameters under this section are strictly mapped from the `concourse` binary commands.
 
