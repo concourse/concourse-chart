@@ -87,10 +87,6 @@ spec:
             - name: CONCOURSE_ENABLE_GLOBAL_RESOURCES
               value: {{ .Values.concourse.web.enableGlobalResources | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.enableArchivePipeline }}
-            - name: CONCOURSE_ENABLE_ARCHIVE_PIPELINE
-              value: {{ .Values.concourse.web.enableArchivePipeline | quote }}
-            {{- end }}
             {{- if .Values.concourse.web.enableBuildRerunWhenWorkerDisappears }}
             - name: CONCOURSE_ENABLE_RERUN_WHEN_WORKER_DISAPPEARS
               value: {{ .Values.concourse.web.enableBuildRerunWhenWorkerDisappears | quote }}
