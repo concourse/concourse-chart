@@ -87,15 +87,13 @@ concourse:
     ##
     enableGlobalResources: true
 
-    ## Enable pipeline archiving functionality in the API
-    ##
-    enableArchivePipeline: false
-    #
-
     ## Enable automatic rerunning of builds when worker disappears
     ##
     enableBuildRerunWhenWorkerDisappears: false
-    #
+
+    ## Enable the experimental across step to be used in jobs. The API is subject to change.
+    ##
+    enableAcrossStep: false
 
     ## Maximum number of jobs to be scheduling at the same time.
     ##

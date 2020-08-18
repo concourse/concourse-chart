@@ -87,13 +87,13 @@ spec:
             - name: CONCOURSE_ENABLE_GLOBAL_RESOURCES
               value: {{ .Values.concourse.web.enableGlobalResources | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.enableArchivePipeline }}
-            - name: CONCOURSE_ENABLE_ARCHIVE_PIPELINE
-              value: {{ .Values.concourse.web.enableArchivePipeline | quote }}
-            {{- end }}
             {{- if .Values.concourse.web.enableBuildRerunWhenWorkerDisappears }}
             - name: CONCOURSE_ENABLE_RERUN_WHEN_WORKER_DISAPPEARS
               value: {{ .Values.concourse.web.enableBuildRerunWhenWorkerDisappears | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.enableAcrossStep }}
+            - name: CONCOURSE_ENABLE_ACROSS_STEP
+              value: {{ .Values.concourse.web.enableAcrossStep | quote }}
             {{- end }}
             {{- if .Values.concourse.web.jobSchedulingMaxInFlight }}
             - name: CONCOURSE_JOB_SCHEDULING_MAX_IN_FLIGHT
