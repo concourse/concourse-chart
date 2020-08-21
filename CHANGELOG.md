@@ -36,3 +36,8 @@ in concourse/concourse#5141 (part of 6.0), riemann was completely removed, makin
 # v11.0.0:
 
 - All settings that were under `web.service` have been moved to three sub-keys: `web.service.api`, `web.service.workerGateway`, and `web.service.prometheus`. This allows users to, for example, expose the `api` component via an ingress while exposing the `workerGateway` via a `LoadBalancer` for registering external workers. Any values previously set under `web.service` should now be moved to `web.service.workerGateway` and `web.service.api`. Any `labels` or `annotations` should be copied to all three sub-keys, `web`, `workerGateway`, and `prometheus`.
+
+# v12.0.1:
+
+- To configure Concourse to use containerd as a runtime, set `concourse.worker.runtime` to `containerd`. In past versions of the chart, this was set in `concourse.worker.garden.useContainerd`, which was removed. Any containerd configuration should now be set under `concourse.worker.containerd.*` rather than under `concourse.worker.garden.*`. The default value for `concourse.worker.runtime` is `guardian`.
+- Note: v12.0.0 has no changes from v11.0.0 - please use the patch version v12.0.1 instead
