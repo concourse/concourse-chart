@@ -506,10 +506,6 @@ concourse:
       ##
       insecureSkipVerify: false
 
-      ## Client token for accessing secrets within the Vault server.
-      ##
-      clientToken:
-
       ## Time after which to force a reLogin. If not set, the token will just be continuously renewed.
       ##
       authBackendMaxTtl:
