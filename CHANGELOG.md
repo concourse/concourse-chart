@@ -41,3 +41,7 @@ in concourse/concourse#5141 (part of 6.0), riemann was completely removed, makin
 
 - To configure Concourse to use containerd as a runtime, set `concourse.worker.runtime` to `containerd`. In past versions of the chart, this was set in `concourse.worker.garden.useContainerd`, which was removed. Any containerd configuration should now be set under `concourse.worker.containerd.*` rather than under `concourse.worker.garden.*`. The default value for `concourse.worker.runtime` is `guardian`.
 - Note: v12.0.0 has no changes from v11.0.0 - please use the patch version v12.0.1 instead
+
+# v13.0.0:
+
+- upgraded the PostgreSQL Chart (direct dependency of this Chart) from `6.5.5` to `9.2.0`. As the backward compatibility is not guarantee when upgrading the PostgreSQL chart to this major version, a major bump was needed. Please refer to [PostgreSQL Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql#upgrade) for details.
