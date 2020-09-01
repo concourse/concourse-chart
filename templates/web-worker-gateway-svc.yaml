@@ -26,6 +26,9 @@ spec:
     - {{ . }}
     {{- end }}
   {{- end }}
+  {{- if and (eq "ClusterIP" .Values.web.service.workerGateway.type) .Values.web.service.workerGateway.clusterIP }}
+  clusterIP: {{ default "None" .Values.web.service.workerGateway.clusterIP }}
+  {{- end }}
   {{- if and (eq "LoadBalancer" .Values.web.service.workerGateway.type) .Values.web.service.workerGateway.loadBalancerIP }}
   loadBalancerIP: {{ .Values.web.service.workerGateway.loadBalancerIP }}
   {{- end }}
