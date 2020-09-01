@@ -945,6 +945,17 @@ concourse:
           ##
           group:
 
+        ## Authentication (Main Team) (SAML)
+        ##
+        saml:
+          ## List of whitelisted SAML users
+          ##
+          user:
+
+          ## List of whitelisted SAML groups
+          ##
+          group:
+
         ## Authentication (Main Team) (OAuth2)
         ##
         oauth:
@@ -1115,6 +1126,69 @@ concourse:
         ## The attribute of the group that represents its name.
         ##
         groupSearchNameAttr:
+
+      ## Authentication (SAML)
+      saml:
+        enabled: false
+
+        ## The auth provider name displayed to users on the login page
+        ##
+        displayName:
+
+        ## (Required) SSO URL used for POST value.
+        ##
+        ssoURL:
+
+        ## Issuer value expected in the SAML response.
+        ##
+        ssoIssuer:
+
+        ## Manually specify Concourse's Issuer value.
+        ##
+        ## When provided Concourse will include this as the Issuer value during AuthnRequest.
+        ## If not provided, will default to the redirect URI when evaluating
+        ## AudienceRestriction elements in the response.
+        entityIssuer:
+
+        ## Name of the username attribute in the returned assertions to map to ID token claims (default: name)
+        ##
+        usernameAttr:
+
+        ## Name of the email attribute in the returned assertions to map to ID token claims (default: email)
+        ##
+        emailAttr:
+
+        ## Name of the groups attribute in the returned assertions to map to ID token claims (default: groups)
+        ##
+        groupsAttr:
+
+        ## Delimiter for splitting groups returned as a single string.
+        ##
+        ## By default, multiple groups are assumed to be represented as multiple
+        ## attributes with the same name.
+        ##
+        ## If "groupsDelim" is provided groups are assumed to be represented as a
+        ## single attribute and the delimiter is used to split the attribute's value
+        ## into multiple groups.
+        groupsDelim:
+
+        ## Requested format of the NameID.
+        ##
+        ## The NameID value is is mapped to the user ID of the user. This can be an
+        ## abbreviated form of the full URI with just the last component. For example,
+        ## if this value is set to "emailAddress" the format will resolve to:
+        ##
+        ##     urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
+        ##
+        ## If no value is specified, this value defaults to:
+        ##
+        ##     urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+        ##
+        nameIDPolicyFormat:
+
+        ## Skip signature verification. If false, you must provide secrets.samlCaCert.
+        ##
+        insecureSkipVerify: false
 
       ## Authentication (OAuth2)
       ##
@@ -2453,6 +2527,10 @@ secrets:
   ## Secrets for LDAP Auth.
   ##
   ldapCaCert:
+
+  ## Secrets for SAML Auth.
+  ##
+  samlCaCert:
 
   ## Secrets for generic OAuth.
   ##
