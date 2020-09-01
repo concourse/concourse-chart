@@ -476,7 +476,7 @@ web:
 
 ### PostgreSQL
 
-By default, this chart uses a PostgreSQL database deployed as a chart dependency (see the [PostgreSQL chart](https://github.com/helm/charts/blob/master/stable/postgresql/README.md)), with default values for username, password, and database name. These can be modified by setting the `postgresql.*` values.
+By default, this chart uses a PostgreSQL database deployed as a chart dependency (see the [PostgreSQL chart](https://github.com/bitnami/charts/blob/master/bitnami/postgresql/README.md)), with default values for username, password, and database name. These can be modified by setting the `postgresql.*` values.
 
 You can also bring your own PostgreSQL. To do so, set `postgresql.enabled` to `false`, and then configure Concourse's `postgres` values (`concourse.web.postgres.*`).
 
