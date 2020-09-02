@@ -233,7 +233,7 @@ concourse:
       ## `concourse.web.auth.mainTeam.localUser` with a comma-separated list
       ## of ids.
       ##
-      ## Ref: https://concourse-ci.org/install.html#local-auth-config
+      ## Ref: https://concourse-ci.org/local-auth.html
       ##
       enabled: true
 
