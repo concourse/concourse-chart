@@ -895,6 +895,14 @@ spec:
             - name: CONCOURSE_MAIN_TEAM_LDAP_GROUP
               value: {{ .Values.concourse.web.auth.mainTeam.ldap.group | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.saml.user }}
+            - name: CONCOURSE_MAIN_TEAM_SAML_USER
+              value: {{ .Values.concourse.web.auth.mainTeam.saml.user | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.mainTeam.saml.group }}
+            - name: CONCOURSE_MAIN_TEAM_SAML_GROUP
+              value: {{ .Values.concourse.web.auth.mainTeam.saml.group | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.auth.mainTeam.oauth.user }}
             - name: CONCOURSE_MAIN_TEAM_OAUTH_USER
               value: {{ .Values.concourse.web.auth.mainTeam.oauth.user | quote }}
@@ -1063,6 +1071,51 @@ spec:
             {{- if .Values.concourse.web.auth.ldap.userSearchUsername }}
             - name: CONCOURSE_LDAP_USER_SEARCH_USERNAME
               value: {{ .Values.concourse.web.auth.ldap.userSearchUsername | quote }}
+            {{- end }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.saml.enabled }}
+            {{- if .Values.concourse.web.auth.saml.displayName }}
+            - name: CONCOURSE_SAML_DISPLAY_NAME
+              value: {{ .Values.concourse.web.auth.saml.displayName | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.saml.ssoURL }}
+            - name: CONCOURSE_SAML_SSO_URL
+              value: {{ .Values.concourse.web.auth.saml.ssoURL | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.saml.ssoIssuer }}
+            - name: CONCOURSE_SAML_SSO_ISSUER
+              value: {{ .Values.concourse.web.auth.saml.ssoIssuer | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.saml.entityIssuer }}
+            - name: CONCOURSE_SAML_ENTITY_ISSUER
+              value: {{ .Values.concourse.web.auth.saml.entityIssuer | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.saml.usernameAttr }}
+            - name: CONCOURSE_SAML_USERNAME_ATTR
+              value: {{ .Values.concourse.web.auth.saml.usernameAttr | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.saml.emailAttr }}
+            - name: CONCOURSE_SAML_EMAIL_ATTR
+              value: {{ .Values.concourse.web.auth.saml.emailAttr | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.saml.groupsAttr }}
+            - name: CONCOURSE_SAML_GROUPS_ATTR
+              value: {{ .Values.concourse.web.auth.saml.groupsAttr | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.saml.groupsDelim }}
+            - name: CONCOURSE_SAML_GROUPS_DELIM
+              value: {{ .Values.concourse.web.auth.saml.groupsDelim | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.saml.nameIDPolicyFormat }}
+            - name: CONCOURSE_SAML_NAME_ID_POLICY_FORMAT
+              value: {{ .Values.concourse.web.auth.saml.nameIDPolicyFormat | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.saml.insecureSkipVerify }}
+            - name: CONCOURSE_SAML_SKIP_SSL_VALIDATION
+              value: {{ .Values.concourse.web.auth.saml.insecureSkipVerify | quote }}
+            {{- else }}
+            - name: CONCOURSE_SAML_CA_CERT
+              value: "{{ .Values.web.authSecretsPath }}/saml_ca.cert"
             {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.auth.oauth.enabled }}
@@ -1457,6 +1510,12 @@ spec:
               {{- if .Values.concourse.web.auth.ldap.useCaCert }}
               - key: ldap-ca-cert
                 path: ldap_ca.cert
+              {{- end }}
+              {{- if .Values.concourse.web.auth.saml.enabled }}
+              {{- if not .Values.concourse.web.auth.saml.insecureSkipVerify }}
+              - key: saml-ca-cert
+                path: saml_ca.cert
+              {{- end }}
               {{- end }}
               {{- if .Values.concourse.web.auth.oauth.useCaCert }}
               - key: oauth-ca-cert

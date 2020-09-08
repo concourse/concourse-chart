@@ -156,6 +156,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `secrets.postgresClientKey` | PostgreSQL Client key | `nil` |
 | `secrets.postgresPassword` | PostgreSQL User Password | `nil` |
 | `secrets.postgresUser` | PostgreSQL User Name | `nil` |
+| `secrets.samlCaCert` | CA Certificate for SAML | `nil` |
 | `secrets.sessionSigningKey` | Concourse Session Signing Private Key | *See [values.yaml](values.yaml)* |
 | `secrets.syslogCaCert` | SSL certificate to verify Syslog server | `nil` |
 | `secrets.teamAuthorizedKeys` | Array of team names and worker public keys for external workers | `nil` |
