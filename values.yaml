@@ -854,7 +854,7 @@ concourse:
         ##
         config: ""
 
-        ## List of local Concourse users to be included as members of the `main` team.
+        ## Comma-separated list of local Concourse users to be included as members of the `main` team.
         ## Make sure you have local users support enabled (`concourse.web.localAuth.enabled`) and
         ## that the users were added (`local-users` secret).
         ##
@@ -863,35 +863,35 @@ concourse:
         ## Authentication (Main Team) (CloudFoundry)
         ##
         cf:
-          ## List of whitelisted CloudFoundry users.
+          ## Comma-separated allow list of CloudFoundry users.
           ##
           user:
 
-          ## List of whitelisted CloudFoundry orgs
+          ## Comma-separated allow list of CloudFoundry orgs.
           ##
           org:
 
-          ## List of whitelisted CloudFoundry spaces for users with any role
+          ## Comma-separated allow list of CloudFoundry spaces for users with any role.
           ##
           spaceWithAnyRole:
 
-          ## List of whitelisted CloudFoundry spaces for users with the 'developer' role
+          ## Comma-separated allow list of CloudFoundry spaces for users with the 'developer' role.
           ##
           spaceWithDeveloperRole:
 
-          ## List of whitelisted CloudFoundry spaces for users with the 'auditor' role
+          ## Comma-separated allow list of CloudFoundry spaces for users with the 'auditor' role.
           ##
           spaceWithAuditorRole:
 
-          ## List of whitelisted CloudFoundry spaces for users with the 'manager' role
+          ## Comma-separated allow list of CloudFoundry spaces for users with the 'manager' role.
           ##
           spaceWithManagerRole:
 
-          ## (Deprecated) List of whitelisted CloudFoundry spaces for users with the 'developer' role
+          ## (Deprecated) Comma-separated allow list of CloudFoundry spaces for users with the 'developer' role.
           ##
           space:
 
-          ## (Deprecated) List of whitelisted CloudFoundry space guids
+          ## (Deprecated) Comma-separated allow list of CloudFoundry space guids.
           ##
           spaceGuid:
 
@@ -899,26 +899,26 @@ concourse:
         ##
         bitbucketCloud:
 
-          ## List of whitelisted Bitbucket Cloud users
+          ## Comma-separated allow list of Bitbucket Cloud users.
           ##
           user:
 
-          ## List of whitelisted Bitbucket Cloud teams
+          ## Comma-separated allow list of Bitbucket Cloud teams.
           ##
           team:
 
         ## Authentication (Main Team) (GitHub)
         ##
         github:
-          ## List of whitelisted GitHub users
+          ## Comma-separated allow list of GitHub users.
           ##
           user:
 
-          ## List of whitelisted GitHub orgs
+          ## Comma-separated allow list of GitHub orgs.
           ##
           org:
 
-          ## List of whitelisted GitHub teams
+          ## Comma-separated allow list of GitHub teams.
           ##
           team:
 
@@ -926,44 +926,44 @@ concourse:
         ##
         gitlab:
 
-          ## List of whitelisted GitLab users
+          ## Comma-separated allow list of GitLab users.
           ##
           user:
 
-          ## List of whitelisted GitLab groups
+          ## Comma-separated allow list of GitLab groups.
           ##
           group:
 
         ## Authentication (Main Team) (LDAP)
         ##
         ldap:
-          ## List of whitelisted LDAP users
+          ## Comma-separated allow list of LDAP users.
           ##
           user:
 
-          ## List of whitelisted LDAP groups
+          ## Comma-separated allow list of LDAP groups.
           ##
           group:
 
         ## Authentication (Main Team) (SAML)
         ##
         saml:
-          ## List of whitelisted SAML users
+          ## Comma-separated allow list of SAML users.
           ##
           user:
 
-          ## List of whitelisted SAML groups
+          ## Comma-separated allow list of SAML groups.
           ##
           group:
 
         ## Authentication (Main Team) (OAuth2)
         ##
         oauth:
-          ## List of whitelisted OAuth2 users
+          ## Comma-separated allow list of OAuth2 users.
           ##
           user:
 
-          ## List of whitelisted OAuth2 groups
+          ## Comma-separated allow list of OAuth2 groups.
           ##
           group:
 
@@ -971,11 +971,11 @@ concourse:
         ##
         oidc:
 
-          ## List of whitelisted OIDC users
+          ## Comma-separated allow list of OIDC users.
           ##
           user:
 
-          ## List of whitelisted OIDC groups
+          ## Comma-separated allow list of OIDC groups.
           ##
           group:
 
@@ -983,11 +983,11 @@ concourse:
         ##
         microsoft:
 
-          ## List of whitelisted Microsoft users
+          ## Comma-separated allow list of Microsoft users.
           ##
           user:
 
-          ## List of whitelisted Microsoft groups
+          ## Comma-separated allow list of Microsoft groups.
           ##
           group:
 
@@ -1843,7 +1843,7 @@ web:
       ##
       annotations: {}
 
-      ## When using `web.service.api.type: LoadBalancer`, whitelist the load balancer to particular IPs
+      ## When using `web.service.api.type: LoadBalancer`, restrict access to the load balancer to particular IPs
       ## Example:
       ##   - 192.168.1.10/32
       ##
@@ -1883,7 +1883,7 @@ web:
       ##
       annotations: {}
 
-      ## When using `web.service.workerGateway.type: LoadBalancer`, whitelist the load balancer to particular IPs
+      ## When using `web.service.workerGateway.type: LoadBalancer`, restrict access to the load balancer to particular IPs
       ## Example:
       ##   - 192.168.1.10/32
       ##
