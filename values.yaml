@@ -856,7 +856,7 @@ concourse:
 
         ## List of local Concourse users to be included as members of the `main` team.
         ## Make sure you have local users support enabled (`concourse.web.localAuth.enabled`) and
-        ## that the users were added (`local-users` secret).
+        ## that the users were added (`secrets.localUsers`).
         ##
         localUser: "test"
 
@@ -2259,6 +2259,7 @@ secrets:
   teamAuthorizedKeys:
 
   ## List of `username:password` or `username:bcrypted_password` combinations for all your local concourse users.
+  ## For details of expected format, see https://concourse-ci.org/local-auth.html 
   ##
   localUsers: "test:test"
 
