@@ -1,7 +1,7 @@
 {{- if .Values.web.enabled -}}
 {{- if .Values.web.ingress.enabled -}}
 {{- $releaseName := .Release.Name -}}
-{{- $serviceName := default "web" .Values.web.nameOverride -}}
+{{- $serviceName := include "concourse.web.fullname" . -}}
 {{- $servicePort := .Values.concourse.web.bindPort -}}
 apiVersion: {{ template "concourse.ingress.apiVersion" . }}
 kind: Ingress
@@ -23,7 +23,7 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: {{ printf "%s-%s" $releaseName $serviceName | trunc 63 | trimSuffix "-" }}
+              serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
     {{- end -}}
   {{- if .Values.web.ingress.tls }}
