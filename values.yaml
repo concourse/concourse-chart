@@ -378,9 +378,9 @@ concourse:
       enabled: true
 
       ## Prefix to use for Kubernetes namespaces under which secrets will be looked up.
-      ## Defaults to the Release name hyphen, e.g. "my-release-" produces namespace "my-release-main"
-      ## for the "main" Concourse team.
-      ##
+      ## Defaults to the Release (https://helm.sh/docs/glossary/#release) name
+      ## hyphen, e.g. "my-release-" produces namespace "my-release-main" for
+      ## the "main" Concourse team.
       namespacePrefix:
 
       ## Teams to create namespaces for to hold secrets.
