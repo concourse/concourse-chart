@@ -1499,6 +1499,14 @@ concourse:
       ##
       requestTimeout:
 
+      ## Maximum container capacity. 0 means no limit. Defaults to 250.
+      ##
+      maxContainers:
+
+      ## Network range to use for dynamically allocated container subnets. Defaults to "10.80.0.0/16".
+      ##
+      networkPool:
+
     containerd:
 
       ## Path to a containerd executable (non-absolute names get resolved from $PATH)."`
@@ -1524,7 +1532,7 @@ concourse:
       ##   - 2.2.2.2
       restrictedNetworks: []
 
-      ## Max container capacity. 0 means no limit.
+      ## Maximum container capacity. 0 means no limit. Defaults to 250.
       maxContainers:
 
       ## Network range to use for dynamically allocated container subnets, defaults to "10.80.0.0/16"

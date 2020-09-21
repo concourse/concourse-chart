@@ -665,12 +665,17 @@ The minimum IAM policy you need to use Secrets Manager with Concourse is:
 
 ## Developing
 
-- When adding a new Concourse flag, don't assign a `default` value in the `values.yml` that mirrors a default set by the Concourse binary. Instead, you may add a comment specifying the default, such as
+When adding a new Concourse flag, don't assign a `default` value in the `values.yml` that mirrors a default set by the Concourse binary.
+
+Instead, you may add a comment specifying the default, such as
 
   ```
       ## pipeline-specific template for SSM parameters, defaults to: /concourse/{{.Team}}/{{.Pipeline}}/{{.Secret}}
       ##
-      pipelineSecretTemplate: /concourse/{{.Team}}/{{.Pipeline}}/{{.Secret}}
+      pipelineSecretTemplate:
 
   ``` 
-  This prevents the possibility of drift if the Concourse binary default value changes.
+
+This prevents the behaviour drifting from that of the binary in case the binary's default values change.
+  
+We understand that the comment stating the binary's default can become stale. The current solution is a suboptimal one. It may be improved in the future by generating a list of the default values from the binary.

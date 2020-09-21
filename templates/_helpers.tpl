@@ -242,6 +242,14 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_GARDEN_REQUEST_TIMEOUT
   value: {{ .Values.concourse.worker.garden.requestTimeout | quote }}
 {{- end }}
+{{- if .Values.concourse.worker.garden.maxContainers }}
+- name: CONCOURSE_GARDEN_MAX_CONTAINERS
+  value: {{ .Values.concourse.worker.garden.maxContainers }}
+{{- end }}
+{{- if .Values.concourse.worker.garden.networkPool }}
+- name: CONCOURSE_GARDEN_NETWORK_POOL
+  value: {{ .Values.concourse.worker.garden.networkPool | quote }}
+{{- end }}
 {{- if .Values.concourse.worker.containerd.bin }}
 - name: CONCOURSE_CONTAINERD_BIN
   value: {{ .Values.concourse.worker.containerd.bin | quote }}
