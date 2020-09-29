@@ -1542,6 +1542,8 @@ concourse:
       ## Time to wait for requests to Containerd to complete. 0 means no timeout.
       requestTimeout:
 
+      ## Path to a dumb init executable, defaults to /usr/local/concourse/bin/init
+      initBin:
 
     ## API endpoint of an externally managed Garden server to use instead of
     ## running the embedded Garden server.
