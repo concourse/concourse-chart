@@ -45,3 +45,7 @@ in concourse/concourse#5141 (part of 6.0), riemann was completely removed, makin
 # v13.0.0:
 
 - upgraded the PostgreSQL Chart (direct dependency of this Chart) from `6.5.5` to `9.2.0`. As the backward compatibility is not guarantee when upgrading the PostgreSQL chart to this major version, a major bump was needed. Please refer to [PostgreSQL Chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql#upgrade) for details.
+
+# v14.0.0:
+
+- The chart is now targeting Helm v3 and no longer supports Helm v2. Trying to deploy this version of the chart with Helm v2 will result an error such as `apiVersion 'v2' is not valid. The value must be "v1"`.
