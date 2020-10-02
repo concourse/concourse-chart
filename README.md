@@ -7,7 +7,7 @@
 
 ```console
 $ helm repo add concourse https://concourse-charts.storage.googleapis.com/
-$ helm install concourse/concourse
+$ helm install my-release concourse/concourse
 ```
 
 
@@ -20,7 +20,7 @@ This chart bootstraps a [Concourse](https://concourse-ci.org/) deployment on a [
 
 * Kubernetes 1.6 (for [`pod affinity`](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) support)
 * [`PersistentVolume`](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) support on underlying infrastructure (if persistence is required)
-* Helm v2.x
+* Helm v3.x
 
 
 ## Installing the Chart
@@ -28,7 +28,7 @@ This chart bootstraps a [Concourse](https://concourse-ci.org/) deployment on a [
 To install the chart with the release name `my-release`:
 
 ```console
-$ helm install --name my-release concourse/concourse
+$ helm install my-release concourse/concourse
 ```
 
 
@@ -216,12 +216,14 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.service.api.NodePort` | Sets the nodePort for api when using `NodePort` | `nil` |
 | `web.service.api.labels` | Additional concourse web api service labels | `nil` |
 | `web.service.api.loadBalancerIP` | The IP to use when web.service.api.type is LoadBalancer | `nil` |
+| `web.service.api.clusterIP` | The IP to use when web.service.api.type is ClusterIP | `None` |
 | `web.service.api.loadBalancerSourceRanges` | Concourse Web API Service Load Balancer Source IP ranges | `nil` |
 | `web.service.api.tlsNodePort` | Sets the nodePort for api tls when using `NodePort` | `nil` |
 | `web.service.api.type` | Concourse Web API service type | `ClusterIP` |
 | `web.service.workerGateway.annotations` | Concourse Web workerGateway Service annotations | `nil` |
 | `web.service.workerGateway.labels` | Additional concourse web workerGateway service labels | `nil` |
 | `web.service.workerGateway.loadBalancerIP` | The IP to use when web.service.workerGateway.type is LoadBalancer | `nil` |
+| `web.service.workerGateway.clusterIP` | The IP to use when web.service.workerGateway.type is ClusterIP | `None` |
 | `web.service.workerGateway.loadBalancerSourceRanges` | Concourse Web workerGateway Service Load Balancer Source IP ranges | `nil` |
 | `web.service.workerGateway.NodePort` | Sets the nodePort for workerGateway when using `NodePort` | `nil` |
 | `web.service.workerGateway.type` | Concourse Web workerGateway service type | `ClusterIP` |
@@ -287,7 +289,7 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```console
-$ helm install --name my-release -f values.yaml concourse/concourse
+$ helm install my-release -f values.yaml concourse/concourse
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
