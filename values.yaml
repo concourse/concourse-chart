@@ -2294,7 +2294,7 @@ rbac:
 
   ## RBAC Version
   ##
-  apiVersion: v1beta1
+  apiVersion: v1
 
   ## The name of the service account to use for web pods if rbac.create is false
   ##
