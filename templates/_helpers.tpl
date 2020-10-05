@@ -286,9 +286,13 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_CONTAINERD_REQUEST_TIMEOUT
   value: {{ .Values.concourse.worker.containerd.requestTimeout | quote }}
 {{- end }}
-{{- if .Values.concourse.worker.containerd.requestTimeout }}
+{{- if .Values.concourse.worker.containerd.initBin }}
 - name: CONCOURSE_CONTAINERD_INIT_BIN
   value: {{ .Values.concourse.worker.containerd.initBin | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.containerd.cniPluginsDir }}
+- name: CONCOURSE_CONTAINERD_CNI_PLUGINS_DIR
+  value: {{ .Values.concourse.worker.containerd.cniPluginsDir | quote }}
 {{- end }}
 {{- if .Values.concourse.worker.baggageclaim.logLevel }}
 - name: CONCOURSE_BAGGAGECLAIM_LOG_LEVEL
