@@ -104,10 +104,6 @@ concourse:
     ##
     lidarScannerInterval:
 
-    ## Interval on which the resource checker runs any scheduled checks.
-    ##
-    lidarCheckerInterval:
-
     ## Limit the number of concurrent requests to an API endpoint.
     ##
     ## Example:
