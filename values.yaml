@@ -1541,6 +1541,9 @@ concourse:
       ## Path to a dumb init executable, defaults to /usr/local/concourse/bin/init
       initBin:
 
+      ## Path to CNI network plugins, defaults to /usr/local/concourse/bin
+      cniPluginsDir:
+
     ## API endpoint of an externally managed Garden server to use instead of
     ## running the embedded Garden server.
     ##
