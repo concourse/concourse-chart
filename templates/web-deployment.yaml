@@ -103,10 +103,6 @@ spec:
             - name: CONCOURSE_LIDAR_SCANNER_INTERVAL
               value: {{ .Values.concourse.web.lidarScannerInterval | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.lidarCheckerInterval }}
-            - name: CONCOURSE_LIDAR_CHECKER_INTERVAL
-              value: {{ .Values.concourse.web.lidarCheckerInterval | quote }}
-            {{- end }}
             {{- if .Values.concourse.web.concurrentRequestLimits }}
             - name: CONCOURSE_CONCURRENT_REQUEST_LIMIT
               value: "{{- $local := dict "first" true -}}{{- range $k, $v := .Values.concourse.web.concurrentRequestLimits -}}{{- if not $local.first -}},{{- end -}}{{- $k -}}:{{- $v -}}{{- $_ := set $local "first" false -}}{{- end -}}"
