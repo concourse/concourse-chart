@@ -87,13 +87,17 @@ concourse:
     ##
     enableGlobalResources: true
 
-    ## Enable automatic rerunning of builds when worker disappears
+    ## Enable automatic rerunning of builds when worker disappears.
     ##
     enableBuildRerunWhenWorkerDisappears: false
 
     ## Enable the experimental across step to be used in jobs. The API is subject to change.
     ##
     enableAcrossStep: false
+
+    ## Enable the creation of instanced pipelines.
+    ##
+    enablePipelineInstances: false
 
     ## Maximum number of jobs to be scheduling at the same time.
     ##
