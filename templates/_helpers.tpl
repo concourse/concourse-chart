@@ -244,7 +244,7 @@ Return concourse environment variables for worker configuration
 {{- end }}
 {{- if .Values.concourse.worker.garden.maxContainers }}
 - name: CONCOURSE_GARDEN_MAX_CONTAINERS
-  value: {{ .Values.concourse.worker.garden.maxContainers }}
+  value: {{ .Values.concourse.worker.garden.maxContainers | quote }}
 {{- end }}
 {{- if .Values.concourse.worker.garden.networkPool }}
 - name: CONCOURSE_GARDEN_NETWORK_POOL
