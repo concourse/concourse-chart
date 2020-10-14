@@ -299,6 +299,10 @@ spec:
             - name: CONCOURSE_RESOURCE_WITH_WEBHOOK_CHECKING_INTERVAL
               value: {{ .Values.concourse.web.resourceWithWebhookCheckingInterval | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.baseResourceTypeDefaults }}
+            - name: CONCOURSE_BASE_RESOURCE_TYPE_DEFAULTS
+              value: /brt-defaults.yml
+            {{- end }}
             {{- if .Values.concourse.web.containerPlacementStrategy }}
             - name: CONCOURSE_CONTAINER_PLACEMENT_STRATEGY
               value: {{ .Values.concourse.web.containerPlacementStrategy | quote }}
@@ -1349,6 +1353,11 @@ spec:
               mountPath: /config-rbac.yml
               subPath: config-rbac.yml
 {{- end }}
+{{- if .Values.concourse.web.baseResourceTypeDefaults }}
+            - name: brt-defaults-config
+              mountPath: /brt-defaults.yml
+              subPath: brt-defaults.yml
+{{- end }}
             - name: concourse-keys
               mountPath: {{ .Values.web.keySecretsPath | quote }}
               readOnly: true
@@ -1402,6 +1411,11 @@ spec:
 {{- end }}
 {{- if .Values.concourse.web.configRBAC }}
         - name: config-rbac
+          configMap:
+            name: {{ template "concourse.web.fullname" . }}
+{{- end }}
+{{- if .Values.concourse.web.baseResourceTypeDefaults }}
+        - name: brt-defaults
           configMap:
             name: {{ template "concourse.web.fullname" . }}
 {{- end }}
