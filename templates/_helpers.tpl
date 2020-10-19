@@ -276,7 +276,7 @@ Return concourse environment variables for worker configuration
 {{- end }}
 {{- if .Values.concourse.worker.containerd.maxContainers }}
 - name: CONCOURSE_CONTAINERD_MAX_CONTAINERS
-  value: {{ .Values.concourse.worker.containerd.maxContainers }}
+  value: {{ .Values.concourse.worker.containerd.maxContainers | quote }}
 {{- end }}
 {{- if .Values.concourse.worker.containerd.networkPool }}
 - name: CONCOURSE_CONTAINERD_NETWORK_POOL
