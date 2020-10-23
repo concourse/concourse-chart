@@ -597,6 +597,22 @@ concourse:
       ##
       stackdriverProjectId:
 
+      ## Honeycomb.io API Key
+      ##
+      honeycombApiKey:
+
+      ## Name of dataset
+      ##
+      ## Example: "web"
+      ##
+      honeycombDataset:
+
+      ## Name of the service being traced
+      ##
+      ## Example: "concourse"
+      ##
+      honeycombServiceName:
+
     metrics:
       ## Host string to attach to emitted metrics.
       ##

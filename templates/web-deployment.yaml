@@ -199,6 +199,18 @@ spec:
             - name: CONCOURSE_TRACING_STACKDRIVER_PROJECTID
               value: {{ .Values.concourse.web.tracing.stackdriverProjectId | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.tracing.honeycombApiKey }}
+            - name: CONCOURSE_TRACING_HONEYCOMB_API_KEY
+              value: {{ .Values.concourse.web.tracing.honeycombApiKey | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.tracing.honeycombDataset }}
+            - name: CONCOURSE_TRACING_HONEYCOMB_DATASET
+              value: {{ .Values.concourse.web.tracing.honeycombDataset | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.tracing.honeycombServiceName }}
+            - name: CONCOURSE_TRACING_HONEYCOMB_SERVICE_NAME
+              value: {{ .Values.concourse.web.tracing.honeycombServiceName | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.metrics.bufferSize }}
             - name: CONCOURSE_METRICS_BUFFER_SIZE
               value: {{ .Values.concourse.web.metrics.bufferSize | quote }}
