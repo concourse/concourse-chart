@@ -357,7 +357,7 @@ concourse:
     ##
     buildEventsBigintBatchSize:
 
-    ## The number of seconds between build event migration batches. (default: 10)
+    ## The time between build event migration batches. (default: 10s)
     ## Used as part of the build events batch migration added in 6.7.0.
     ##
     buildEventsBigintInterval:
