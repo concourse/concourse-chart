@@ -352,6 +352,16 @@ concourse:
     ##
     peerAddress:
 
+    ## The number of build events to migrate to use bigints in a single interval. (default: 100000)
+    ## Used as part of the build events batch migration added in 6.7.0.
+    ##
+    buildEventsBigintBatchSize:
+
+    ## The time between build event migration batches. (default: 10s)
+    ## Used as part of the build events batch migration added in 6.7.0.
+    ##
+    buildEventsBigintInterval:
+
     ## Configurations regarding how the web component is able to connect to a postgres
     ## instance.
     ##

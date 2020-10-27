@@ -395,6 +395,14 @@ spec:
             - name: CONCOURSE_DEFAULT_TASK_MEMORY_LIMIT
               value: {{ .Values.concourse.web.defaultTaskMemoryLimit | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.buildEventsBigintBatchSize }}
+            - name: CONCOURSE_BUILD_EVENTS_BIGINT_BATCH_SIZE
+              value: {{ .Values.concourse.web.buildEventsBigintBatchSize | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.buildEventsBigintInterval }}
+            - name: CONCOURSE_BUILD_EVENTS_BIGINT_INTERVAL
+              value: {{ .Values.concourse.web.buildEventsBigintInterval | quote }}
+            {{- end }}
             {{- if .Values.postgresql.enabled }}
             - name: CONCOURSE_POSTGRES_HOST
               value: {{ template "concourse.postgresql.fullname" . }}
