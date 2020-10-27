@@ -573,6 +573,19 @@ concourse:
       secretTemplate:
 
     tracing:
+      ## Service name to attach to traces as metadata.
+      #
+      ## Example: "web"
+      ##
+      serviceName:
+
+      ## Attributes to attach to traces as metadata.
+      #
+      ## Example:
+      ##   environment: ci
+      ##
+      attributes:
+
       ## Jaeger's HTTP-based Thrift collector endpoint.
       #
       ## Example: "http://jaeger:14268/api/traces"
@@ -612,6 +625,23 @@ concourse:
       ## Example: "concourse"
       ##
       honeycombServiceName:
+
+      ## OTLP address to send traces to
+      ##
+      ## Example: "otel-collector:55680"
+      ##
+      otlpAddress:
+
+      ## Headers to attach to each tracing message
+      ##
+      ## Example:
+      ##   lightstep-access-token: mysupersecrettoken
+      ##
+      otlpHeaders:
+
+      ## Whether to use TLS for the OTLP connection
+      ##
+      otlpUseTls:
 
     metrics:
       ## Host string to attach to emitted metrics.
