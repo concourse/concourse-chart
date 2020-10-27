@@ -183,6 +183,14 @@ spec:
             - name: CONCOURSE_AWS_SSM_REGION
               value: {{ .Values.concourse.web.awsSsm.region | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.tracing.serviceName }}
+            - name: CONCOURSE_TRACING_SERVICE_NAME
+              value: {{ .Values.concourse.web.tracing.serviceName | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.tracing.attributes }}
+            - name: CONCOURSE_TRACING_ATTRIBUTE
+              value: "{{- $local := dict "first" true -}}{{- range $k, $v := .Values.concourse.web.tracing.attributes -}}{{- if not $local.first -}},{{- end -}}{{- $k -}}:{{- $v -}}{{- $_ := set $local "first" false -}}{{- end -}}"
+            {{- end }}
             {{- if .Values.concourse.web.tracing.jaegerEndpoint }}
             - name: CONCOURSE_TRACING_JAEGER_ENDPOINT
               value: {{ .Values.concourse.web.tracing.jaegerEndpoint | quote }}
@@ -206,6 +214,18 @@ spec:
             {{- if .Values.concourse.web.tracing.honeycombDataset }}
             - name: CONCOURSE_TRACING_HONEYCOMB_DATASET
               value: {{ .Values.concourse.web.tracing.honeycombDataset | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.tracing.otlpAddress }}
+            - name: CONCOURSE_TRACING_OTLP_ADDRESS
+              value: {{ .Values.concourse.web.tracing.otlpAddress | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.tracing.otlpHeaders }}
+            - name: CONCOURSE_TRACING_OTLP_HEADER
+              value: "{{- $local := dict "first" true -}}{{- range $k, $v := .Values.concourse.web.tracing.otlpHeaders -}}{{- if not $local.first -}},{{- end -}}{{- $k -}}:{{- $v -}}{{- $_ := set $local "first" false -}}{{- end -}}"
+            {{- end }}
+            {{- if .Values.concourse.web.tracing.otlpUseTls }}
+            - name: CONCOURSE_TRACING_OTLP_USE_TLS
+              value: {{ .Values.concourse.web.tracing.otlpUseTls | quote }}
             {{- end }}
             {{- if .Values.concourse.web.tracing.honeycombServiceName }}
             - name: CONCOURSE_TRACING_HONEYCOMB_SERVICE_NAME
