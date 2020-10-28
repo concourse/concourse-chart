@@ -1419,7 +1419,7 @@ spec:
             name: {{ template "concourse.web.fullname" . }}
 {{- end }}
 {{- if .Values.concourse.web.baseResourceTypeDefaults }}
-        - name: brt-defaults
+        - name: brt-defaults-config
           configMap:
             name: {{ template "concourse.web.fullname" . }}
 {{- end }}
