@@ -2352,6 +2352,16 @@ secrets:
   ##
   create: true
 
+  ## Annotations to be added to the secrets.
+  ##
+  ## Example:
+  ##   key1: "value1"
+  ##   key2: "value2"
+  ##
+  ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  annotations: {}
+
   ## Array of team names and public keys for team external workers.
   ##
   ## Example:
