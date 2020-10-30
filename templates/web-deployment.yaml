@@ -51,6 +51,9 @@ spec:
       initContainers:
       {{- toYaml .Values.web.extraInitContainers | nindent 8 }}
       {{- end }}
+      {{- if .Values.web.dangerousAdditionalPodSpecFields }}
+      {{- toYaml .Values.web.dangerousAdditionalPodSpecFields | nindent 6 }}
+      {{- end }}
       containers:
       {{- if .Values.web.sidecarContainers }}
       {{- toYaml .Values.web.sidecarContainers | nindent 8 }}

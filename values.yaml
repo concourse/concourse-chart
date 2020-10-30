@@ -1645,7 +1645,6 @@ concourse:
 ## Concourse Web nodes, see https://concourse-ci.org/concourse-web.html.
 ##
 web:
-
   ## Enable or disable the web component.
   ## This allows the creation of worker-only releases by setting this to false.
   ##
@@ -1728,6 +1727,19 @@ web:
   ##     value: "debug"
   ##
   env:
+
+  ## Configure additional fields for the Pod spec
+  ## This provides a way to add arbitrary fields to the pod spec, this could be
+  ## useful to configure things that are not necessarily supported by the current
+  ## chart version
+  ## Warning: this could be dangerous and you should know what you're doing
+  ## Example:
+  ##   securityContext:
+  ##     capabilities:
+  ##       add:
+  ##         - SYS_PTRACE
+  ##
+  dangerousAdditionalPodSpecFields:
 
   ## Where secrets should be mounted for the web container.
   ##
@@ -1937,9 +1949,6 @@ web:
       ##
       ##
       annotations: {}
-
-
-
 
   ## Ingress configuration.
   ## Ref: https://kubernetes.io/docs/user-guide/ingress/
