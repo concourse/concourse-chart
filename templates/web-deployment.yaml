@@ -11,7 +11,8 @@ metadata:
 spec:
   replicas: {{ .Values.web.replicas }}
 {{- if .Values.web.strategy }}
-{{ toYaml .Values.web.strategy | indent 2 }}
+  strategy:
+{{ toYaml .Values.web.strategy | indent 4 }}
 {{- end }}
   selector:
     matchLabels:

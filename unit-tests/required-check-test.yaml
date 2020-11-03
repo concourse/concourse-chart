@@ -9,6 +9,7 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: "Must set either web.enabled or worker.enabled to create a concourse deployment"
+
   - it: should return an error if TSA host is not set in a worker only deployment
     set:
       web.enabled: false

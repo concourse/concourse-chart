@@ -1,0 +1,88 @@
+suite: Web Deployment
+templates:
+  - web-deployment.yaml
+tests:
+  - it: should render by default
+    capabilities:
+      # 1.9.0
+      minorVersion: 9
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+         of: Deployment
+      - equal:
+          path: apiVersion
+          value: apps/v1
+
+  - it: metadata contains
+    release:
+      name: release
+    asserts:
+      - equal:
+          path: metadata.name
+          value: release-web
+      - isNotEmpty:
+          path: metadata.labels.chart
+      - isNotEmpty:
+          path: metadata.labels.release
+      - isNotEmpty:
+          path: metadata.labels.heritage
+
+  - it: fullnameOverride is used
+    set:
+      fullnameOverride: fullOverride
+      web.nameOverride: webOverride
+    asserts:
+      - equal:
+          path: metadata.name
+          value: fullOverride-webOverride
+
+  - it: has specified replicas
+    set:
+      web.replicas: 5
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 5
+
+  - it: renders the strategy
+    set:
+      web.strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxSurge: 1
+          maxUnavailable: 25%
+    asserts:
+      - isNotEmpty:
+          path: spec.strategy
+      - isNotEmpty:
+          path: spec.strategy.type
+      - isNotEmpty:
+          path: spec.strategy.rollingUpdate
+
+  - it: renders matchLabels
+    release:
+      name: release
+    asserts:
+      - equal:
+          path: spec.selector.matchLabels.app
+          value: release-web
+      - equal:
+          path: spec.selector.matchLabels.release
+          value: release
+
+  - it: renders template metadata
+    release:
+      name: release
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels.app
+          value: release-web
+      - equal:
+          path: spec.template.metadata.labels.release
+          value: release
+      - isNotEmpty:
+          path: spec.template.metadata.annotations.checksum/secrets
+      - isNotEmpty:
+          path: spec.template.metadata.annotations.checksum/config
