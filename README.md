@@ -672,13 +672,25 @@ When adding a new Concourse flag, don't assign a `default` value in the `values.
 
 Instead, you may add a comment specifying the default, such as
 
-  ```
-      ## pipeline-specific template for SSM parameters, defaults to: /concourse/{{.Team}}/{{.Pipeline}}/{{.Secret}}
-      ##
-      pipelineSecretTemplate:
+```
+  ## pipeline-specific template for SSM parameters, defaults to: /concourse/{{.Team}}/{{.Pipeline}}/{{.Secret}}
+  ##
+  pipelineSecretTemplate:
 
-  ``` 
+```
+or an example, such as
+```
+  ## When using `web.service.api.type: ClusterIP`, sets the user-specified cluster IP.
+  ## Example: 172.217.1.174
+  ##
+  clusterIP: None
+```
 
 This prevents the behaviour drifting from that of the binary in case the binary's default values change.
   
 We understand that the comment stating the binary's default can become stale. The current solution is a suboptimal one. It may be improved in the future by generating a list of the default values from the binary.
+
+To run the unit tests use the `Makefile`
+```
+make test
+```
