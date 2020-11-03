@@ -1,0 +1,18 @@
+suite: Required Checks
+templates:
+  - required-check.yaml
+tests:
+  - it: should return an error if web and worker are disabled
+    set:
+      web.enabled: false
+      worker.enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: "Must set either web.enabled or worker.enabled to create a concourse deployment"
+  - it: should return an error if TSA host is not set in a worker only deployment
+    set:
+      web.enabled: false
+      worker.enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "concourse.worker.tsa.hosts must be set in case of worker only deployment"
