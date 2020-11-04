@@ -1748,6 +1748,14 @@ web:
   ##
   extraInitContainers: []
 
+  ## Enable or disable the process namespace sharing for the web nodes.
+  ## This allows signaling the concourse process from a sidecar container.
+  ## eg.: signal concourse web to reload the team authorized keys file.
+  ##
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/
+  ##
+  shareProcessNamespace: false
+
   ## Configures the liveness probe used to determine if the Web component is up.
   ## ps.: if you're upgrading Concourse from one version  to another, the probe will
   ## probably fail for some time before migrations are finished - in such situations,
