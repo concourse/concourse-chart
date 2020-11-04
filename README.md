@@ -229,6 +229,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.service.workerGateway.type` | Concourse Web workerGateway service type | `ClusterIP` |
 | `web.service.prometheus.annotations` | Concourse Web Prometheus Service annotations | `nil` |
 | `web.service.prometheus.labels` | Additional concourse web prometheus service labels | `nil` |
+| `web.shareProcessNamespace` | Enable or disable the process namespace sharing for the web nodes | `false` |
 | `web.sidecarContainers` | Array of extra containers to run alongside the Concourse web container | `nil` |
 | `web.extraInitContainers` | Array of extra init containers to run before the Concourse web container | `nil` |
 | `web.strategy` | Strategy for updates to deployment. | `{}` |
