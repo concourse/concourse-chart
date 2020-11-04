@@ -16,12 +16,10 @@ tests:
           value: apps/v1
 
   - it: metadata contains
-    release:
-      name: release
     asserts:
       - equal:
           path: metadata.name
-          value: release-web
+          value: RELEASE-NAME-web
       - isNotEmpty:
           path: metadata.labels.chart
       - isNotEmpty:
@@ -62,27 +60,243 @@ tests:
           path: spec.strategy.rollingUpdate
 
   - it: renders matchLabels
-    release:
-      name: release
     asserts:
       - equal:
           path: spec.selector.matchLabels.app
-          value: release-web
+          value: RELEASE-NAME-web
       - equal:
           path: spec.selector.matchLabels.release
-          value: release
+          value: RELEASE-NAME
 
   - it: renders template metadata
-    release:
-      name: release
+    set:
+      web.labels:
+        label1: value1
+        label2: value2
+      web.annotations:
+        annot1: value1
+        annot2: value2
     asserts:
       - equal:
-          path: spec.template.metadata.labels.app
-          value: release-web
+          path: spec.template.metadata.labels
+          value:
+            app: RELEASE-NAME-web
+            release: RELEASE-NAME
+            label1: value1
+            label2: value2
       - equal:
-          path: spec.template.metadata.labels.release
-          value: release
+          path: spec.template.metadata.annotations.annot1
+          value: value1
+      - equal:
+          path: spec.template.metadata.annotations.annot2
+          value: value2
       - isNotEmpty:
           path: spec.template.metadata.annotations.checksum/secrets
       - isNotEmpty:
           path: spec.template.metadata.annotations.checksum/config
+
+
+  # Spec tests
+  #
+  - it: renders nodeSelector
+    set:
+      web.nodeSelector:
+        key1: value1
+    asserts:
+      - equal:
+          path: spec.template.spec.nodeSelector
+          value:
+            key1: value1
+
+  - it: renders serviceAccountName when rbac creation is disabled
+    set:
+      rbac.create: false
+      rbac.webServiceAccountName: rbacAccount
+    asserts:
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: rbacAccount
+
+  - it: renders web fullname as rbac service account
+    asserts:
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: RELEASE-NAME-web
+
+  - it: renders tolerations
+    set:
+      web.tolerations:
+        - key: "toleration=key"
+          operator: "Equal"
+          value: "value"
+          effect: "NoSchedule"
+    asserts:
+      - equal:
+          path: spec.template.spec.tolerations
+          value:
+            - key: "toleration=key"
+              operator: "Equal"
+              value: "value"
+              effect: "NoSchedule"
+
+  - it: renders imagePullSecrets
+    set:
+      imagePullSecrets:
+        - secret1
+        - secret2
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets
+          value:
+            - name: secret1
+            - name: secret2
+
+  - it: renders extraInitContainers
+    set:
+      web.extraInitContainers:
+        - name: init-1
+          image: alpine
+          command: ['sh', '-c', 'echo Hello World']
+        - name: init-2
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              echo hello world!
+              sleep 10
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers
+          value:
+            - name: init-1
+              image: alpine
+              command: ['sh', '-c', 'echo Hello World']
+            - name: init-2
+              image: busybox
+              command:
+                - sh
+                - -c
+                - |
+                  echo hello world!
+                  sleep 10
+
+  - it: renders containers and sidecarContainers
+    set:
+      imageTag: "4.4.4"
+      web.sidecarContainers:
+        - name: init-1
+          image: alpine
+          command: ['sh', '-c', 'echo Hello World']
+        - name: init-2
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              echo hello world!
+              sleep 10
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0]
+          value:
+            name: init-1
+            image: alpine
+            command: ['sh', '-c', 'echo Hello World']
+      - equal:
+          path: spec.template.spec.containers[1]
+          value:
+            name: init-2
+            image: busybox
+            command:
+              - sh
+              - -c
+              - |
+                echo hello world!
+                sleep 10
+      # main concourse container splt into multiple asserts because all the env
+      # vars that render would make this test really long
+      - equal:
+          path: spec.template.spec.containers[2].name
+          value: RELEASE-NAME-web
+      - equal:
+          path: spec.template.spec.containers[2].image
+          value: "concourse/concourse:4.4.4"
+      - equal:
+          path: spec.template.spec.containers[2].imagePullPolicy
+          value: IfNotPresent
+      - equal:
+          path: spec.template.spec.containers[2].args
+          value: ["web"]
+
+  - it: renders default ports
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: atc
+            containerPort: 8080
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: tsa
+            containerPort: 2222
+
+  - it: renders custom/non-default ports
+    set:
+      concourse.web.tls.enabled: true
+      secrets.webTlsCert: fakecert
+      secrets.webTlsKey: fakekey
+      concourse.web.externalUrl: url
+      concourse.web.debugBindPort: 1111
+      concourse.web.tsa.bindDebugPort: 1234
+      concourse.web.prometheus.enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: atc-tls
+            containerPort: 443
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: atc-debug
+            containerPort: 1111
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: tsa-debug
+            containerPort: 1234
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: prometheus
+            containerPort: 9391
+
+  - it: renders the liveness and readiness probes
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].livenessProbe
+          value:
+            failureThreshold: 5
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            timeoutSeconds: 3
+            httpGet:
+              path: /api/v1/info
+              port: atc
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            httpGet:
+              path: /api/v1/info
+              port: atc
+
+  - it: renders resouces
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
