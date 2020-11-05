@@ -2,7 +2,7 @@ suite: Web Deployment
 templates:
   - web-deployment.yaml
 tests:
-  - it: should render by default
+  - it: should render successfully with default values.yaml
     capabilities:
       # 1.9.0
       minorVersion: 9
@@ -15,7 +15,7 @@ tests:
           path: apiVersion
           value: apps/v1
 
-  - it: metadata contains
+  - it: metadata should be populated
     asserts:
       - equal:
           path: metadata.name
@@ -52,12 +52,13 @@ tests:
           maxSurge: 1
           maxUnavailable: 25%
     asserts:
-      - isNotEmpty:
+      - equal:
           path: spec.strategy
-      - isNotEmpty:
-          path: spec.strategy.type
-      - isNotEmpty:
-          path: spec.strategy.rollingUpdate
+          value:
+            type: RollingUpdate
+            rollingUpdate:
+              maxSurge: 1
+              maxUnavailable: 25%
 
   - it: renders matchLabels
     asserts:
@@ -96,7 +97,7 @@ tests:
           path: spec.template.metadata.annotations.checksum/config
 
 
-  # Spec tests
+  # Template.Spec tests
   #
   - it: renders nodeSelector
     set:
