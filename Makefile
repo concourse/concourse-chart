@@ -1,7 +1,7 @@
 .PHONY: test
 
 test:
-	helm unittest -f 'unit-tests/*.yaml' ./ --helm3
+	helm unittest --helm3 -f 'unit-tests/*.yaml' ./
 
 template:
 	helm template test ./ > rendered.yaml
