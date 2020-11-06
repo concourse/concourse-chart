@@ -2316,9 +2316,15 @@ rbac:
   ##
   webServiceAccountName: default
 
+  ## Any annotations required for the web Service Account
+  webServiceAccountAnnotations: {}
+
   ## The name of the service account to use for worker pods if rbac.create is false
   ##
   workerServiceAccountName: default
+
+  ## Any annotations required for the worker Service Account
+  workerServiceAccountAnnotations: {} 
 
 ## For managing podSecurityPolicies. To make sure rbac objects are also created
 ## for the use of the podsecuritypolicy objects,
