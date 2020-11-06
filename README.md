@@ -109,6 +109,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `podSecurityPolicy.create` | Enables creation of podSecurityPolicy resources | `false` |
 | `podSecurityPolicy.allowedWorkerVolumes` | List of volumes allowed by the podSecurityPolicy for the worker pods | *See [values.yaml](values.yaml)* |
 | `podSecurityPolicy.allowedWebVolumes` | List of volumes allowed by the podSecurityPolicy for the web pods | *See [values.yaml](values.yaml)* |
+| `secrets.annotations`| Annotations to be added to the secrets | `{}` |
 | `secrets.awsSecretsmanagerAccessKey` | AWS Access Key ID for Secrets Manager access | `nil` |
 | `secrets.awsSecretsmanagerSecretKey` | AWS Secret Access Key ID for Secrets Manager access | `nil` |
 | `secrets.awsSecretsmanagerSessionToken` | AWS Session Token for Secrets Manager access | `nil` |
