@@ -2377,9 +2377,15 @@ rbac:
   ##
   webServiceAccountName: default
 
+  ## Any annotations required for the web Service Account
+  webServiceAccountAnnotations: {}
+
   ## The name of the service account to use for worker pods if rbac.create is false
   ##
   workerServiceAccountName: default
+
+  ## Any annotations required for the worker Service Account
+  workerServiceAccountAnnotations: {} 
 
 ## For managing podSecurityPolicies. To make sure rbac objects are also created
 ## for the use of the podsecuritypolicy objects,
@@ -2420,6 +2426,16 @@ secrets:
   ## false to manage these secrets outside Helm.
   ##
   create: true
+
+  ## Annotations to be added to the secrets.
+  ##
+  ## Example:
+  ##   key1: "value1"
+  ##   key2: "value2"
+  ##
+  ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  annotations: {}
 
   ## Array of team names and public keys for team external workers.
   ##
