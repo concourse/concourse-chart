@@ -1728,18 +1728,13 @@ web:
   ##
   env:
 
-  ## Configure additional fields for the Pod spec
-  ## This provides a way to add arbitrary fields to the pod spec, this could be
-  ## useful to configure things that are not necessarily supported by the current
-  ## chart version
-  ## Warning: this could be dangerous and you should know what you're doing
+  ## Configure the security context for the web containers.
   ## Example:
-  ##   securityContext:
-  ##     capabilities:
-  ##       add:
-  ##         - SYS_PTRACE
+  ##   capabilities:
+  ##     add:
+  ##       - SYS_PTRACE
   ##
-  dangerousAdditionalPodSpecFields:
+  securityContext:
 
   ## Where secrets should be mounted for the web container.
   ##

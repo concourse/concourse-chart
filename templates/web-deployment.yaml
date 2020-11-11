@@ -51,9 +51,6 @@ spec:
       initContainers:
       {{- toYaml .Values.web.extraInitContainers | nindent 8 }}
       {{- end }}
-      {{- if .Values.web.dangerousAdditionalPodSpecFields }}
-      {{- toYaml .Values.web.dangerousAdditionalPodSpecFields | nindent 6 }}
-      {{- end }}
       containers:
       {{- if .Values.web.sidecarContainers }}
       {{- toYaml .Values.web.sidecarContainers | nindent 8 }}
@@ -1403,6 +1400,10 @@ spec:
             - name: auth-keys
               mountPath: {{ .Values.web.authSecretsPath | quote }}
               readOnly: true
+          {{- if .Values.web.securityContext }}
+          securityContext:
+          {{- toYaml .Values.web.securityContext | nindent 12 }}
+          {{- end }}
 {{- if .Values.web.additionalAffinities }}
       affinity:
 {{ toYaml .Values.web.additionalAffinities | indent 8 }}
