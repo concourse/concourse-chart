@@ -95,6 +95,10 @@ concourse:
     ##
     enableAcrossStep: false
 
+    ## Enable skip checking not-in-use resources.
+    ##
+    enableSkipCheckingNotInUseResources: false
+
     ## Maximum number of jobs to be scheduling at the same time.
     ##
     jobSchedulingMaxInFlight:
