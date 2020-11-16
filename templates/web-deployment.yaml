@@ -95,6 +95,10 @@ spec:
             - name: CONCOURSE_ENABLE_ACROSS_STEP
               value: {{ .Values.concourse.web.enableAcrossStep | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.enableSkipCheckingNotInUseResources }}
+            - name: CONCOURSE_ENABLE_SKIP_CHECKING_NOT_IN_USE_RESOURCES:
+              value: {{ .Values.concourse.web.enableSkipCheckingNotInUseResources | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.jobSchedulingMaxInFlight }}
             - name: CONCOURSE_JOB_SCHEDULING_MAX_IN_FLIGHT
               value: {{ .Values.concourse.web.jobSchedulingMaxInFlight | quote }}
