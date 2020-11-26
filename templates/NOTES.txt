@@ -33,7 +33,7 @@
     kubectl port-forward --namespace {{ .Release.Namespace }} $POD_NAME 8080:{{ .Values.concourse.web.bindPort }}
     {{- end }}
   {{- end }}
-* If this is your first time using Concourse, follow the tutorials at https://concourse-ci.org/tutorials.html
+* If this is your first time using Concourse, follow the examples at https://concourse-ci.org/examples.html
 
 {{- if .Values.worker.enabled }}
 {{- if .Values.concourse.worker.baggageclaim.driver }}
