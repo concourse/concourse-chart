@@ -38,6 +38,8 @@ spec:
       targetPort: tsa
       {{- if and (eq "NodePort" .Values.web.service.workerGateway.type) .Values.web.service.workerGateway.NodePort }}
       nodePort: {{ .Values.web.service.workerGateway.NodePort}}
+      {{- else}}
+      nodePort: null
       {{- end }}
   selector:
     app: {{ template "concourse.web.fullname" . }}
