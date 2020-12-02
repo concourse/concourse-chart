@@ -26,11 +26,11 @@ spec:
     - {{ . }}
     {{- end }}
   {{- end }}
-  {{- if and (eq "ClusterIP" .Values.web.service.workerGateway.type) .Values.web.service.workerGateway.clusterIP }}
-  clusterIP: {{ .Values.web.service.workerGateway.clusterIP }}
+  {{- if and (eq "ClusterIP" .Values.web.service.workerGateway.type) (ne "None" .Values.web.service.workerGateway.clusterIP) }}
+  {{ with .Values.web.service.workerGateway.clusterIP }}clusterIP: {{ quote . }}{{ end }}
   {{- end }}
-  {{- if and (eq "LoadBalancer" .Values.web.service.workerGateway.type) .Values.web.service.workerGateway.loadBalancerIP }}
-  loadBalancerIP: {{ .Values.web.service.workerGateway.loadBalancerIP }}
+  {{- if and (eq "LoadBalancer" .Values.web.service.workerGateway.type) (ne "None" .Values.web.service.workerGateway.loadBalancerIP) }}
+  {{ with .Values.web.service.workerGateway.loadBalancerIP }}loadBalancerIP: {{ quote . }}{{ end }}
   {{- end }}
   ports:
     - name: worker-gateway

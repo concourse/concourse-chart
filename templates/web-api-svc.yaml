@@ -26,11 +26,11 @@ spec:
     - {{ . }}
     {{- end }}
   {{- end }}
-  {{- if and (eq "ClusterIP" .Values.web.service.api.type) .Values.web.service.api.clusterIP }}
-  clusterIP: {{ .Values.web.service.api.clusterIP }}
+  {{- if and (eq "ClusterIP" .Values.web.service.api.type) (ne "None" .Values.web.service.api.clusterIP) }}
+  {{ with .Values.web.service.api.clusterIP }}clusterIP: {{ quote . }}{{ end }}
   {{- end }}
-  {{- if and (eq "LoadBalancer" .Values.web.service.api.type) .Values.web.service.api.loadBalancerIP }}
-  loadBalancerIP: {{ .Values.web.service.api.loadBalancerIP }}
+  {{- if and (eq "LoadBalancer" .Values.web.service.api.type) (ne "None" .Values.web.service.api.loadBalancerIP) }}
+  {{ with .Values.web.service.api.loadBalancerIP }}loadBalancerIP: {{ quote . }}{{ end }}
   {{- end }}
   ports:
   - name: atc
