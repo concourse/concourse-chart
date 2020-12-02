@@ -29,7 +29,7 @@ spec:
   {{- if and (eq "ClusterIP" .Values.web.service.workerGateway.type) (ne "None" .Values.web.service.workerGateway.clusterIP) }}
   {{ with .Values.web.service.workerGateway.clusterIP }}clusterIP: {{ quote . }}{{ end }}
   {{- end }}
-  {{- if and (eq "LoadBalancer" .Values.web.service.workerGateway.type) (ne "None" .Values.web.service.workerGateway.loadBalancerIP) }}
+  {{- if (eq "LoadBalancer" .Values.web.service.workerGateway.type) }}
   {{ with .Values.web.service.workerGateway.loadBalancerIP }}loadBalancerIP: {{ quote . }}{{ end }}
   {{- end }}
   ports:
