@@ -99,6 +99,10 @@ concourse:
     ##
     enablePipelineInstances: false
 
+    ## Enable skip checking not-in-use resources.
+    ##
+    enableSkipCheckingNotInUseResources: false
+
     ## Maximum number of jobs to be scheduling at the same time.
     ##
     jobSchedulingMaxInFlight:
@@ -2385,7 +2389,7 @@ rbac:
   workerServiceAccountName: default
 
   ## Any annotations required for the worker Service Account
-  workerServiceAccountAnnotations: {} 
+  workerServiceAccountAnnotations: {}
 
 ## For managing podSecurityPolicies. To make sure rbac objects are also created
 ## for the use of the podsecuritypolicy objects,
@@ -2451,7 +2455,7 @@ secrets:
   teamAuthorizedKeys:
 
   ## List of `username:password` or `username:bcrypted_password` combinations for all your local concourse users.
-  ## For details of expected format, see https://concourse-ci.org/local-auth.html 
+  ## For details of expected format, see https://concourse-ci.org/local-auth.html
   ##
   localUsers: "test:test"
 
