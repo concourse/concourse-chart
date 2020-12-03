@@ -96,7 +96,7 @@ spec:
               value: {{ .Values.concourse.web.enableAcrossStep | quote }}
             {{- end }}
             {{- if .Values.concourse.web.enableSkipCheckingNotInUseResources }}
-            - name: CONCOURSE_ENABLE_SKIP_CHECKING_NOT_IN_USE_RESOURCES:
+            - name: CONCOURSE_ENABLE_SKIP_CHECKING_NOT_IN_USE_RESOURCES
               value: {{ .Values.concourse.web.enableSkipCheckingNotInUseResources | quote }}
             {{- end }}
             {{- if .Values.concourse.web.jobSchedulingMaxInFlight }}
