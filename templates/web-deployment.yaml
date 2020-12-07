@@ -1447,6 +1447,10 @@ spec:
             - name: auth-keys
               mountPath: {{ .Values.web.authSecretsPath | quote }}
               readOnly: true
+          {{- if .Values.web.securityContext }}
+          securityContext:
+          {{- toYaml .Values.web.securityContext | nindent 12 }}
+          {{- end }}
 {{- if .Values.web.additionalAffinities }}
       affinity:
 {{ toYaml .Values.web.additionalAffinities | indent 8 }}
