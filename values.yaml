@@ -1649,7 +1649,6 @@ concourse:
 ## Concourse Web nodes, see https://concourse-ci.org/concourse-web.html.
 ##
 web:
-
   ## Enable or disable the web component.
   ## This allows the creation of worker-only releases by setting this to false.
   ##
@@ -1740,6 +1739,14 @@ web:
   ##     value: "debug"
   ##
   env:
+
+  ## Configure the security context for the web containers.
+  ## Example:
+  ##   capabilities:
+  ##     add:
+  ##       - SYS_PTRACE
+  ##
+  securityContext:
 
   ## Where secrets should be mounted for the web container.
   ##
@@ -1949,9 +1956,6 @@ web:
       ##
       ##
       annotations: {}
-
-
-
 
   ## Ingress configuration.
   ## Ref: https://kubernetes.io/docs/user-guide/ingress/
