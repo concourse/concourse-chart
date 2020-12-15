@@ -207,10 +207,10 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_LOG_LEVEL
   value: {{ .Values.concourse.worker.logLevel | quote }}
 {{- end }}
-{{ if not .Values.web.enabled }}
+{{- if not .Values.web.enabled }}
 - name: CONCOURSE_TSA_HOST
   value: "{{- range $i, $tsaHost := .Values.concourse.worker.tsa.hosts }}{{- if $i }},{{ end }}{{- $tsaHost }}{{- end -}}"
-{{ else }}
+{{- else }}
 - name: CONCOURSE_TSA_HOST
   value: "{{ template "concourse.web.tsa.address" . -}}"
 {{- end }}
@@ -337,14 +337,14 @@ Return concourse environment variables for worker configuration
 {{- if .Values.concourse.worker.containerSweeperMaxInFlight }}
 - name: CONCOURSE_CONTAINER_SWEEPER_MAX_IN_FLIGHT
   value: {{ .Values.concourse.worker.containerSweeperMaxInFlight | quote }}
-{{- end -}}
-{{- if .Values.concourse.worker.p2pInterfaceFamily }}
+{{- end }}
+{{- if .Values.concourse.worker.baggageclaim.p2pInterfaceFamily }}
 - name: CONCOURSE_BAGGAGECLAIM_P2P_INTERFACE_FAMILY
-  value: {{ .Values.concourse.worker.p2pInterfaceFamily }}
-{{- end -}}
-{{- if .Values.concourse.worker.p2pInterfacePattern }}
+  value: {{ .Values.concourse.worker.baggageclaim.p2pInterfaceFamily }}
+{{- end }}
+{{- if .Values.concourse.worker.baggageclaim.p2pInterfacePattern }}
 - name: CONCOURSE_BAGGAGECLAIM_P2P_INTERFACE_NAME_PATTERN
-  value: {{ .Values.concourse.worker.p2pInterfacePattern | quote }}
+  value: {{ .Values.concourse.worker.baggageclaim.p2pInterfacePattern | quote }}
 {{- end -}}
 {{- end -}}
 
