@@ -99,6 +99,11 @@ concourse:
     ##
     enableSkipCheckingNotInUseResources: false
 
+    ## Enable P2P volume streaming between all wokrers.
+    ## By default all volume streming goes through the web nodes.
+    ##
+    enablep2pVolumeStreaming: false
+
     ## Maximum number of jobs to be scheduling at the same time.
     ##
     jobSchedulingMaxInFlight:
@@ -256,6 +261,10 @@ concourse:
     ## Time limit on checking for new versions of resources.
     ##
     globalResourceCheckTimeout: 1h
+
+    ## Time limit on P2P volume streaming
+    ##
+    p2pVolumeStreamingTimeout:
 
     ## Maximum number of checks that can be started per second. If not
     ## specified, # this will be calculated as (# of resources)/(resource
@@ -1611,6 +1620,15 @@ concourse:
       ## Interval on which to reap expired volumes.
       ##
       reapInterval: 10s
+
+      ## 4 for IPv4 and 6 for IPv6
+      ##
+      p2pInterfaceFamily:
+
+      ## Regular expression to match a network interface for p2p streaming
+      ## e.g. "eth0"
+      ##
+      p2pInterfacePattern:
 
     ## Enable Horizontal Pod Autoscaling
     ## to use this, ephemeral worker with

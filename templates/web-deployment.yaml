@@ -102,6 +102,10 @@ spec:
             - name: CONCOURSE_ENABLE_SKIP_CHECKING_NOT_IN_USE_RESOURCES
               value: {{ .Values.concourse.web.enableSkipCheckingNotInUseResources | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.enablep2pVolumeStreaming }}
+            - name: CONCOURSE_ENABLE_P2P_VOLUME_STREAMING
+              value: {{ .Values.concourse.web.enablep2pVolumeStreaming | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.jobSchedulingMaxInFlight }}
             - name: CONCOURSE_JOB_SCHEDULING_MAX_IN_FLIGHT
               value: {{ .Values.concourse.web.jobSchedulingMaxInFlight | quote }}
@@ -297,6 +301,10 @@ spec:
             {{- if .Values.concourse.web.globalResourceCheckTimeout }}
             - name: CONCOURSE_GLOBAL_RESOURCE_CHECK_TIMEOUT
               value: {{ .Values.concourse.web.globalResourceCheckTimeout | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.p2pVolumeStreamingTimeout }}
+            - name: CONCOURSE_P2P_VOLUME_STREAMING_TIMEOUT
+              value: {{ .Values.concourse.web.p2pVolumeStreamingTimeout | quote }}
             {{- end }}
             {{- if .Values.concourse.web.maxChecksPerSecond }}
             - name: CONCOURSE_MAX_CHECKS_PER_SECOND

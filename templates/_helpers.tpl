@@ -338,5 +338,13 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_CONTAINER_SWEEPER_MAX_IN_FLIGHT
   value: {{ .Values.concourse.worker.containerSweeperMaxInFlight | quote }}
 {{- end -}}
+{{- if .Values.concourse.worker.p2pInterfaceFamily }}
+- name: CONCOURSE_BAGGAGECLAIM_P2P_INTERFACE_FAMILY
+  value: {{ .Values.concourse.worker.p2pInterfaceFamily }}
+{{- end -}}
+{{- if .Values.concourse.worker.p2pInterfacePattern }}
+- name: CONCOURSE_BAGGAGECLAIM_P2P_INTERFACE_NAME_PATTERN
+  value: {{ .Values.concourse.worker.p2pInterfacePattern | quote }}
+{{- end -}}
 {{- end -}}
 
