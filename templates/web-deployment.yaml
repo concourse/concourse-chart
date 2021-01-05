@@ -102,10 +102,6 @@ spec:
             - name: CONCOURSE_ENABLE_PIPELINE_INSTANCES
               value: {{ .Values.concourse.web.enablePipelineInstances | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.enableSkipCheckingNotInUseResources }}
-            - name: CONCOURSE_ENABLE_SKIP_CHECKING_NOT_IN_USE_RESOURCES
-              value: {{ .Values.concourse.web.enableSkipCheckingNotInUseResources | quote }}
-            {{- end }}
             {{- if .Values.concourse.web.jobSchedulingMaxInFlight }}
             - name: CONCOURSE_JOB_SCHEDULING_MAX_IN_FLIGHT
               value: {{ .Values.concourse.web.jobSchedulingMaxInFlight | quote }}
@@ -401,14 +397,6 @@ spec:
             {{- if .Values.concourse.web.defaultTaskMemoryLimit }}
             - name: CONCOURSE_DEFAULT_TASK_MEMORY_LIMIT
               value: {{ .Values.concourse.web.defaultTaskMemoryLimit | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.buildEventsBigintBatchSize }}
-            - name: CONCOURSE_BUILD_EVENTS_BIGINT_BATCH_SIZE
-              value: {{ .Values.concourse.web.buildEventsBigintBatchSize | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.buildEventsBigintInterval }}
-            - name: CONCOURSE_BUILD_EVENTS_BIGINT_INTERVAL
-              value: {{ .Values.concourse.web.buildEventsBigintInterval | quote }}
             {{- end }}
             {{- if .Values.postgresql.enabled }}
             - name: CONCOURSE_POSTGRES_HOST
