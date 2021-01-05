@@ -342,13 +342,24 @@ spec:
             - name: CONCOURSE_BASE_RESOURCE_TYPE_DEFAULTS
               value: /brt-defaults.yml
             {{- end }}
-            {{- if .Values.concourse.web.containerPlacementStrategy }}
+            {{- if .Values.concourse.web.containerPlacementStrategies }}
+            - name: CONCOURSE_CONTAINER_PLACEMENT_STRATEGY
+              value: {{ .Values.concourse.web.containerPlacementStrategies | join "," | quote }}
+            {{- else if .Values.concourse.web.containerPlacementStrategy }}
             - name: CONCOURSE_CONTAINER_PLACEMENT_STRATEGY
               value: {{ .Values.concourse.web.containerPlacementStrategy | quote }}
             {{- end }}
             {{- if .Values.concourse.web.limitActiveTasks }}
             - name: CONCOURSE_MAX_ACTIVE_TASKS_PER_WORKER
               value: {{ .Values.concourse.web.limitActiveTasks | quote }}
+            {{- end}}
+            {{- if .Values.concourse.web.limitActiveContainers }}
+            - name: CONCOURSE_MAX_ACTIVE_CONTAINERS_PER_WORKER
+              value: {{ .Values.concourse.web.limitActiveContainers | quote }}
+            {{- end}}
+            {{- if .Values.concourse.web.limitActiveVolumes }}
+            - name: CONCOURSE_MAX_ACTIVE_VOLUMES_PER_WORKER
+              value: {{ .Values.concourse.web.limitActiveVolumes | quote }}
             {{- end}}
             {{- if .Values.concourse.web.gardenRequestTimeout }}
             - name: CONCOURSE_GARDEN_REQUEST_TIMEOUT

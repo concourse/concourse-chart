@@ -283,8 +283,16 @@ concourse:
     streamingArtifactsCompression:
 
     ## Method by which a worker is selected during container placement.
-    ## Possible values: volume-locality | random | fewest-build-containers| limit-active-tasks
+    ## Possible values: volume-locality | random | fewest-build-containers | limit-active-tasks | limit-active-containers | limit-active-volumes
     containerPlacementStrategy: volume-locality
+
+    ## Instead of specifying a single placement strategy, configure a chain of
+    ## them to be applied in order.
+    ##
+    ## If set, takes priority over containerPlacementStrategy.
+    ##
+    ## Possible values: volume-locality | fewest-build-containers | limit-active-tasks | limit-active-containers | limit-active-volumes
+    containerPlacementStrategies: []
 
     ## Maximum allowed number of active build tasks per worker.
     ##
@@ -296,6 +304,28 @@ concourse:
     ## ref: https://concourse-ci.org/container-placement.html#limit-active-tasks-strategy
     ##
     limitActiveTasks:
+
+    ## Maximum allowed number of active containers per worker.
+    ##
+    ## Has effect only when containerPlacementStrategy is set to use
+    ## limit-active-containers placement strategy.
+    ##
+    ## ps.: 0 means no limit.
+    ##
+    ## ref: https://concourse-ci.org/container-placement.html#limit-active-containers-strategy
+    ##
+    limitActiveContainers:
+
+    ## Maximum allowed number of active volumes per worker.
+    ##
+    ## Has effect only when containerPlacementStrategy is set to use
+    ## limit-active-volumes placement strategy.
+    ##
+    ## ps.: 0 means no limit.
+    ##
+    ## ref: https://concourse-ci.org/container-placement.html#limit-active-volumes-strategy
+    ##
+    limitActiveVolumes:
 
     ## How long to wait for requests to Garden to complete. 0 means no timeout.
     ##
