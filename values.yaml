@@ -1628,7 +1628,7 @@ concourse:
       ## Regular expression to match a network interface for p2p streaming
       ## e.g. "eth0"
       ##
-      p2pInterfacePattern:
+      p2pInterfaceNamePattern:
 
     ## Enable Horizontal Pod Autoscaling
     ## to use this, ephemeral worker with

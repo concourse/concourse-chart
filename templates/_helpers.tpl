@@ -342,9 +342,9 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_BAGGAGECLAIM_P2P_INTERFACE_FAMILY
   value: {{ .Values.concourse.worker.baggageclaim.p2pInterfaceFamily }}
 {{- end }}
-{{- if .Values.concourse.worker.baggageclaim.p2pInterfacePattern }}
+{{- if .Values.concourse.worker.baggageclaim.p2pInterfaceNamePattern }}
 - name: CONCOURSE_BAGGAGECLAIM_P2P_INTERFACE_NAME_PATTERN
-  value: {{ .Values.concourse.worker.baggageclaim.p2pInterfacePattern | quote }}
+  value: {{ .Values.concourse.worker.baggageclaim.p2pInterfaceNamePattern | quote }}
 {{- end -}}
 {{- end -}}
 
