@@ -99,10 +99,6 @@ concourse:
     ##
     enablePipelineInstances: false
 
-    ## Enable skip checking not-in-use resources.
-    ##
-    enableSkipCheckingNotInUseResources: false
-
     ## Maximum number of jobs to be scheduling at the same time.
     ##
     jobSchedulingMaxInFlight:
@@ -287,8 +283,16 @@ concourse:
     streamingArtifactsCompression:
 
     ## Method by which a worker is selected during container placement.
-    ## Possible values: volume-locality | random | fewest-build-containers| limit-active-tasks
+    ## Possible values: volume-locality | random | fewest-build-containers | limit-active-tasks | limit-active-containers | limit-active-volumes
     containerPlacementStrategy: volume-locality
+
+    ## Instead of specifying a single placement strategy, configure a chain of
+    ## them to be applied in order.
+    ##
+    ## If set, takes priority over containerPlacementStrategy.
+    ##
+    ## Possible values: volume-locality | fewest-build-containers | limit-active-tasks | limit-active-containers | limit-active-volumes
+    containerPlacementStrategies: []
 
     ## Maximum allowed number of active build tasks per worker.
     ##
@@ -300,6 +304,28 @@ concourse:
     ## ref: https://concourse-ci.org/container-placement.html#limit-active-tasks-strategy
     ##
     limitActiveTasks:
+
+    ## Maximum allowed number of active containers per worker.
+    ##
+    ## Has effect only when containerPlacementStrategy is set to use
+    ## limit-active-containers placement strategy.
+    ##
+    ## ps.: 0 means no limit.
+    ##
+    ## ref: https://concourse-ci.org/container-placement.html#limit-active-containers-strategy
+    ##
+    limitActiveContainers:
+
+    ## Maximum allowed number of active volumes per worker.
+    ##
+    ## Has effect only when containerPlacementStrategy is set to use
+    ## limit-active-volumes placement strategy.
+    ##
+    ## ps.: 0 means no limit.
+    ##
+    ## ref: https://concourse-ci.org/container-placement.html#limit-active-volumes-strategy
+    ##
+    limitActiveVolumes:
 
     ## How long to wait for requests to Garden to complete. 0 means no timeout.
     ##
@@ -355,16 +381,6 @@ concourse:
     ## Network address of this web node, reachable by other web nodes. Used for forwarded worker addresses. (default: $POD_IP)
     ##
     peerAddress:
-
-    ## The number of build events to migrate to use bigints in a single interval. (default: 100000)
-    ## Used as part of the build events batch migration added in 6.7.0.
-    ##
-    buildEventsBigintBatchSize:
-
-    ## The time between build event migration batches. (default: 10s)
-    ## Used as part of the build events batch migration added in 6.7.0.
-    ##
-    buildEventsBigintInterval:
 
     ## Configurations regarding how the web component is able to connect to a postgres
     ## instance.
