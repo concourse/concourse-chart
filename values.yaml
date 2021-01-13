@@ -2479,12 +2479,14 @@ secrets:
   ##
   annotations: {}
 
-  ## Array of team names and public keys for team external workers.
+  ## Array of team names and public keys for team external workers. A single
+  ## team can have many keys defined in the key field.
   ##
   ## Example:
   ## - team: main
   ##   key: |-
   ##     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYBQ9fG6IML+qsFaMh1Pl+81wyUwRilHdfhItAiAsLVQsOwI5+V4pn5aLhHPBuRQqIqYmbkZ7I1VUIN1+90PVJ3X7l9qqanb85AHMtLujw1j9u0zDyH2XHgpUloknUQzUSLIZjjU3Hn3Uo/XikF+vT8104isO7Ym8Xp7sIcRuvOQ3nuRsFVCRogxpLTVHD/k57rwYVqWWLaKLwvx01ZVXOq4GHk/BVaKa9ODC/dNgbZMfwvVVXuf7/NFGmSMyXb49Si4aoP4Gn7jAX6GngBbm/bgKqO0skQy/ggQm/YVF+s5q4EhleMBLVJKD1VpM5LeLDFpiu/y4bVd8wUcgK+QQ9 Concourse
+  ##     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDzpK/sIOtL9SCjAWrvO8QvknzYbnXvP/BljTQFNLwzsPqawqTk3FqUIsEjsq4clV3nwADK8Iq9A/xRlPR+ANhoGDPDv34FsWz5qKcXV7aXcOma8vyU4MJPjveXcZX7FjwztGoRIND9CXlLCDuYeIwBxCcnBBAwQFZuCmEXcqwsRbCve1KkswV1yr9yvmNaKNKTkJGo+7wGyShjzkfqijYCdwYbUWpSB0/tOGszBONtKE6FyJUmVtBgj+CAGZtj1AxGBbMnxxV
   ##
   ## Make sure to chack the security caveats here: https://concourse-ci.org/teams-caveats.html
   ## Extra Reads: https://github.com/concourse/concourse/issues/1865#issuecomment-464166994
