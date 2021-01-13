@@ -54,7 +54,7 @@ spec:
         {{- else }}
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         {{- end }}
-        command: ['concourse', 'migrate']
+        args: ["migrate"]
         env:
 {{- include "concourse.postgresql.env" . | indent 10 }}
       {{- if .Values.web.extraInitContainers }}
