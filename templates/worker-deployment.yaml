@@ -77,7 +77,7 @@ spec:
                 command:
                   - "/bin/bash"
                   - "/pre-stop-hook.sh"
-          env: 
+          env:
 {{- include "concourse.worker.env" . | indent 12 }}
 {{- if .Values.worker.env }}
 {{ toYaml .Values.worker.env | indent 12 }}

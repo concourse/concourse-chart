@@ -207,10 +207,10 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_LOG_LEVEL
   value: {{ .Values.concourse.worker.logLevel | quote }}
 {{- end }}
-{{ if not .Values.web.enabled }}
+{{- if not .Values.web.enabled }}
 - name: CONCOURSE_TSA_HOST
   value: "{{- range $i, $tsaHost := .Values.concourse.worker.tsa.hosts }}{{- if $i }},{{ end }}{{- $tsaHost }}{{- end -}}"
-{{ else }}
+{{- else }}
 - name: CONCOURSE_TSA_HOST
   value: "{{ template "concourse.web.tsa.address" . -}}"
 {{- end }}
@@ -340,3 +340,68 @@ Return concourse environment variables for worker configuration
 {{- end -}}
 {{- end -}}
 
+{{/*
+Return concourse environment variables for postgresql configuration
+*/}}
+{{- define "concourse.postgresql.env" -}}
+{{- if .Values.postgresql.enabled }}
+- name: CONCOURSE_POSTGRES_HOST
+  value: {{ template "concourse.postgresql.fullname" . }}
+- name: CONCOURSE_POSTGRES_USER
+  value: {{ .Values.postgresql.postgresqlUsername | quote }}
+- name: CONCOURSE_POSTGRES_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "concourse.postgresql.fullname" . }}
+      key: postgresql-password
+- name: CONCOURSE_POSTGRES_DATABASE
+  value: {{ .Values.postgresql.postgresqlDatabase | quote }}
+{{- else }}
+{{- if .Values.concourse.web.postgres.host }}
+- name: CONCOURSE_POSTGRES_HOST
+  value: {{ .Values.concourse.web.postgres.host | quote }}
+{{- end }}
+{{- if .Values.concourse.web.postgres.port }}
+- name: CONCOURSE_POSTGRES_PORT
+  value: {{ .Values.concourse.web.postgres.port | quote }}
+{{- end }}
+{{- if .Values.concourse.web.postgres.socket }}
+- name: CONCOURSE_POSTGRES_SOCKET
+  value: {{ .Values.concourse.web.postgres.socket | quote }}
+{{- end }}
+- name: CONCOURSE_POSTGRES_USER
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "concourse.web.fullname" . }}
+      key: postgresql-user
+- name: CONCOURSE_POSTGRES_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "concourse.web.fullname" . }}
+      key: postgresql-password
+{{- if .Values.concourse.web.postgres.sslmode }}
+- name: CONCOURSE_POSTGRES_SSLMODE
+  value: {{ .Values.concourse.web.postgres.sslmode | quote }}
+{{- end }}
+{{- if .Values.secrets.postgresCaCert }}
+- name: CONCOURSE_POSTGRES_CA_CERT
+  value: "{{ .Values.web.postgresqlSecretsPath }}/ca.cert"
+{{- end }}
+{{- if .Values.secrets.postgresClientCert }}
+- name: CONCOURSE_POSTGRES_CLIENT_CERT
+  value: "{{ .Values.web.postgresqlSecretsPath }}/client.cert"
+{{- end }}
+{{- if .Values.secrets.postgresClientKey }}
+- name: CONCOURSE_POSTGRES_CLIENT_KEY
+  value: "{{ .Values.web.postgresqlSecretsPath }}/client.key"
+{{- end }}
+{{- if .Values.concourse.web.postgres.connectTimeout }}
+- name: CONCOURSE_POSTGRES_CONNECT_TIMEOUT
+  value: {{ .Values.concourse.web.postgres.connectTimeout | quote }}
+{{- end }}
+{{- if .Values.concourse.web.postgres.database }}
+- name: CONCOURSE_POSTGRES_DATABASE
+  value: {{ .Values.concourse.web.postgres.database | quote }}
+{{- end }}
+{{- end -}}
+{{- end -}}
