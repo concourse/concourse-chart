@@ -567,6 +567,14 @@ concourse:
       ##
       retryInitial: 1s
 
+      ## The maximum time to wait to authenticate with Vault.
+      ##
+      loginTimeout:
+
+      ## The maximum time to wait for Vault queries to resolve.
+      ##
+      queryTimeout:
+
     ## Configuration for using Credhub as a credential manager.
     ## Ref: https://concourse-ci.org/credhub-credential-manager.html
     ##
@@ -850,9 +858,13 @@ concourse:
       ##
       failedGracePeriod:
 
-      ## Period after which to reap checks that are completed.
+      ## Period after which completed checks will be garbage collected
       ##
       checkRecyclePeriod:
+
+      ## Period after which unused var_sources will get garbage collected
+      ##
+      varSourceRecyclePeriod:
 
     syslog:
       ## Enables the emission of build logs to external log ingesters through
