@@ -554,11 +554,11 @@ concourse:
     vault:
       ## Use Hashicorp Vault for the Credential Manager.
       ##
-      enabled: false
+      enabled: true
 
       ## URL pointing to vault addr (i.e. http://vault:8200).
       ##
-      # url:
+      url:
 
       ## vault path under which to namespace credential lookup, defaults to /concourse.
       ##
