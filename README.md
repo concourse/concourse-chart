@@ -562,7 +562,7 @@ concourse:
 
       ## vault path under which to namespace credential lookup, defaults to /concourse.
       ##
-      # pathPrefix:
+      pathPrefix:
 ```
 
 #### Credhub
