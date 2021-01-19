@@ -613,6 +613,14 @@ spec:
             - name: CONCOURSE_VAULT_RETRY_MAX
               value: {{ .Values.concourse.web.vault.retryMax | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.vault.loginTimeout }}
+            - name: CONCOURSE_VAULT_LOGIN_TIMEOUT
+              value: {{ .Values.concourse.web.vault.loginTimeout | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.vault.queryTimeout }}
+            - name: CONCOURSE_VAULT_QUERY_TIMEOUT
+              value: {{ .Values.concourse.web.vault.queryTimeout | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.vault.serverName }}
             - name: CONCOURSE_VAULT_SERVER_NAME
               value: {{ .Values.concourse.web.vault.serverName | quote }}
@@ -808,6 +816,10 @@ spec:
             {{- if .Values.concourse.web.gc.failedGracePeriod }}
             - name: CONCOURSE_GC_FAILED_GRACE_PERIOD
               value: {{ .Values.concourse.web.gc.failedGracePeriod | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.gc.varSourceRecyclePeriod }}
+            - name: CONCOURSE_GC_VAR_SOURCE_RECYCLE_PERIOD
+              value: {{ .Values.concourse.web.gc.varSourceRecyclePeriod | quote }}
             {{- end }}
             {{- if .Values.concourse.web.syslog.enabled }}
             {{- if .Values.concourse.web.syslog.hostname }}
