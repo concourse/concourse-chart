@@ -219,7 +219,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.service.api.NodePort` | Sets the nodePort for api when using `NodePort` | `nil` |
 | `web.service.api.labels` | Additional concourse web api service labels | `nil` |
 | `web.service.api.loadBalancerIP` | The IP to use when web.service.api.type is LoadBalancer | `nil` |
-| `web.service.api.clusterIP` | The IP to use when web.service.api.type is ClusterIP | `None` |
+| `web.service.api.clusterIP` | The IP to use when web.service.api.type is ClusterIP | `nil` |
 | `web.service.api.loadBalancerSourceRanges` | Concourse Web API Service Load Balancer Source IP ranges | `nil` |
 | `web.service.api.tlsNodePort` | Sets the nodePort for api tls when using `NodePort` | `nil` |
 | `web.service.api.type` | Concourse Web API service type | `ClusterIP` |

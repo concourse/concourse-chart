@@ -358,7 +358,6 @@ concourse:
     ##
     logClusterName:
 
-
     ## Interval on which to run build tracking.
     ##
     buildTrackerInterval: 10s
@@ -1957,7 +1956,7 @@ web:
       ## When using `web.service.api.type: ClusterIP`, sets the user-specified cluster IP.
       ## Example: 172.217.1.174
       ##
-      clusterIP: None
+      clusterIP: 
 
       ## When using `web.service.api.type: LoadBalancer`, sets the user-specified load balancer IP.
       ## Example: 172.217.1.174
