@@ -1296,6 +1296,10 @@ concourse:
         ##
         userNameKey: username
 
+        ## Disable OIDC groups claim fetching
+        ##
+        disableGroups:
+
       ## Authentication (Microsoft)
       microsoft:
         enabled: false
