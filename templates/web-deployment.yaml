@@ -1236,6 +1236,10 @@ spec:
             - name: CONCOURSE_OIDC_USER_NAME_KEY
               value: {{ .Values.concourse.web.auth.oidc.userNameKey | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.auth.oidc.disableGroups }}
+            - name: CONCOURSE_OIDC_DISABLE_GROUPS
+              value: {{ .Values.concourse.web.auth.oidc.disableGroups | quote }}
+            {{- end }}
             {{- end }}
 
             {{- if .Values.concourse.web.auth.microsoft.enabled }}
