@@ -502,10 +502,10 @@ concourse:
       ##
       useCaCert: false
 
-      ## Vault authentication backend, leave this blank if using an initial periodic token.
+      ## Vault authentication backend
       ## Currently supported backends: token, approle, cert.
-      ##
-      authBackend: ""
+      ## Use token if using an initial periodic token.
+      authBackend: token
 
       ## Path to a directory of PEMEncoded CA cert files to verify the vault server SSL cert.
       ##
