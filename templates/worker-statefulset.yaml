@@ -60,6 +60,10 @@ spec:
           image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+{{- if .Values.worker.init-resources }}
+          resources:
+{{ toYaml .Values.worker.resources | indent 12 }}
+{{- end }}
           securityContext:
             privileged: true
           command:
