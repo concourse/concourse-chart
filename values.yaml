@@ -1359,7 +1359,7 @@ concourse:
         ##
         scope:
 
-        ## The groups key indicates which claim to use to map external groups to Concourse teams.
+        ## The groups key indicates which claim to use to map external groups to Concourse teams
         ##
         groupsKey:
 
@@ -1370,6 +1370,10 @@ concourse:
         ## Skip SSL validation
         ##
         skipSslValidation:
+
+        ## Ignore the email_verified claim from the upstream provider, treating all users as if email_verified were true
+        ##
+        skipEmailVerifiedValidation:
 
         ## The user name key indicates which claim to use to map an external user name to a
         ## Concourse user name.

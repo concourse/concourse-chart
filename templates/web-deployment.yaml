@@ -1229,6 +1229,10 @@ spec:
             - name: CONCOURSE_OIDC_SKIP_SSL_VALIDATION
               value: {{ .Values.concourse.web.auth.oidc.skipSslValidation | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.auth.oidc.skipEmailVerifiedValidation }}
+            - name: CONCOURSE_OIDC_SKIP_EMAIL_VERIFIED_VALIDATION
+              value: {{ .Values.concourse.web.auth.oidc.skipEmailVerifiedValidation | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.auth.oidc.userNameKey }}
             - name: CONCOURSE_OIDC_USER_NAME_KEY
               value: {{ .Values.concourse.web.auth.oidc.userNameKey | quote }}
