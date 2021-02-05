@@ -57,6 +57,26 @@ spec:
         args: ["migrate", "--migrate-to-latest-version"]
         env:
 {{- include "concourse.postgresql.env" . | indent 10 }}
+        volumeMounts:
+        {{- if not (eq .Values.concourse.web.postgres.sslmode "disable") }}
+          - name: postgresql-keys
+            mountPath: {{ .Values.web.postgresqlSecretsPath | quote }}
+            readOnly: true
+        {{- end }}
+        volumes:
+        {{- if not (eq .Values.concourse.web.postgres.sslmode "disable") }}
+        - name: postgresql-keys
+          secret:
+            secretName: {{ template "concourse.web.fullname" . }}
+            defaultMode: 0400
+            items:
+              - key: postgresql-ca-cert
+                path: ca.cert
+              - key: postgresql-client-cert
+                path: client.cert
+              - key: postgresql-client-key
+                path: client.key
+        {{- end }}
       {{- if .Values.web.extraInitContainers }}
       {{- toYaml .Values.web.extraInitContainers | nindent 8 }}
       {{- end }}
