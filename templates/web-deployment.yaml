@@ -947,6 +947,10 @@ spec:
             - name: CONCOURSE_MAIN_TEAM_MICROSOFT_GROUP
               value: {{ .Values.concourse.web.auth.mainTeam.microsoft.group | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.auth.userIDFieldPerConnector }}
+            - name: CONCOURSE_DISPLAY_USER_ID_PER_CONNECTOR
+              value: {{ .Values.concourse.web.auth.userIDFieldPerConnector | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.auth.cf.enabled }}
             - name: CONCOURSE_CF_CLIENT_ID
               valueFrom:

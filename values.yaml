@@ -966,6 +966,13 @@ concourse:
         ##
         localUser: "test"
 
+        # Define how to display user ID for each authentication connector.
+        # Format is <connector>:<fieldname>. Valid field names are user_id,
+        # name, username and email, where name maps to claims field username,
+        # and username maps to claims field preferred username.
+        #
+        userIDFieldPerConnector: ""
+
         ## Authentication (Main Team) (CloudFoundry)
         ##
         cf:
