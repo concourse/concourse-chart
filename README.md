@@ -170,6 +170,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `secrets.vaultClientToken` | Vault periodic client token | `nil` |
 | `secrets.webTlsCert` | TLS certificate for the web component to terminate TLS connections | `nil` |
 | `secrets.webTlsKey` | An RSA private key, used to encrypt HTTPS traffic  | `nil` |
+| `secrets.webTlsCaCert` | TLS CA certificate for the web component to terminate TLS connections | `nil` |
 | `secrets.workerKeyPub` | Concourse Worker Public Key | *See [values.yaml](values.yaml)* |
 | `secrets.workerKey` | Concourse Worker Private Key | *See [values.yaml](values.yaml)* |
 | `web.additionalAffinities` | Additional affinities to apply to web pods. E.g: node affinity | `{}` |
