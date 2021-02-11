@@ -2430,6 +2430,11 @@ secrets:
   webTlsCert:
   webTlsKey:
 
+  ## The TLS CA certificate for the web component to be able to terminate
+  ## TLS connections. Enables mTLS.
+  ##
+  webTlsCaCert:
+
   ## Concourse Host Keys.
   ## Ref: https://concourse-ci.org/install.html#generating-keys
   ##
