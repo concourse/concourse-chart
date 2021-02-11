@@ -1514,8 +1514,10 @@ spec:
                 path: client.cert
               - key: web-tls-key
                 path: client.key
+              {{- if .Values.secrets.webTlsCaCert }}
               - key: web-tls-ca-cert
                 path: ca.cert
+              {{- end }}
         {{- end }}
         {{- end }}
         {{- if .Values.concourse.web.vault.enabled }}
