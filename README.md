@@ -87,7 +87,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `imageDigest` | Specific image digest to use in place of a tag. | `nil` |
 | `imagePullPolicy` | Concourse image pull policy | `IfNotPresent` |
 | `imagePullSecrets` | Array of imagePullSecrets in the namespace for pulling images | `[]` |
-| `imageTag` | Concourse image version | `6.7.4` |
+| `imageTag` | Concourse image version | `6.7.5` |
 | `image` | Concourse image | `concourse/concourse` |
 | `nameOverride` | Provide a name in place of `concourse` for `app:` labels | `nil` |
 | `persistence.enabled` | Enable Concourse persistence using Persistent Volume Claims | `true` |
@@ -170,6 +170,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `secrets.vaultClientToken` | Vault periodic client token | `nil` |
 | `secrets.webTlsCert` | TLS certificate for the web component to terminate TLS connections | `nil` |
 | `secrets.webTlsKey` | An RSA private key, used to encrypt HTTPS traffic  | `nil` |
+| `secrets.webTlsCaCert` | TLS CA certificate for the web component to terminate TLS connections | `nil` |
 | `secrets.workerKeyPub` | Concourse Worker Public Key | *See [values.yaml](values.yaml)* |
 | `secrets.workerKey` | Concourse Worker Private Key | *See [values.yaml](values.yaml)* |
 | `web.additionalAffinities` | Additional affinities to apply to web pods. E.g: node affinity | `{}` |

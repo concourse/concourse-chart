@@ -314,6 +314,8 @@ spec:
               value: "{{ .Values.web.tlsSecretsPath }}/client.cert"
             - name: CONCOURSE_TLS_KEY
               value: "{{ .Values.web.tlsSecretsPath }}/client.key"
+            - name: CONCOURSE_TLS_CA_CERT
+              value: "{{ .Values.web.tlsSecretsPath }}/ca.cert"
             {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.tls.enabled }}
@@ -1265,6 +1267,10 @@ spec:
             - name: CONCOURSE_OIDC_DISABLE_GROUPS
               value: {{ .Values.concourse.web.auth.oidc.disableGroups | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.auth.oidc.skipEmailVerifiedValidation }}
+            - name: CONCOURSE_OIDC_SKIP_EMAIL_VERIFIED_VALIDATION
+              value: {{ .Values.concourse.web.auth.oidc.skipEmailVerifiedValidation | quote }}
+            {{- end }}
             {{- end }}
 
             {{- if .Values.concourse.web.auth.microsoft.enabled }}
@@ -1508,6 +1514,10 @@ spec:
                 path: client.cert
               - key: web-tls-key
                 path: client.key
+              {{- if .Values.secrets.webTlsCaCert }}
+              - key: web-tls-ca-cert
+                path: ca.cert
+              {{- end }}
         {{- end }}
         {{- end }}
         {{- if .Values.concourse.web.vault.enabled }}
