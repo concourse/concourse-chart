@@ -300,8 +300,10 @@ spec:
               value: "{{ .Values.web.tlsSecretsPath }}/client.cert"
             - name: CONCOURSE_TLS_KEY
               value: "{{ .Values.web.tlsSecretsPath }}/client.key"
+            {{- if .Values.secrets.webTlsCaCert }}
             - name: CONCOURSE_TLS_CA_CERT
               value: "{{ .Values.web.tlsSecretsPath }}/ca.cert"
+            {{- end }}
             {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.tls.enabled }}
