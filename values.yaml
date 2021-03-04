@@ -1644,6 +1644,12 @@ concourse:
       ## Enable a proxy DNS server for Garden
       dnsProxyEnable:
 
+      ## MTU size for container network interfaces. Defaults to the MTU of the interface used for outbound access by the host
+      mtu:
+
+      ## IP address to use to reach container's mapped ports. Autodetected if not specified.
+      externalIP:
+
       ## List of DNS server IP addresses to use instead of automatically determined servers.
       ## Example:
       ## dnsServers:

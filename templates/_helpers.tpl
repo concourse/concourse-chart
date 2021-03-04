@@ -264,6 +264,14 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_CONTAINERD_DNS_PROXY_ENABLE
   value: {{ .Values.concourse.worker.containerd.dnsProxyEnable | quote }}
 {{- end }}
+{{- if .Values.concourse.worker.containerd.mtu }}
+- name: CONCOURSE_CONTAINERD_MTU
+  value: {{ .Values.concourse.worker.containerd.mtu | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.containerd.externalIP }}
+- name: CONCOURSE_CONTAINERD_EXTERNAL_IP
+  value: {{ .Values.concourse.worker.containerd.externalIP | quote }}
+{{- end }}
 {{- if .Values.concourse.worker.containerd.dnsServers }}
 {{- range .Values.concourse.worker.containerd.dnsServers }}
 - name: CONCOURSE_CONTAINERD_DNS_SERVER
