@@ -546,7 +546,7 @@ spec:
             - name: CONCOURSE_VAULT_CLIENT_KEY
               value: "{{ .Values.web.vaultSecretsPath }}/client.key"
             {{- end }}
-            {{- if eq .Values.concourse.web.vault.authBackend "approle" }}
+            {{- if or (eq .Values.concourse.web.vault.authBackend "approle") (eq .Values.concourse.web.vault.authBackend "ldap") }}
             - name: CONCOURSE_VAULT_AUTH_PARAM
               valueFrom:
                 secretKeyRef:
