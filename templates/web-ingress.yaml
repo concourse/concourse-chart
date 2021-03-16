@@ -20,9 +20,12 @@ metadata:
 spec:
   rules:
     {{- range .Values.web.ingress.hosts }}
-    - host: {{ . }}
+    - host: {{ if .name }}{{ .name }}{{ else }}{{ . }}{{ end }}
       http:
         paths:
+          {{- if .additionalEarlierPaths }}
+          {{- toYaml .additionalEarlierPaths | nindent 10 }}
+          {{- end }}
           {{- if or (eq $apiVersion "extensions/v1beta1") (eq $apiVersion "networking.k8s.io/v1beta1") }}
           - backend:
               serviceName: {{ $serviceName }}

@@ -469,6 +469,20 @@ web:
 
     ## Hostnames.
     ## Must be provided if Ingress is enabled.
+    ## This is either a list of hostnames or a list of objects
+    ## containing both a name and any earlier paths for that
+    ## hostname.
+    ##
+    ## Example (no additional paths):
+    ##   - concourse.domain.com
+    ##
+    ## Example (additional earlier path):
+    ##   - name: concourse.domain.com
+    ##     additionalEarlierPaths:
+    ##     - path: '/*'
+    ##       backend:
+    ##         serviceName: "ssl-redirect"
+    ##         servicePort: "use-annotation"
     ##
     hosts:
       - concourse.domain.com
