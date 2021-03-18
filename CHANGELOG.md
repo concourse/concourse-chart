@@ -49,3 +49,7 @@ in concourse/concourse#5141 (part of 6.0), riemann was completely removed, makin
 # v14.0.0:
 
 - The chart is now targeting Helm v3 and no longer supports Helm v2. Trying to deploy this version of the chart with Helm v2 will result an error such as `apiVersion 'v2' is not valid. The value must be "v1"`.
+
+# v15.0.0:
+
+- This chart version creates an init container where it will run the database migrations in. The migration command that it runs depends on a flag that is only added in concourse v7.0.0, making this a breaking change to anyone that tries to use this latest chart version with an older version of concourse.
