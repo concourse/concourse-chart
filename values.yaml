@@ -1391,11 +1391,6 @@ concourse:
         ##
         disableGroups:
 
-        ## Ignore the email_verified claim from the upstream provider, treating
-        ## all users as if email_verified were true.
-        ##
-        skipEmailVerifiedValidation:
-
       ## Authentication (Microsoft)
       microsoft:
         enabled: false

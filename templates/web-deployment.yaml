@@ -1255,10 +1255,6 @@ spec:
             - name: CONCOURSE_OIDC_DISABLE_GROUPS
               value: {{ .Values.concourse.web.auth.oidc.disableGroups | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.auth.oidc.skipEmailVerifiedValidation }}
-            - name: CONCOURSE_OIDC_SKIP_EMAIL_VERIFIED_VALIDATION
-              value: {{ .Values.concourse.web.auth.oidc.skipEmailVerifiedValidation | quote }}
-            {{- end }}
             {{- end }}
 
             {{- if .Values.concourse.web.auth.microsoft.enabled }}
