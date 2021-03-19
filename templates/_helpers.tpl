@@ -87,8 +87,7 @@ Sometimes GitVersion will contain a `v` so we need
 to strip that out.
 */}}
 {{- define "concourse.deployment.apiVersion" -}}
-{{- $version := include "concourse.kubeVersion" . -}}
-{{- if semverCompare "<1.9-0" $version -}}
+{{- if .Capabilities.APIVersions.Has "extensions/v1beta1" -}}
 {{- print "extensions/v1beta1" -}}
 {{- else -}}
 {{- print "apps/v1" -}}
@@ -99,8 +98,7 @@ to strip that out.
 Return the appropriate apiVersion for statefulset.
 */}}
 {{- define "concourse.statefulset.apiVersion" -}}
-{{- $version := include "concourse.kubeVersion" . -}}
-{{- if semverCompare "<1.9-0" $version -}}
+{{- if .Capabilities.APIVersions.Has "apps/v1beta2" -}}
 {{- print "apps/v1beta2" -}}
 {{- else -}}
 {{- print "apps/v1" -}}
@@ -111,10 +109,9 @@ Return the appropriate apiVersion for statefulset.
 Return the appropriate apiVersion for ingress.
 */}}
 {{- define "concourse.ingress.apiVersion" -}}
-{{- $version := include "concourse.kubeVersion" . -}}
-{{- if semverCompare "<1.14-0" $version -}}
+{{- if .Capabilities.APIVersions.Has "extensions/v1beta1" -}}
 {{- print "extensions/v1beta1" -}}
-{{- else if semverCompare "<1.20-0" $version -}}
+{{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1beta1" -}}
 {{- print "networking.k8s.io/v1beta1" -}}
 {{- else -}}
 {{- print "networking.k8s.io/v1" -}}
