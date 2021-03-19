@@ -36,14 +36,14 @@ spec:
   - name: atc
     port: {{ .Values.concourse.web.bindPort }}
     targetPort: atc
-    {{- if and (eq "NodePort" .Values.web.service.api.type) .Values.web.service.api.atcNodePort }}
+    {{- if and (eq "NodePort" .Values.web.service.api.type) .Values.web.service.api.NodePort }}
     nodePort: {{ .Values.web.service.api.NodePort}}
     {{- end }}
 {{- if .Values.concourse.web.tls.enabled }}
   - name: atc-tls
     port: {{ .Values.concourse.web.tls.bindPort }}
     targetPort: atc-tls
-    {{- if and (eq "NodePort" .Values.web.service.api.type) .Values.web.service.api.atcTlsNodePort }}
+    {{- if and (eq "NodePort" .Values.web.service.api.type) .Values.web.service.api.tlsNodePort }}
     nodePort: {{ .Values.web.service.api.tlsNodePort}}
     {{- end }}
 {{- end }}
