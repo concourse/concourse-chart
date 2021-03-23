@@ -542,6 +542,11 @@ concourse:
       ##
       authBackend: ""
 
+      ## if the Vault authentication backend requires params from secrets, set this to true,
+      ## and provide a value in secrets (field `vault-client-auth-param`).
+      ##
+      useAuthParam: false
+
       ## Path to a directory of PEMEncoded CA cert files to verify the vault server SSL cert.
       ##
       caPath:
@@ -1994,7 +1999,7 @@ web:
       ## When using `web.service.api.type: ClusterIP`, sets the user-specified cluster IP.
       ## Example: 172.217.1.174
       ##
-      clusterIP: 
+      clusterIP:
 
       ## When using `web.service.api.type: LoadBalancer`, sets the user-specified load balancer IP.
       ## Example: 172.217.1.174
