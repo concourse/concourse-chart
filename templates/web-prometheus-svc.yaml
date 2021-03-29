@@ -18,11 +18,26 @@ metadata:
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
-  type: ClusterIP
+  type: {{ .Values.web.service.prometheus.type }}
+  {{- if .Values.web.service.prometheus.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+    {{- range .Values.web.service.prometheus.loadBalancerSourceRanges }}
+    - {{ . }}
+    {{- end }}
+  {{- end }}
+  {{- if and (eq "ClusterIP" .Values.web.service.prometheus.type) .Values.web.service.prometheus.clusterIP }}
+  clusterIP: {{ .Values.web.service.prometheus.clusterIP }}
+  {{- end }}
+  {{- if and (eq "LoadBalancer" .Values.web.service.prometheus.type) .Values.web.service.prometheus.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.web.service.prometheus.loadBalancerIP }}
+  {{- end }}
   ports:
     - name: prometheus
       port: {{ .Values.concourse.web.prometheus.bindPort }}
       targetPort: prometheus
+      {{- if and (eq "NodePort" .Values.web.service.prometheus.type) .Values.web.service.prometheus.NodePort }}
+      nodePort: {{ .Values.web.service.prometheus.NodePort}}
+      {{- end }}
   selector:
     app: {{ template "concourse.web.fullname" . }}
 {{- end }}
