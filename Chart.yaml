@@ -11,20 +11,14 @@ keywords:
   - concourse.ci
 home: https://concourse-ci.org/
 sources:
+  - https://github.com/concourse/concourse-chart
   - https://github.com/concourse/concourse
-  - https://github.com/helm/charts
 dependencies:
   - name: postgresql
-    version: 9.2.0
+    version: 10.3.13
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled
 maintainers:
-  - name: cirocosta
-    email: cscosta@pivotal.io
-  - name: william-tran
-    email: will@autonomic.ai
-  - name: YoussB
-    email: byoussef@pivotal.io
-  - name: taylorsilva
-    email: tsilva@pivotal.io
+  - name: concourse-team
+    email: concourse@vmware.com
 engine: gotpl
