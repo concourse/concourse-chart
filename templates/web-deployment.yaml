@@ -859,6 +859,10 @@ spec:
             - name: CONCOURSE_AUTH_DURATION
               value: {{ .Values.concourse.web.auth.duration | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.auth.passwordConnector }}
+            - name: CONCOURSE_AUTH_PASSWORD_CONNECTOR
+              value: {{ .Values.concourse.web.auth.passwordConnector | quote }}
+            {{- end }}
             - name: CONCOURSE_SESSION_SIGNING_KEY
               value: "{{ .Values.web.keySecretsPath }}/session_signing_key"
             {{- if .Values.concourse.web.auth.mainTeam.localUser }}
@@ -1105,6 +1109,10 @@ spec:
             {{- if .Values.concourse.web.auth.ldap.userSearchUsername }}
             - name: CONCOURSE_LDAP_USER_SEARCH_USERNAME
               value: {{ .Values.concourse.web.auth.ldap.userSearchUsername | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.auth.ldap.usernamePrompt }}
+            - name: CONCOURSE_LDAP_USERNAME_PROMPT
+              value: {{ .Values.concourse.web.auth.ldap.usernamePrompt | quote }}
             {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.auth.saml.enabled }}
