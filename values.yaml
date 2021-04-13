@@ -949,6 +949,10 @@ concourse:
       ## The value must be specified as Go duration values (e.g.: 30m or 24h).
       duration: 24h
 
+      ## The connector to use for password authentication for `fly login -u ... -p ...`.
+      ## Either "local" or "ldap". Defaults to "local".
+      passwordConnector:
+
       mainTeam:
 
         ## Configuration file for specifying the main teams params.
@@ -1204,6 +1208,10 @@ concourse:
         ## filter as '(<attr>=<username>)'.
         ##
         userSearchUsername:
+
+        ## The prompt when logging in through the UI when concourse.web.auth.passwordConnector is set to "ldap".
+        ## Defaults to 'Username'.
+        usernamePrompt:
 
         ## Can either be: 'sub'  search the whole sub tree or 'one' - only search one level. Defaults to 'sub'.
         ##
