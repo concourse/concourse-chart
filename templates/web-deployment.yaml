@@ -860,7 +860,7 @@ spec:
               value: {{ .Values.concourse.web.auth.duration | quote }}
             {{- end }}
             {{- if .Values.concourse.web.auth.passwordConnector }}
-            - name: CONCOURSE_AUTH_PASSWORD_CONNECTOR
+            - name: CONCOURSE_PASSWORD_CONNECTOR
               value: {{ .Values.concourse.web.auth.passwordConnector | quote }}
             {{- end }}
             - name: CONCOURSE_SESSION_SIGNING_KEY
