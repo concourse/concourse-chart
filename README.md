@@ -191,6 +191,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.ingress.annotations` | Concourse Web Ingress annotations | `{}` |
 | `web.ingress.enabled` | Enable Concourse Web Ingress | `false` |
 | `web.ingress.hosts` | Concourse Web Ingress Hostnames | `[]` |
+| `web.ingress.rulesOverride` | Concourse Web Ingress rules (override) (alternate to `web.ingress.hosts`) | `[]` |
 | `web.ingress.tls` | Concourse Web Ingress TLS configuration | `[]` |
 | `web.keySecretsPath` | Specify the mount directory of the web keys secrets | `/concourse-keys` |
 | `web.labels`| Additional labels to be added to the worker pods | `{}` |
@@ -468,24 +469,29 @@ web:
     enabled: true
 
     ## Hostnames.
-    ## Must be provided if Ingress is enabled.
-    ## This is either a list of hostnames or a list of objects
-    ## containing both a name and any earlier paths for that
-    ## hostname.
-    ##
-    ## Example (no additional paths):
-    ##   - concourse.domain.com
-    ##
-    ## Example (additional earlier path):
-    ##   - name: concourse.domain.com
-    ##     additionalEarlierPaths:
-    ##     - path: '/*'
-    ##       backend:
-    ##         serviceName: "ssl-redirect"
-    ##         servicePort: "use-annotation"
+    ## Either `hosts` or `rulesOverride` must be provided if Ingress is enabled.
+    ## `hosts` sets up the Ingress with default rules per provided hostname.
     ##
     hosts:
       - concourse.domain.com
+
+    ## Ingress rules override
+    ## Either `hosts` or `rulesOverride` must be provided if Ingress is enabled.
+    ## `rulesOverride` allows the user to define the full set of ingress rules, for more complex Ingress setups.
+    ##
+    ##
+    rulesOverride:
+      - host: concourse.domain.com
+        http:
+          paths:
+            - path: '/*'
+              backend:
+                serviceName: "ssl-redirect"
+                servicePort: "use-annotation"
+            - path: '/*'
+              backend:
+                serviceName: "web-atc"
+                servicePort: 8080
 
     ## TLS configuration.
     ## Secrets must be manually created in the namespace.

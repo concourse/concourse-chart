@@ -19,13 +19,13 @@ metadata:
     {{- end }}
 spec:
   rules:
+    {{- if .Values.web.ingress.rulesOverride }}
+    {{- toYaml .Values.web.ingress.rulesOverride | nindent 4 }}
+    {{- else }}
     {{- range .Values.web.ingress.hosts }}
-    - host: {{ if .name }}{{ .name }}{{ else }}{{ . }}{{ end }}
+    - host: {{ . }}
       http:
         paths:
-          {{- if .additionalEarlierPaths }}
-          {{- toYaml .additionalEarlierPaths | nindent 10 }}
-          {{- end }}
           {{- if or (eq $apiVersion "extensions/v1beta1") (eq $apiVersion "networking.k8s.io/v1beta1") }}
           - backend:
               serviceName: {{ $serviceName }}
@@ -44,6 +44,7 @@ spec:
                   {{- end }}
           {{- end }}
     {{- end -}}
+    {{- end }}
   {{- if .Values.web.ingress.tls }}
   tls:
 {{ toYaml .Values.web.ingress.tls | indent 4 }}
