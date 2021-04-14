@@ -490,8 +490,8 @@ web:
                 servicePort: "use-annotation"
             - path: '/*'
               backend:
-                serviceName: "web-atc"
-                servicePort: 8080
+                serviceName: "concourse-web"
+                servicePort: atc
 
     ## TLS configuration.
     ## Secrets must be manually created in the namespace.
