@@ -2247,6 +2247,11 @@ worker:
   ##
   keySecretsPath: "/concourse-keys"
 
+  ## For managing where additional certs should be added into worker
+  ## cert pool
+  ##
+  workerCertsPath: "/etc/ssl/certs"
+
   ## Configure additional volumeMounts for the
   ## worker container(s)
   ##
@@ -2255,6 +2260,12 @@ worker:
   ##     mountPath: /baggageclaim
   ##
   additionalVolumeMounts: []
+
+  ## Enable additional certificates to be added to
+  ## worker certificates pool where all containers
+  ## will inherit their certs from
+  ##
+  additionalCertificates: false
 
   ## Additional Labels to be added to the worker pods.
   ##
@@ -2682,6 +2693,18 @@ secrets:
   workerKeyPub: |-
     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC496FSYFcBAKgDtMsBAJiF/6/NxlXKP5UZecyEsedYuTt1GOgJTwaA1qZ1LmHsbfLDE68oDdiM4uvxfI4wtLhz57w3u0jOUxZ2JeF7SVwEf1nVqLn4Gh/f8GUNQGSyIp1zUD5Bx9fq0PAyQ47mt7Ufi84rcf8LKl7nzAIHTcdg2BvTkQN9bUGPaq/Pb1W2bKPAQy4OzXTSIyrAJ89TH2jFeaZfyxQFGbD9jVHH/yl0oiMrDeaRYgccE5II+KY7WoLjsBry/9Qf2ERELKTK4UeIGIqWci9lab1ti+GxFPPiC3krNFjo4jShV4eUs4cNIrjwNrxVaKPXmU6o7Y3Hpayx Concourse
 
+  ## Concourse worker additional certificates
+  ## Example:
+  ## workerAdditionalCerts: |-
+  ##   -----BEGIN CERTIFICATE-----
+  ##   ....
+  ##   -----END CERTIFICATE-----
+  ##   -----BEGIN CERTIFICATE-----
+  ##   ....
+  ##   -----END CERTIFICATE-----
+  ##   ....
+  #
+  workerAdditionalCerts:
 
   ## Secrets for web interface login
   ##
