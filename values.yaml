@@ -671,12 +671,6 @@ concourse:
       ##
       honeycombDataset:
 
-      ## Name of the service being traced
-      ##
-      ## Example: "concourse"
-      ##
-      honeycombServiceName:
-
       ## OTLP address to send traces to
       ##
       ## Example: "otel-collector:55680"

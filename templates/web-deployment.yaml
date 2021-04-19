@@ -249,10 +249,6 @@ spec:
             - name: CONCOURSE_TRACING_OTLP_USE_TLS
               value: {{ .Values.concourse.web.tracing.otlpUseTls | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.tracing.honeycombServiceName }}
-            - name: CONCOURSE_TRACING_HONEYCOMB_SERVICE_NAME
-              value: {{ .Values.concourse.web.tracing.honeycombServiceName | quote }}
-            {{- end }}
             {{- if .Values.concourse.web.metrics.bufferSize }}
             - name: CONCOURSE_METRICS_BUFFER_SIZE
               value: {{ .Values.concourse.web.metrics.bufferSize | quote }}
