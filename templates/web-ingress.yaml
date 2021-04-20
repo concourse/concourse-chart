@@ -19,6 +19,9 @@ metadata:
     {{- end }}
 spec:
   rules:
+    {{- if .Values.web.ingress.rulesOverride }}
+    {{- toYaml .Values.web.ingress.rulesOverride | nindent 4 }}
+    {{- else }}
     {{- range .Values.web.ingress.hosts }}
     - host: {{ . }}
       http:
@@ -41,6 +44,7 @@ spec:
                   {{- end }}
           {{- end }}
     {{- end -}}
+    {{- end }}
   {{- if .Values.web.ingress.tls }}
   tls:
 {{ toYaml .Values.web.ingress.tls | indent 4 }}
