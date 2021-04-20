@@ -5,3 +5,8 @@
 {{ if and (not .Values.concourse.worker.tsa.hosts) (and (not .Values.web.enabled) (.Values.worker.enabled)) }}
 {{- required "concourse.worker.tsa.hosts must be set in case of worker only deployment" "" }}
 {{ end }}
+
+{{ if and (.Values.web.ingress.enabled) (not (or .Values.web.ingress.hosts .Values.web.ingress.rulesOverride)) }}
+
+{{- required "When ingress is enabled, you must define either web.ingress.hosts or web.ingress.rulesOverride" "" }}
+{{ end }}
