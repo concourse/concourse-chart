@@ -173,6 +173,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `secrets.webTlsCaCert` | TLS CA certificate for the web component to terminate TLS connections | `nil` |
 | `secrets.workerKeyPub` | Concourse Worker Public Key | *See [values.yaml](values.yaml)* |
 | `secrets.workerKey` | Concourse Worker Private Key | *See [values.yaml](values.yaml)* |
+| `secrets.workerAdditionalCerts` | Concourse Worker Additional Certificates | *See [values.yaml](values.yaml)* |
 | `web.additionalAffinities` | Additional affinities to apply to web pods. E.g: node affinity | `{}` |
 | `web.additionalVolumeMounts` | VolumeMounts to be added to the web pods | `nil` |
 | `web.additionalVolumes` | Volumes to be added to the web pods | `nil` |
@@ -254,6 +255,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.hardAntiAffinity` | Should the workers be forced (as opposed to preferred) to be on different nodes? | `false` |
 | `worker.hardAntiAffinityLabels` | Set of labels used for hard anti affinity rule | `{}` |
 | `worker.keySecretsPath` | Specify the mount directory of the worker keys secrets | `/concourse-keys` |
+| `worker.certsPath` | Specify the path for additional worker certificates | `/etc/ssl/certs` |
 | `worker.kind` | Choose between `StatefulSet` to preserve state or `Deployment` for ephemeral workers | `StatefulSet` |
 | `worker.livenessProbe.failureThreshold` | Minimum consecutive failures for the probe to be considered failed after having succeeded | `5` |
 | `worker.livenessProbe.httpGet.path` | Path to access on the HTTP server when performing the healthcheck | `/` |
