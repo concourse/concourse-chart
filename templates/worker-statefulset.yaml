@@ -125,6 +125,11 @@ spec:
             - name: pre-stop-hook
               mountPath: /pre-stop-hook.sh
               subPath: pre-stop-hook.sh
+            {{- if and (not (kindIs "invalid" .Values.secrets.workerAdditionalCerts)) (.Values.secrets.workerAdditionalCerts | toString) }}
+            - name: worker-certs
+              mountPath: "{{ .Values.worker.workerCertsPath }}/worker-certs.pem"
+              readOnly: true
+            {{- end }}
 
 {{- if .Values.worker.additionalVolumeMounts }}
 {{ toYaml .Values.worker.additionalVolumeMounts | indent 12 }}
@@ -171,6 +176,15 @@ spec:
                 path: host_key.pub
               - key: worker-key
                 path: worker_key
+        {{- if and (not (kindIs "invalid" .Values.secrets.workerAdditionalCerts)) (.Values.secrets.workerAdditionalCerts | toString) }}
+        - name: worker-certs
+          secret:
+            secretName: {{ template "concourse.worker.fullname" . }}
+            optional: true
+            items:
+              - key: worker-certs
+                path: worker-certs.pem
+        {{- end }}
   {{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
     - metadata:
