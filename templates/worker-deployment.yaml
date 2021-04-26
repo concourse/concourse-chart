@@ -98,7 +98,7 @@ spec:
             - name: pre-stop-hook
               mountPath: /pre-stop-hook.sh
               subPath: pre-stop-hook.sh
-            {{- if .Values.worker.additionalCertificates }}
+            {{- if and (not (kindIs "invalid" .Values.secrets.workerAdditionalCerts)) (.Values.secrets.workerAdditionalCerts | toString) }}
             - name: worker-certs
               mountPath: "{{ .Values.worker.workerCertsPath }}/worker-certs.pem"
               readOnly: true
@@ -149,15 +149,15 @@ spec:
                 path: host_key.pub
               - key: worker-key
                 path: worker_key
+        {{- if and (not (kindIs "invalid" .Values.secrets.workerAdditionalCerts)) (.Values.secrets.workerAdditionalCerts | toString) }}
         - name: worker-certs
           secret:
             secretName: {{ template "concourse.worker.fullname" . }}
             optional: true
             items:
-              {{- if .Values.worker.additionalCertificates }}
               - key: worker-certs
                 path: worker-certs.pem
-              {{- end }}
+        {{- end }}
       {{- if semverCompare "^1.7-0" .Capabilities.KubeVersion.GitVersion }}
   strategy:
 {{ toYaml .Values.worker.updateStrategy | indent 4 }}
