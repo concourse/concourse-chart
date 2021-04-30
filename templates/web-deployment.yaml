@@ -542,7 +542,8 @@ spec:
             - name: CONCOURSE_VAULT_CLIENT_KEY
               value: "{{ .Values.web.vaultSecretsPath }}/client.key"
             {{- end }}
-            {{- if .Values.concourse.web.vault.useAuthParam }}
+            {{- /* Enable the AUTH_PARAM by default when secrets.vaultAuthParam is set, unless useAuthParam is explicitly set to false */}}
+            {{- if and (or .Values.concourse.web.vault.useAuthParam .Values.secrets.vaultAuthParam) (ne .Values.concourse.web.vault.useAuthParam false) }}
             - name: CONCOURSE_VAULT_AUTH_PARAM
               valueFrom:
                 secretKeyRef:
