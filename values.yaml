@@ -545,7 +545,7 @@ concourse:
       ## if the Vault authentication backend requires params from secrets, set this to true,
       ## and provide a value in secrets (field `vault-client-auth-param`).
       ##
-      useAuthParam: false
+      useAuthParam:
 
       ## Path to a directory of PEMEncoded CA cert files to verify the vault server SSL cert.
       ##
