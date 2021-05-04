@@ -754,6 +754,10 @@ spec:
             - name: CONCOURSE_X_FRAME_OPTIONS
               value: {{ .Values.concourse.web.xFrameOptions | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.ContentSecuritPolicy }}
+            - name: CONCOURSE_CONTENT_SECURITY_POLICY
+              value: {{ .Values.concourse.web.ContentSecuritPolicy | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.gc.interval }}
             - name: CONCOURSE_GC_INTERVAL
               value: {{ .Values.concourse.web.gc.interval | quote }}
