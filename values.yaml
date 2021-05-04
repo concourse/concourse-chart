@@ -844,7 +844,7 @@ concourse:
     ## The value to set for Content-Security-Policy header. If omitted, the default
     ## value in the Concourse binary is used.
     ##
-    ContentSecuritPolicy:
+    contentSecurityPolicy:
 
     gc:
       ## Interval on which to perform garbage collection.
