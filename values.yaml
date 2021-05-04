@@ -830,9 +830,15 @@ concourse:
         ##     action: labeldrop
         metricRelabelings:
 
-    ## The value to set for X-Frame-Options. If omitted, the header is not set.
+    ## The value to set for X-Frame-Options. If omitted, the default value in
+    ## the Concourse binary is used.
     ##
     xFrameOptions:
+
+    ## The value to set for Content-Security-Policy header. If omitted, the default
+    ## value in the Concourse binary is used.
+    ##
+    contentSecurityPolicy:
 
     gc:
       ## Interval on which to perform garbage collection.
