@@ -285,6 +285,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.containerd.maxContainers` | Max container capacity where 0 means no limit | `nil` |
 | `worker.containerd.networkPool` | Network range to use for dynamically allocated container subnets | `nil` |
 | `worker.containerd.requestTimeout` | Time to wait for requests to Containerd to complete | `nil` |
+| `worker.containerd.allowHostAccess` | Allows containers to reach host network | `false` |
 
 For configurable Concourse parameters, refer to [`values.yaml`](values.yaml)' `concourse` section. All parameters under this section are strictly mapped from the `concourse` binary commands.
 
