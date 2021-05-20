@@ -121,9 +121,9 @@ spec:
             - name: CONCOURSE_ENABLE_P2P_VOLUME_STREAMING
               value: {{ .Values.concourse.web.enablep2pVolumeStreaming | quote }}
             {{- end }}
-            {{- if .Values.concourse.web.disableCacheStreamedVolumes }}
-            - name: CONCOURSE_DISABLE_CACHE_STREAMED_VOLUMES
-              value: {{ .Values.concourse.web.disableCacheStreamedVolumes | quote }}
+            {{- if .Values.concourse.web.enableCacheStreamedVolumes }}
+            - name: CONCOURSE_ENABLE_CACHE_STREAMED_VOLUMES
+              value: {{ .Values.concourse.web.enableCacheStreamedVolumes | quote }}
             {{- end }}
             {{- if .Values.concourse.web.jobSchedulingMaxInFlight }}
             - name: CONCOURSE_JOB_SCHEDULING_MAX_IN_FLIGHT
