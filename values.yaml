@@ -1653,7 +1653,7 @@ concourse:
       ## Path to a config file to use for the Containerd daemon.
       config:
 
-      ## Enable a proxy DNS server for Garden
+      ## Enable a proxy DNS server for Garden. Note: this implicitly turns on container access to host network.
       dnsProxyEnable:
 
       ## MTU size for container network interfaces. Defaults to the MTU of the interface used for outbound access by the host
@@ -1675,6 +1675,9 @@ concourse:
       ##   - 1.1.1.1
       ##   - 2.2.2.2
       restrictedNetworks: []
+
+      ## Allows containers to reach host network.
+      allowHostAccess:
 
       ## Maximum container capacity. 0 means no limit. Defaults to 250.
       maxContainers:

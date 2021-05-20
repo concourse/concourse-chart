@@ -284,6 +284,10 @@ Return concourse environment variables for worker configuration
   value: {{ . | title | quote }}
 {{- end }}
 {{- end }}
+{{- if .Values.concourse.worker.containerd.allowHostAccess }}
+- name: CONCOURSE_CONTAINERD_ALLOW_HOST_ACCESS
+  value: {{ .Values.concourse.worker.containerd.allowHostAccess | quote }}
+{{- end }}
 {{- if .Values.concourse.worker.containerd.maxContainers }}
 - name: CONCOURSE_CONTAINERD_MAX_CONTAINERS
   value: {{ .Values.concourse.worker.containerd.maxContainers | quote }}
