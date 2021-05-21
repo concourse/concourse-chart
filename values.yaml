@@ -107,7 +107,7 @@ concourse:
     ## Disable the default behaviour of caching streamed resource volumes on
     ## the destination worker.
     ##
-    disableCacheStreamedVolumes: false
+    enableCacheStreamedVolumes: false
 
     ## Maximum number of jobs to be scheduling at the same time.
     ##
