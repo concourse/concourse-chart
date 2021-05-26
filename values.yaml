@@ -1837,6 +1837,10 @@ web:
   ##
   extraInitContainers: []
 
+  ## Pod priority class to assign to web pods.
+  ## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#pod-priority
+  priorityClassName:
+
   ## Enable or disable the process namespace sharing for the web nodes.
   ## This allows signaling the concourse process from a sidecar container.
   ## eg.: signal concourse web to reload the team authorized keys file.
@@ -2358,6 +2362,10 @@ worker:
   ##     effect: "NoSchedule"
   ##
   tolerations: []
+
+  ## Pod priority class to assign to worker pods.
+  ## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#pod-priority
+  priorityClassName:
 
   ## Time to allow the pod to terminate before being forcefully terminated. This should provide time for
   ## the worker to retire, i.e. drain its tasks. See https://concourse-ci.org/worker-internals.html for worker
