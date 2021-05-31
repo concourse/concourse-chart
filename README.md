@@ -236,6 +236,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.service.prometheus.annotations` | Concourse Web Prometheus Service annotations | `nil` |
 | `web.service.prometheus.labels` | Additional concourse web prometheus service labels | `nil` |
 | `web.shareProcessNamespace` | Enable or disable the process namespace sharing for the web nodes | `false` |
+| `web.priorityClassName` | Sets a PriorityClass for the web pods | `nil` |
 | `web.sidecarContainers` | Array of extra containers to run alongside the Concourse web container | `nil` |
 | `web.extraInitContainers` | Array of extra init containers to run before the Concourse web container | `nil` |
 | `web.strategy` | Strategy for updates to deployment. | `{}` |
@@ -273,6 +274,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.resources.requests.memory` | Minimum amount of memory resources requested | `512Mi` |
 | `worker.sidecarContainers` | Array of extra containers to run alongside the Concourse worker container | `nil` |
 | `worker.extraInitContainers` | Array of extra init containers to run before the Concourse worker container | `nil` |
+| `worker.priorityClassName` | Sets a PriorityClass for the worker pods | `nil` |
 | `worker.terminationGracePeriodSeconds` | Upper bound for graceful shutdown to allow the worker to drain its tasks | `60` |
 | `worker.tolerations` | Tolerations for the worker nodes | `[]` |
 | `worker.updateStrategy` | `OnDelete` or `RollingUpdate` (requires Kubernetes >= 1.7) | `RollingUpdate` |
