@@ -66,6 +66,9 @@ spec:
       {{- if .Values.web.extraInitContainers }}
       {{- toYaml .Values.web.extraInitContainers | nindent 8 }}
       {{- end }}
+      {{- if .Values.web.priorityClassName }}
+      priorityClassName: {{ .Values.web.priorityClassName }}
+      {{- end }}
       {{- if .Values.web.shareProcessNamespace }}
       shareProcessNamespace: true
       {{- end }}
