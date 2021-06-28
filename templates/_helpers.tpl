@@ -236,7 +236,7 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_GARDEN_CONFIG
   value: {{ .Values.concourse.worker.garden.config | quote }}
 {{- end }}
-{{- if .Values.concourse.worker.garden.dnsProxyEnable }}
+{{- if not (kindIs "invalid" .Values.concourse.worker.garden.dnsProxyEnable) }}
 - name: CONCOURSE_GARDEN_DNS_PROXY_ENABLE
   value: {{ .Values.concourse.worker.garden.dnsProxyEnable | quote }}
 {{- end }}
