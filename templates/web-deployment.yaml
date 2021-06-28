@@ -819,6 +819,18 @@ spec:
             - name: CONCOURSE_OPA_TIMEOUT
               value: {{ .Values.concourse.web.opa.timeout | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.opa.result.allowedKey }}
+            - name: CONCOURSE_OPA_RESULT_ALLOWED_KEY
+              value: {{ .Values.concourse.web.opa.result.allowedKey | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.opa.result.shouldBlockKey }}
+            - name: CONCOURSE_OPA_RESULT_SHOULD_BLOCK_KEY
+              value: {{ .Values.concourse.web.opa.result.shouldBlockKey | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.opa.result.messagesKey }}
+            - name: CONCOURSE_OPA_RESULT_MESSAGES_KEY
+              value: {{ .Values.concourse.web.opa.result.messagesKey | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.policyCheck.filterHttpMethods }}
             - name: CONCOURSE_POLICY_CHECK_FILTER_HTTP_METHOD
               value: {{ .Values.concourse.web.policyCheck.filterHttpMethods | join "," | quote }}
