@@ -914,6 +914,26 @@ concourse:
       ##
       timeout:
 
+      result:
+        ## Name of key in the Open Policy Agent result to check if the action is allowed.
+        ##
+        ## Example: result.allowed
+        ##
+        allowedKey:
+
+        ## Name of key in the Open Policy Agent result to check if it should hard block and fail, or soft block and emit warning on failure.
+        ##
+        ## Example: result.block
+        ##
+        shouldBlockKey:
+
+        ## Name of key in the Open Policy Agent result to extract the messages from.
+        ##
+        ## Example: result.reasons
+        ##
+        messagesKey:
+
+
     policyCheck:
       ## Array of HTTP methods to filter through policy checking.
       ##
