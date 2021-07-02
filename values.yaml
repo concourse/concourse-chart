@@ -108,6 +108,10 @@ concourse:
     ##
     enableCacheStreamedVolumes: false
 
+    ## Enable web UI and API endpoint for resource causality.
+    ##
+    enableResourceCausality: false
+
     ## Maximum number of jobs to be scheduling at the same time.
     ##
     jobSchedulingMaxInFlight:
