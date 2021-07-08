@@ -2431,7 +2431,7 @@ persistence:
     size: 20Gi
 
     # You can define additional selector for pvc
-    # selector:
+    selector:
     #   matchLabels:
     #     app-volume: "concourse"
 
