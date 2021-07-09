@@ -2430,6 +2430,11 @@ persistence:
     ##
     size: 20Gi
 
+    # You can define additional selector for pvc
+    selector:
+    #   matchLabels:
+    #     app-volume: "concourse"
+
 ## Configuration values for the postgresql dependency.
 ## Ref: https://github.com/helm/charts/blob/master/stable/postgresql/README.md
 ##

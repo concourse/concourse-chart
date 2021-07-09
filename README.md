@@ -99,6 +99,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `postgresql.persistence.enabled` | Enable PostgreSQL persistence using Persistent Volume Claims | `true` |
 | `postgresql.persistence.size` | Persistent Volume Storage Size | `8Gi` |
 | `postgresql.persistence.storageClass` | Concourse data Persistent Volume Storage Class | `nil` |
+| `persistence.worker.selector` | Concourse Worker Persistent Volume selector | `nil` |
 | `postgresql.postgresqlDatabase` | PostgreSQL Database to create | `concourse` |
 | `postgresql.postgresqlPassword` | PostgreSQL Password for the new user | `concourse` |
 | `postgresql.postgresqlUsername` | PostgreSQL User to create | `concourse` |
