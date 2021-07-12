@@ -48,21 +48,21 @@ spec:
       {{- end }}
       {{- end }}
       initContainers:
-      - name: concourse-migration
-        {{- if .Values.imageDigest }}
-        image: "{{ .Values.image }}@{{ .Values.imageDigest }}"
-        {{- else }}
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-        {{- end }}
-        args: ["migrate", "--migrate-to-latest-version"]
-        env:
+        - name: concourse-migration
+          {{- if .Values.imageDigest }}
+          image: "{{ .Values.image }}@{{ .Values.imageDigest }}"
+          {{- else }}
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          {{- end }}
+          args: ["migrate", "--migrate-to-latest-version"]
+          env:
 {{- include "concourse.postgresql.env" . | indent 10 }}
-        volumeMounts:
-        {{- if not (eq .Values.concourse.web.postgres.sslmode "disable") }}
-          - name: postgresql-keys
-            mountPath: {{ .Values.web.postgresqlSecretsPath | quote }}
-            readOnly: true
-        {{- end }}
+          volumeMounts:
+          {{- if not (eq .Values.concourse.web.postgres.sslmode "disable") }}
+            - name: postgresql-keys
+              mountPath: {{ .Values.web.postgresqlSecretsPath | quote }}
+              readOnly: true
+          {{- end }}
       {{- if .Values.web.extraInitContainers }}
       {{- toYaml .Values.web.extraInitContainers | nindent 8 }}
       {{- end }}
