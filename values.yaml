@@ -728,6 +728,11 @@ concourse:
       ##
       agentPort: 8125
 
+      ## Datadog agent unix domain socket (uds) filepath to expose dogstatsd metrics
+      ## e.g. /tmp/datadog.socket
+      ##
+      agentUdsFilepath:
+
       ## Prefix for all metrics to easily find them in Datadog
       ##
       prefix: "concourse.ci"

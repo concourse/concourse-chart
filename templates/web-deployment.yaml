@@ -679,16 +679,23 @@ spec:
               value: {{ .Values.concourse.web.metrics.attribute | quote }}
             {{- end }}
             {{- if .Values.concourse.web.datadog.enabled }}
-            - name: CONCOURSE_DATADOG_AGENT_HOST
             {{- if .Values.concourse.web.datadog.agentHostUseHostIP }}
+            - name: CONCOURSE_DATADOG_AGENT_HOST
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            {{- else }}
+            {{- else if .Values.concourse.web.datadog.agentHost }}
+            - name: CONCOURSE_DATADOG_AGENT_HOST
               value: {{ .Values.concourse.web.datadog.agentHost | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.datadog.agentPort }}
             - name: CONCOURSE_DATADOG_AGENT_PORT
               value: {{ .Values.concourse.web.datadog.agentPort | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.datadog.agentUdsFilepath }}
+            - name: CONCOURSE_DATADOG_AGENT_UDS_FILEPATH
+              value: {{ .Values.concourse.web.datadog.agentUdsFilepath | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.datadog.prefix }}
             - name: CONCOURSE_DATADOG_PREFIX
               value: {{ .Values.concourse.web.datadog.prefix | quote }}
