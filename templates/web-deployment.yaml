@@ -1474,6 +1474,11 @@ spec:
               mountPath: {{ .Values.web.syslogSecretsPath | quote }}
               readOnly: true
             {{- end }}
+            {{- if .Values.concourse.web.datadog.agentUdsFilepath }}
+            - name: dsdsocket
+              mountPath: {{ .Values.concourse.web.datadog.agentUdsFilepath | dir | quote }}
+              readOnly: true
+            {{- end }}
             - name: auth-keys
               mountPath: {{ .Values.web.authSecretsPath | quote }}
               readOnly: true
@@ -1592,6 +1597,11 @@ spec:
             items:
               - key: syslog-ca-cert
                 path: ca.cert
+        {{- end }}
+        {{- if .Values.concourse.web.datadog.agentUdsFilepath }}
+        - name: dsdsocket
+          hostPath:
+            path: {{ .Values.concourse.web.datadog.agentUdsFilepath | dir | printf "%s/"| quote }}
         {{- end }}
         - name: auth-keys
           secret:
