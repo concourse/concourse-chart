@@ -128,7 +128,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `secrets.conjurAuthnLogin` | Host username for Conjur auth provider | `nil` |
 | `secrets.conjurAuthnApiKey` | API key for host used for Conjur auth provider. Either API key or token file can be used, but not both. | `nil` |
 | `secrets.conjurAuthnTokenFile` | Token file used for Conjur auth provider if running in Kubernetes or IAM. Either token file or API key can be used, but not both. | `nil` |
-| `secrets.conjurCertFile` | Token file used for Conjur auth provider if running in Kubernetes or IAM | `nil` |
+| `secrets.conjurCACert` | CA Cert used if Conjur instance is deployed with a self-signed certificate  | `nil` |
 | `secrets.create` | Create the secret resource from the following values. *See [Secrets](#secrets)* | `true` |
 | `secrets.credhubCaCert` | Value of PEM-encoded CA cert file to use to verify the CredHub server SSL cert. | `nil` |
 | `secrets.credhubClientId` | Client ID for CredHub authorization. | `nil` |
@@ -625,6 +625,61 @@ concourse:
       ##
       insecureSkipVerify: false
 ```
+
+#### Conjur
+
+To use Conjur, set `concourse.web.kubernetes.enabled` to false, and set the following values:
+
+```yaml
+## Configuration for using Conjur as a credential manager.
+## Ref: https://concourse-ci.org/conjur-credential-manager.html
+##
+concourse:
+  web:
+    conjur:
+      ## Enable the use of Conjur as a credential manager.
+      ##
+      enabled: true
+
+      ## Conjur server address used to access secrets
+      ## Example: https://conjur.example.com
+      ##
+      applianceUrl:
+
+      ## Base path used to locate a vault or safe-level secret
+      ## Default: vaultName/{{.Secret}})
+      ##
+      secretTemplate:
+
+      ## Base path used to locate a team-level secret
+      ## Default: concourse/{{.Team}}/{{.Secret}}
+      ##
+      teamSecretTemplate:
+
+      ## Base path used to locate a pipeline-level secret
+      ## Default: concourse/{{.Team}}/{{.Pipeline}}/{{.Secret}}
+      ##
+      pipelineSecretTemplate:
+secrets:
+  # Org account.
+  conjurAccount:
+
+  # Host username. E.g host/concourse
+  conjurAuthnLogin:
+
+  # Api key related to the host.
+  conjurAuthnApiKey:
+
+  # Token file used if conjur instance is running in k8s or iam. E.g. /path/to/token_file
+  conjurAuthnTokenFile:
+
+  # CA Certificate to specify if conjur instance is deployed with a self-signed cert
+  conjurCACert:
+```
+
+You can specify either `conjurAuthnApiKey` that corresponds to the Conjur host OR `conjurAuthnTokenFile` if running in K8s or IAM.
+
+If your Conjur instance is deployed with a self-signed SSL certifcate, you will need to set `conjurCACert` property in your `values.yaml`. 
 
 #### AWS Systems Manager Parameter Store (SSM)
 
