@@ -618,18 +618,24 @@ concourse:
       ##
       authenticationMode: "secrets"
 
-    ## TODO link to docs: Configuration for using Conjur as a credential manager.
+    ## Configuration for using Conjur as a credential manager.
+    ## Ref: https://concourse-ci.org/conjur-credential-manager.html
     ##
     conjur:
+      ## Enable the use of Conjur as a credential manager
       enabled: false
 
       # URL of the Conjur instance.
       applianceUrl:
 
-      # Optional overrides for pattern of storing different types of secrets.
-      pipelineSecretTemplate:
-      teamSecretTemplate:
-      secretTemplate:
+      # Path used to to locate pipeline-level secret
+      pipelineSecretTemplate: concourse/{{.Team}}/{{.Pipeline}}/{{.Secret}}
+
+      # Path used to locate team-level secret
+      teamSecretTemplate: concourse/{{.Team}}/{{.Secret}}
+
+      # Path used to locate a vault or safe-level secret
+      secretTemplate: concourse/{{.Secret}}
 
     tracing:
       ## Service name to attach to traces as metadata.
@@ -1938,6 +1944,7 @@ web:
   postgresqlSecretsPath: "/concourse-postgresql"
   syslogSecretsPath: "/concourse-syslog"
   tlsSecretsPath: "/concourse-web-tls"
+  conjurSecretsPath: "/concourse-conjur"
 
   ## Configure additional volumes for the
   ## web container(s).
@@ -2910,5 +2917,5 @@ secrets:
   # Token file used if conjur instance is running in k8s or iam. E.g. /path/to/token_file
   conjurAuthnTokenFile:
 
-  # Cert file used if conjur instance is using a self signed cert. E.g. /path/to/conjur.pem
-  conjurCertFile:
+  # CA Certificate to specify if conjur instance is deployed with a self-signed cert
+  conjurCACert:
