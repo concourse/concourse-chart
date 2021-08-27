@@ -642,11 +642,10 @@ spec:
                 secretKeyRef:
                   name: {{ template "concourse.web.fullname" . }}
                   key: conjur-account
+            {{- if .Values.secrets.conjurCACert }}
             - name: CONCOURSE_CONJUR_CERT_FILE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "concourse.web.fullname" . }}
-                  key: conjur-cert-file
+              value: "{{ .Values.web.conjurSecretsPath }}/ca.cert"
+            {{- end }}
             - name: CONCOURSE_CONJUR_AUTHN_LOGIN
               valueFrom:
                 secretKeyRef:
@@ -1464,6 +1463,11 @@ spec:
               mountPath: {{ .Values.web.credhubSecretsPath | quote }}
               readOnly: true
             {{- end }}
+            {{- if .Values.concourse.web.conjur.enabled }}
+            - name: conjur-keys
+              mountPath: {{ .Values.web.conjurSecretsPath | quote }}
+              readOnly: true
+            {{- end }}
             {{- if not (eq .Values.concourse.web.postgres.sslmode "disable") }}
             - name: postgresql-keys
               mountPath: {{ .Values.web.postgresqlSecretsPath | quote }}
@@ -1573,6 +1577,17 @@ spec:
             items:
             {{- if .Values.concourse.web.credhub.useCaCert }}
               - key: credhub-ca-cert
+                path: ca.cert
+            {{- end }}
+        {{- end }}
+        {{- if .Values.concourse.web.conjur.enabled }}
+        - name: conjur-keys
+          secret:
+            secretName: {{ template "concourse.web.fullname" . }}
+            defaultMode: 0400
+            items:
+            {{- if .Values.secrets.conjurCACert }}
+              - key: conjur-ca-cert
                 path: ca.cert
             {{- end }}
         {{- end }}
