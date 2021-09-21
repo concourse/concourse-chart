@@ -194,6 +194,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.ingress.annotations` | Concourse Web Ingress annotations | `{}` |
 | `web.ingress.enabled` | Enable Concourse Web Ingress | `false` |
 | `web.ingress.hosts` | Concourse Web Ingress Hostnames | `[]` |
+| `web.ingress.ingressClassName` | IngressClass to register to | `nil` |
 | `web.ingress.rulesOverride` | Concourse Web Ingress rules (override) (alternate to `web.ingress.hosts`) | `[]` |
 | `web.ingress.tls` | Concourse Web Ingress TLS configuration | `[]` |
 | `web.keySecretsPath` | Specify the mount directory of the web keys secrets | `/concourse-keys` |
