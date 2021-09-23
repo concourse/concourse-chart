@@ -18,6 +18,9 @@ metadata:
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
+  {{- if .Values.web.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.web.ingress.ingressClassName | quote }}
+  {{- end }}
   rules:
     {{- if .Values.web.ingress.rulesOverride }}
     {{- toYaml .Values.web.ingress.rulesOverride | nindent 4 }}

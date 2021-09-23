@@ -2189,6 +2189,10 @@ web:
     ## `hosts` sets up the Ingress with default rules per provided hostname.
     hosts:
 
+    ## Ingress class name
+    ## Should match the name of the IngressClass. If left unset, will select the default IngressClass.
+    ingressClassName:
+
     ## Ingress rules override
     ## Either `hosts` or `rulesOverride` must be provided if Ingress is enabled.
     ## `rulesOverride` allows the user to define the full set of ingress rules, for more complex Ingress setups.
