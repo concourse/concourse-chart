@@ -1794,6 +1794,72 @@ concourse:
       ##
       p2pInterfaceNamePattern:
 
+    tracing:
+      ## Service name to attach to traces as metadata.
+      #
+      ## Example: "worker"
+      ##
+      serviceName: worker-trace
+
+      ## Attributes to attach to traces as metadata.
+      #
+      ## Example:
+      ##   environment: ci
+      ##
+      attributes:
+
+      ## Jaeger's HTTP-based Thrift collector endpoint.
+      #
+      ## Example: "http://jaeger:14268/api/traces"
+      ##
+      jaegerEndpoint: http://somethinig/api/traces
+
+      ## Tags to include to components
+      ##
+      ## Example: "foo:bar,caz:zaz"
+      ##
+      jaegerTags:
+
+      ## Name of the service being traced
+      ##
+      ## Example: "worker"
+      ##
+      jaegerService: worker-trace-jaeger
+
+      ## GCP's Project ID
+      ##
+      ## Example: "my-projectid"
+      ##
+      stackdriverProjectId:
+
+      ## Honeycomb.io API Key
+      ##
+      honeycombApiKey:
+
+      ## Name of dataset
+      ##
+      ## Example: "web"
+      ##
+      honeycombDataset:
+
+      ## OTLP address to send traces to
+      ##
+      ## Example: "otel-collector:55680"
+      ##
+      otlpAddress:
+
+      ## Headers to attach to each tracing message
+      ##
+      ## Example:
+      ##   lightstep-access-token: mysupersecrettoken
+      ##
+      otlpHeaders:
+
+      ## Whether to use TLS for the OTLP connection
+      ##
+      otlpUseTls:
+
+
     ## Enable Horizontal Pod Autoscaling
     ## to use this, ephemeral worker with
     ## worker.kind: Deployment is recommended

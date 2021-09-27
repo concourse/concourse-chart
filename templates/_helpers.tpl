@@ -368,6 +368,50 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_BAGGAGECLAIM_P2P_INTERFACE_NAME_PATTERN
   value: {{ .Values.concourse.worker.baggageclaim.p2pInterfaceNamePattern | quote }}
 {{- end -}}
+{{- if .Values.concourse.worker.tracing.serviceName }}
+- name: CONCOURSE_TRACING_SERVICE_NAME
+  value: {{ .Values.concourse.worker.tracing.serviceName | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.tracing.attributes }}
+- name: CONCOURSE_TRACING_ATTRIBUTE
+  value: "{{- $local := dict "first" true -}}{{- range $k, $v := .Values.concourse.worker.tracing.attributes -}}{{- if not $local.first -}},{{- end -}}{{- $k -}}:{{- $v -}}{{- $_ := set $local "first" false -}}{{- end -}}"
+{{- end }}
+{{- if .Values.concourse.worker.tracing.jaegerEndpoint }}
+- name: CONCOURSE_TRACING_JAEGER_ENDPOINT
+  value: {{ .Values.concourse.worker.tracing.jaegerEndpoint | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.tracing.jaegerTags }}
+- name: CONCOURSE_TRACING_JAEGER_TAGS
+  value: {{ .Values.concourse.worker.tracing.jaegerTags | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.tracing.jaegerService }}
+- name: CONCOURSE_TRACING_JAEGER_SERVICE
+  value: {{ .Values.concourse.worker.tracing.jaegerService | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.tracing.stackdriverProjectId }}
+- name: CONCOURSE_TRACING_STACKDRIVER_PROJECTID
+  value: {{ .Values.concourse.worker.tracing.stackdriverProjectId | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.tracing.honeycombApiKey }}
+- name: CONCOURSE_TRACING_HONEYCOMB_API_KEY
+  value: {{ .Values.concourse.worker.tracing.honeycombApiKey | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.tracing.honeycombDataset }}
+- name: CONCOURSE_TRACING_HONEYCOMB_DATASET
+  value: {{ .Values.concourse.worker.tracing.honeycombDataset | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.tracing.otlpAddress }}
+- name: CONCOURSE_TRACING_OTLP_ADDRESS
+  value: {{ .Values.concourse.worker.tracing.otlpAddress | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.tracing.otlpHeaders }}
+- name: CONCOURSE_TRACING_OTLP_HEADER
+  value: "{{- $local := dict "first" true -}}{{- range $k, $v := .Values.concourse.worker.tracing.otlpHeaders -}}{{- if not $local.first -}},{{- end -}}{{- $k -}}:{{- $v -}}{{- $_ := set $local "first" false -}}{{- end -}}"
+{{- end }}
+{{- if .Values.concourse.worker.tracing.otlpUseTls }}
+- name: CONCOURSE_TRACING_OTLP_USE_TLS
+  value: {{ .Values.concourse.worker.tracing.otlpUseTls | quote }}
+{{- end }}
 {{- end -}}
 
 {{/*
