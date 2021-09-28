@@ -103,7 +103,7 @@ spec:
               subPath: pre-stop-hook.sh
             {{- if and (not (kindIs "invalid" .Values.secrets.workerAdditionalCerts)) (.Values.secrets.workerAdditionalCerts | toString) }}
             - name: worker-certs
-              mountPath: "{{ .Values.worker.workerCertsPath }}/worker-certs.pem"
+              mountPath: "{{ .Values.worker.certsPath }}/worker-certs.pem"
               readOnly: true
             {{- end }}
 
