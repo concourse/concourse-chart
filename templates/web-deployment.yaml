@@ -56,7 +56,7 @@ spec:
           {{- end }}
           args: ["migrate", "--migrate-to-latest-version"]
           env:
-{{- include "concourse.postgresql.env" . | indent 10 }}
+{{- include "concourse.postgresql.env" . | indent 12 }}
           volumeMounts:
           {{- if not (eq .Values.concourse.web.postgres.sslmode "disable") }}
             - name: postgresql-keys
