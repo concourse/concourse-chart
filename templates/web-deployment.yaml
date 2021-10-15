@@ -96,18 +96,18 @@ spec:
             - name: CONCOURSE_COMPONENT_RUNNER_INTERVAL
               value: {{ .Values.concourse.web.componentRunnerInterval | quote }}
             {{- end }}
-            {{ - if .Values.concourse.web.defaultGetTimeout }}
+            {{- if .Values.concourse.web.defaultGetTimeout }}
             - name: CONCOURSE_DEFAULT_GET_TIMEOUT
               value: {{ .Values.concourse.web.defaultGetTimeout | quote }}
-            {{ - end }}
-            {{ - if .Values.concourse.web.defaultPutTimeout }}
+            {{- end }}
+            {{- if .Values.concourse.web.defaultPutTimeout }}
             - name: CONCOURSE_DEFAULT_PUT_TIMEOUT
               value: {{ .Values.concourse.web.defaultPutTimeout | quote }}
-            {{ - end }}
-            {{ - if .Values.concourse.web.defaultTaskTimeout }}
+            {{- end }}
+            {{- if .Values.concourse.web.defaultTaskTimeout }}
             - name: CONCOURSE_DEFAULT_TASK_TIMEOUT
               value: {{ .Values.concourse.web.defaultTaskTimeout | quote }}
-            {{ - end }}
+            {{- end }}
             {{- if .Values.concourse.web.apiMaxConns }}
             - name: CONCOURSE_API_MAX_CONNS
               value: {{ .Values.concourse.web.apiMaxConns | quote }}
