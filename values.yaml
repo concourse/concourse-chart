@@ -74,6 +74,24 @@ concourse:
     ##
     componentRunnerInterval:
 
+    ## Default timeout of a get step.
+    ##
+    ## Example: 10m
+    ##
+    defaultGetTimeout:
+
+    ## Default timeout of a put step.
+    ##
+    ## Example: 30m
+    ##
+    defaultPutTimeout:
+
+    ## Default timeout of a task step.
+    ##
+    ## Example: 8h
+    ##
+    defaultTaskTimeout:
+
     ## The maximum number of open connections for the API connection pool.
     ##
     apiMaxConns:
