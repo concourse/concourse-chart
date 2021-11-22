@@ -1894,6 +1894,16 @@ concourse:
       # for this to work you need to configure the metric eg. with prometheus adapter
 #      maxReplicas: 1
 #      minReplicas: 1
+#     behavior:
+#        scaleDown:
+#          stabilizationWindowSeconds: 1200
+#          selectPolicy: Min
+#          policies:
+#          - type: Percent
+#            value: 10
+#            periodSeconds: 300
+#        scaleUp:
+#          stabilizationWindowSeconds: 60
 #      builtInMetrics:
 #        - type: Resource
 #          resource:
