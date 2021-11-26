@@ -12,6 +12,10 @@ metadata:
 spec:
   minReplicas: {{ .Values.concourse.worker.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.concourse.worker.autoscaling.maxReplicas }}
+  {{- if .Values.concourse.worker.autoscaling.behavior }}
+  behavior:
+{{ toYaml .Values.concourse.worker.autoscaling.behavior | indent 4 }}
+  {{- end }}
   metrics:
     {{- if .Values.concourse.worker.autoscaling.builtInMetrics }}
 {{ toYaml .Values.concourse.worker.autoscaling.builtInMetrics | indent 4 }}
