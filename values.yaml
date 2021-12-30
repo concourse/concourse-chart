@@ -412,6 +412,13 @@ concourse:
     ##
     defaultTaskMemoryLimit:
 
+    ## The number of days after which a pipeline will be automatically paused #
+    ## if none of its jobs have run in less than the given number of days. A #
+    ## value of zero disables this component. If not set the component is
+    ## disabled by default.
+    ##
+    pausePipelinesAfter:
+
     ## Network address of this web node, reachable by other web nodes. Used for forwarded worker addresses. (default: $POD_IP)
     ##
     peerAddress:

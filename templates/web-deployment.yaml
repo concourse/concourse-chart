@@ -116,6 +116,10 @@ spec:
             - name: CONCOURSE_BACKEND_MAX_CONNS
               value: {{ .Values.concourse.web.backendMaxConns | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.pausePipelinesAfter }}
+            - name: CONCOURSE_PAUSE_PIPELINES_AFTER
+              value: {{ .Values.concourse.web.pausePipelinesAfter | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.enableGlobalResources }}
             - name: CONCOURSE_ENABLE_GLOBAL_RESOURCES
               value: {{ .Values.concourse.web.enableGlobalResources | quote }}
