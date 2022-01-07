@@ -499,6 +499,10 @@ spec:
             - name: CONCOURSE_AWS_SECRETSMANAGER_TEAM_SECRET_TEMPLATE
               value: {{ .Values.concourse.web.awsSecretsManager.teamSecretTemplate | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.awsSecretsManager.sharedSecretTemplate }}
+            - name: CONCOURSE_AWS_SECRETSMANAGER_SHARED_SECRET_TEMPLATE
+              value: {{ .Values.concourse.web.awsSecretsManager.sharedSecretTemplate | quote }}
+            {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.awsSsm.enabled }}
             {{- if .Values.concourse.web.awsSsm.keyAuth.enabled }}
