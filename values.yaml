@@ -509,6 +509,10 @@ concourse:
       ##
       teamSecretTemplate: /concourse/{{.Team}}/{{.Secret}}
 
+      ## top level template for Secrets Manager shared parameters, defaults to: /concourse/{{.Secret}}
+      ##
+      sharedSecretTemplate: /concourse/{{.Secret}}
+
     ## Configuration for using AWS SSM as a credential manager.
     ## Ref: https://concourse-ci.org/creds.html#ssm
     ##
