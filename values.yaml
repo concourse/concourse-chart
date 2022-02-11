@@ -1835,7 +1835,7 @@ concourse:
       #
       ## Example: "worker"
       ##
-      serviceName: worker-trace
+      serviceName:
 
       ## Attributes to attach to traces as metadata.
       #
@@ -1848,7 +1848,7 @@ concourse:
       #
       ## Example: "http://jaeger:14268/api/traces"
       ##
-      jaegerEndpoint: http://somethinig/api/traces
+      jaegerEndpoint:
 
       ## Tags to include to components
       ##
@@ -1860,7 +1860,7 @@ concourse:
       ##
       ## Example: "worker"
       ##
-      jaegerService: worker-trace-jaeger
+      jaegerService:
 
       ## GCP's Project ID
       ##
