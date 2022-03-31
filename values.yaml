@@ -1915,11 +1915,11 @@ concourse:
 #      behavior:
 #        scaleDown:
 #          stabilizationWindowSeconds: 1200
-#            selectPolicy: Min
-#            policies:
-#              - type: Percent
-#                value: 10
-#                periodSeconds: 300
+#          selectPolicy: Min
+#          policies:
+#            - type: Percent
+#              value: 10
+#              periodSeconds: 300
 #        scaleUp:
 #          stabilizationWindowSeconds: 60
 #      builtInMetrics:
