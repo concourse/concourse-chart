@@ -10,7 +10,9 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
+  {{- if not .Values.concourse.worker.autoscaling.maxReplicas }}
   replicas: {{ .Values.worker.replicas }}
+  {{- end }}
   selector:
     matchLabels:
       app: {{ template "concourse.worker.fullname" . }}
