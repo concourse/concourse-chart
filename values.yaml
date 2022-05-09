@@ -329,6 +329,19 @@ concourse:
     ## Possible values: volume-locality | fewest-build-containers | limit-active-tasks | limit-active-containers | limit-active-volumes
     containerPlacementStrategies: []
 
+    ## A second method by which a worker is selected during container placement
+    ## that is only used for get and nested check steps.
+    ## Possible values: volume-locality | random | fewest-build-containers | limit-active-tasks | limit-active-containers | limit-active-volumes
+    noInputContainerPlacementStrategy:
+
+    ## Instead of specifying a single placement strategy, configure a chain of
+    ## them to be applied in order.
+    ##
+    ## If set, takes priority over noInputContainerPlacementStrategy.
+    ##
+    ## Possible values: volume-locality | fewest-build-containers | limit-active-tasks | limit-active-containers | limit-active-volumes
+    noInputContainerPlacementStrategies: []
+
     ## Maximum allowed number of active build tasks per worker.
     ##
     ## Has effect only when containerPlacementStrategy is set to use
