@@ -565,6 +565,11 @@ concourse:
       ##
       url:
 
+      ## Disable Vault SRV lookup when vault url not including port.
+      ## When vault url includes port, SRV lookup is diabled and this value has no impart.
+      ##
+      disable_srv_lookup: false
+
       ## Vault namespace to use for authentication and secret lookup.
       ##
       namespace:
