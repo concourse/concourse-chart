@@ -547,6 +547,8 @@ spec:
             {{- if .Values.concourse.web.vault.enabled }}
             - name: CONCOURSE_VAULT_URL
               value: {{ .Values.concourse.web.vault.url | quote }}
+            - name: CONCOURSE_VAULT_DISABLE_SRV_LOOKUP
+              value: {{ .Values.concourse.web.vault.disable_srv_lookup | quote }}
             - name: CONCOURSE_VAULT_PATH_PREFIX
               value: {{ .Values.concourse.web.vault.pathPrefix | quote }}
             {{- if.Values.concourse.web.vault.namespace }}

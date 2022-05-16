@@ -20,7 +20,7 @@ spec:
   volumes:
 {{ toYaml .Values.podSecurityPolicy.allowedWebVolumes | indent 4 }}
   runAsUser:
-    rule: 'RunAsAny'    
+    rule: 'RunAsAny'
   seLinux:
     rule: 'RunAsAny'
   supplementalGroups:

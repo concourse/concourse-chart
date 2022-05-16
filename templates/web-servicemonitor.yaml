@@ -13,7 +13,7 @@ metadata:
     heritage: "{{ .Release.Service }}"
     {{- with .Values.concourse.web.prometheus.serviceMonitor.labels }}
 {{ toYaml . | trim | indent 4 }}
-    {{- end }}    
+    {{- end }}
 spec:
   endpoints:
   - interval: {{ .Values.concourse.web.prometheus.serviceMonitor.interval }}
