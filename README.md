@@ -81,97 +81,97 @@ See [Configuration](#configuration) and [`values.yaml`](./values.yaml) for the c
 
 The following table lists the configurable parameters of the Concourse chart and their default values.
 
-| Parameter               | Description                           | Default                          |
-| ----------------------- | ----------------------------------    |----------------------------------|
-| `fullnameOverride` | Provide a name to substitute for the full names of resources | `nil`                            |
-| `imageDigest` | Specific image digest to use in place of a tag. | `nil`                            |
-| `imagePullPolicy` | Concourse image pull policy | `IfNotPresent`                   |
-| `imagePullSecrets` | Array of imagePullSecrets in the namespace for pulling images | `[]`                             |
-| `imageTag` | Concourse image version | `7.7.1`                          |
-| `image` | Concourse image | `concourse/concourse`            |
-| `nameOverride` | Provide a name in place of `concourse` for `app:` labels | `nil`                            |
-| `persistence.enabled` | Enable Concourse persistence using Persistent Volume Claims | `true`                           |
-| `persistence.worker.accessMode` | Concourse Worker Persistent Volume Access Mode | `ReadWriteOnce`                  |
-| `persistence.worker.size` | Concourse Worker Persistent Volume Storage Size | `20Gi`                           |
-| `persistence.worker.storageClass` | Concourse Worker Persistent Volume Storage Class | `generic`                        |
-| `postgresql.enabled` | Enable PostgreSQL as a chart dependency | `true`                           |
-| `postgresql.persistence.accessModes` | Persistent Volume Access Mode | `["ReadWriteOnce"]`              |
-| `postgresql.persistence.enabled` | Enable PostgreSQL persistence using Persistent Volume Claims | `true`                           |
-| `postgresql.persistence.size` | Persistent Volume Storage Size | `8Gi`                            |
-| `postgresql.persistence.storageClass` | Concourse data Persistent Volume Storage Class | `nil`                            |
-| `persistence.worker.selector` | Concourse Worker Persistent Volume selector | `nil`                            |
-| `postgresql.postgresqlDatabase` | PostgreSQL Database to create | `concourse`                      |
-| `postgresql.postgresqlPassword` | PostgreSQL Password for the new user | `concourse`                      |
-| `postgresql.postgresqlUsername` | PostgreSQL User to create | `concourse`                      |
-| `rbac.apiVersion` | RBAC version | `v1beta1`                        |
-| `rbac.create` | Enables creation of RBAC resources | `true`                           |
-| `rbac.webServiceAccountName` | Name of the service account to use for web pods if `rbac.create` is `false` | `default`                        |
-| `rbac.webServiceAccountAnnotations` | Any annotations to be attached to the web service account | `{}`                             |
-| `rbac.workerServiceAccountName` | Name of the service account to use for workers if `rbac.create` is `false` | `default`                        |
-| `rbac.workerServiceAccountAnnotations` | Any annotations to be attached to the worker service account | `{}`                             |
-| `podSecurityPolicy.create` | Enables creation of podSecurityPolicy resources | `false`                          |
+| Parameter               | Description                           | Default                                                    |
+| ----------------------- | ----------------------------------    | ---------------------------------------------------------- |
+| `fullnameOverride` | Provide a name to substitute for the full names of resources | `nil` |
+| `imageDigest` | Specific image digest to use in place of a tag. | `nil` |
+| `imagePullPolicy` | Concourse image pull policy | `IfNotPresent` |
+| `imagePullSecrets` | Array of imagePullSecrets in the namespace for pulling images | `[]` |
+| `imageTag` | Concourse image version | `7.7.0` |
+| `image` | Concourse image | `concourse/concourse` |
+| `nameOverride` | Provide a name in place of `concourse` for `app:` labels | `nil` |
+| `persistence.enabled` | Enable Concourse persistence using Persistent Volume Claims | `true` |
+| `persistence.worker.accessMode` | Concourse Worker Persistent Volume Access Mode | `ReadWriteOnce` |
+| `persistence.worker.size` | Concourse Worker Persistent Volume Storage Size | `20Gi` |
+| `persistence.worker.storageClass` | Concourse Worker Persistent Volume Storage Class | `generic` |
+| `postgresql.enabled` | Enable PostgreSQL as a chart dependency | `true` |
+| `postgresql.persistence.accessModes` | Persistent Volume Access Mode | `["ReadWriteOnce"]` |
+| `postgresql.persistence.enabled` | Enable PostgreSQL persistence using Persistent Volume Claims | `true` |
+| `postgresql.persistence.size` | Persistent Volume Storage Size | `8Gi` |
+| `postgresql.persistence.storageClass` | Concourse data Persistent Volume Storage Class | `nil` |
+| `persistence.worker.selector` | Concourse Worker Persistent Volume selector | `nil` |
+| `postgresql.postgresqlDatabase` | PostgreSQL Database to create | `concourse` |
+| `postgresql.postgresqlPassword` | PostgreSQL Password for the new user | `concourse` |
+| `postgresql.postgresqlUsername` | PostgreSQL User to create | `concourse` |
+| `rbac.apiVersion` | RBAC version | `v1beta1` |
+| `rbac.create` | Enables creation of RBAC resources | `true` |
+| `rbac.webServiceAccountName` | Name of the service account to use for web pods if `rbac.create` is `false` | `default` |
+| `rbac.webServiceAccountAnnotations` | Any annotations to be attached to the web service account | `{}` |
+| `rbac.workerServiceAccountName` | Name of the service account to use for workers if `rbac.create` is `false` | `default` |
+| `rbac.workerServiceAccountAnnotations` | Any annotations to be attached to the worker service account | `{}` |
+| `podSecurityPolicy.create` | Enables creation of podSecurityPolicy resources | `false` |
 | `podSecurityPolicy.allowedWorkerVolumes` | List of volumes allowed by the podSecurityPolicy for the worker pods | *See [values.yaml](values.yaml)* |
 | `podSecurityPolicy.allowedWebVolumes` | List of volumes allowed by the podSecurityPolicy for the web pods | *See [values.yaml](values.yaml)* |
-| `secrets.annotations`| Annotations to be added to the secrets | `{}`                             |
-| `secrets.awsSecretsmanagerAccessKey` | AWS Access Key ID for Secrets Manager access | `nil`                            |
-| `secrets.awsSecretsmanagerSecretKey` | AWS Secret Access Key ID for Secrets Manager access | `nil`                            |
-| `secrets.awsSecretsmanagerSessionToken` | AWS Session Token for Secrets Manager access | `nil`                            |
-| `secrets.awsSsmAccessKey` | AWS Access Key ID for SSM access | `nil`                            |
-| `secrets.awsSsmSecretKey` | AWS Secret Access Key ID for SSM access | `nil`                            |
-| `secrets.awsSsmSessionToken` | AWS Session Token for SSM access | `nil`                            |
-| `secrets.bitbucketCloudClientId` | Client ID for the BitbucketCloud OAuth | `nil`                            |
-| `secrets.bitbucketCloudClientSecret` | Client Secret for the BitbucketCloud OAuth | `nil`                            |
-| `secrets.cfCaCert` | CA certificate for cf auth provider | `nil`                            |
-| `secrets.cfClientId` | Client ID for cf auth provider | `nil`                            |
-| `secrets.cfClientSecret` | Client secret for cf auth provider | `nil`                            |
-| `secrets.conjurAccount` | Account for Conjur auth provider | `nil`                            |
-| `secrets.conjurAuthnLogin` | Host username for Conjur auth provider | `nil`                            |
-| `secrets.conjurAuthnApiKey` | API key for host used for Conjur auth provider. Either API key or token file can be used, but not both. | `nil`                            |
-| `secrets.conjurAuthnTokenFile` | Token file used for Conjur auth provider if running in Kubernetes or IAM. Either token file or API key can be used, but not both. | `nil`                            |
-| `secrets.conjurCACert` | CA Cert used if Conjur instance is deployed with a self-signed certificate  | `nil`                            |
-| `secrets.create` | Create the secret resource from the following values. *See [Secrets](#secrets)* | `true`                           |
-| `secrets.credhubCaCert` | Value of PEM-encoded CA cert file to use to verify the CredHub server SSL cert. | `nil`                            |
-| `secrets.credhubClientId` | Client ID for CredHub authorization. | `nil`                            |
-| `secrets.credhubClientSecret` | Client secret for CredHub authorization. | `nil`                            |
-| `secrets.credhubClientKey` | Client key for Credhub authorization. | `nil`                            |
-| `secrets.credhubClientCert` | Client cert for Credhub authorization | `nil`                            |
-| `secrets.encryptionKey` | current encryption key | `nil`                            |
-| `secrets.githubCaCert` | CA certificate for Enterprise Github OAuth | `nil`                            |
-| `secrets.githubClientId` | Application client ID for GitHub OAuth | `nil`                            |
-| `secrets.githubClientSecret` | Application client secret for GitHub OAuth | `nil`                            |
-| `secrets.gitlabClientId` | Application client ID for GitLab OAuth | `nil`                            |
-| `secrets.gitlabClientSecret` | Application client secret for GitLab OAuth | `nil`                            |
+| `secrets.annotations`| Annotations to be added to the secrets | `{}` |
+| `secrets.awsSecretsmanagerAccessKey` | AWS Access Key ID for Secrets Manager access | `nil` |
+| `secrets.awsSecretsmanagerSecretKey` | AWS Secret Access Key ID for Secrets Manager access | `nil` |
+| `secrets.awsSecretsmanagerSessionToken` | AWS Session Token for Secrets Manager access | `nil` |
+| `secrets.awsSsmAccessKey` | AWS Access Key ID for SSM access | `nil` |
+| `secrets.awsSsmSecretKey` | AWS Secret Access Key ID for SSM access | `nil` |
+| `secrets.awsSsmSessionToken` | AWS Session Token for SSM access | `nil` |
+| `secrets.bitbucketCloudClientId` | Client ID for the BitbucketCloud OAuth | `nil` |
+| `secrets.bitbucketCloudClientSecret` | Client Secret for the BitbucketCloud OAuth | `nil` |
+| `secrets.cfCaCert` | CA certificate for cf auth provider | `nil` |
+| `secrets.cfClientId` | Client ID for cf auth provider | `nil` |
+| `secrets.cfClientSecret` | Client secret for cf auth provider | `nil` |
+| `secrets.conjurAccount` | Account for Conjur auth provider | `nil` |
+| `secrets.conjurAuthnLogin` | Host username for Conjur auth provider | `nil` |
+| `secrets.conjurAuthnApiKey` | API key for host used for Conjur auth provider. Either API key or token file can be used, but not both. | `nil` |
+| `secrets.conjurAuthnTokenFile` | Token file used for Conjur auth provider if running in Kubernetes or IAM. Either token file or API key can be used, but not both. | `nil` |
+| `secrets.conjurCACert` | CA Cert used if Conjur instance is deployed with a self-signed certificate  | `nil` |
+| `secrets.create` | Create the secret resource from the following values. *See [Secrets](#secrets)* | `true` |
+| `secrets.credhubCaCert` | Value of PEM-encoded CA cert file to use to verify the CredHub server SSL cert. | `nil` |
+| `secrets.credhubClientId` | Client ID for CredHub authorization. | `nil` |
+| `secrets.credhubClientSecret` | Client secret for CredHub authorization. | `nil` |
+| `secrets.credhubClientKey` | Client key for Credhub authorization. | `nil` |
+| `secrets.credhubClientCert` | Client cert for Credhub authorization | `nil` |
+| `secrets.encryptionKey` | current encryption key | `nil` |
+| `secrets.githubCaCert` | CA certificate for Enterprise Github OAuth | `nil` |
+| `secrets.githubClientId` | Application client ID for GitHub OAuth | `nil` |
+| `secrets.githubClientSecret` | Application client secret for GitHub OAuth | `nil` |
+| `secrets.gitlabClientId` | Application client ID for GitLab OAuth | `nil` |
+| `secrets.gitlabClientSecret` | Application client secret for GitLab OAuth | `nil` |
 | `secrets.hostKeyPub` | Concourse Host Public Key | *See [values.yaml](values.yaml)* |
 | `secrets.hostKey` | Concourse Host Private Key | *See [values.yaml](values.yaml)* |
-| `secrets.influxdbPassword` | Password used to authenticate with influxdb | `nil`                            |
-| `secrets.ldapCaCert` | CA Certificate for LDAP | `nil`                            |
+| `secrets.influxdbPassword` | Password used to authenticate with influxdb | `nil` |
+| `secrets.ldapCaCert` | CA Certificate for LDAP | `nil` |
 | `secrets.localUsers` | Create concourse local users. Default username and password are `test:test` *See [values.yaml](values.yaml)* |
-| `secrets.microsoftClientId` | Client ID for Microsoft authorization. | `nil `                           |
-| `secrets.microsoftClientSecret` | Client secret for Microsoft authorization. | `nil`                            |
-| `secrets.oauthCaCert` | CA certificate for Generic OAuth | `nil`                            |
-| `secrets.oauthClientId` | Application client ID for Generic OAuth | `nil`                            |
-| `secrets.oauthClientSecret` | Application client secret for Generic OAuth | `nil`                            |
-| `secrets.oidcCaCert` | CA certificate for OIDC Oauth | `nil`                            |
-| `secrets.oidcClientId` | Application client ID for OIDI OAuth | `nil`                            |
-| `secrets.oidcClientSecret` | Application client secret for OIDC OAuth | `nil`                            |
-| `secrets.oldEncryptionKey` | old encryption key, used for key rotation | `nil`                            |
-| `secrets.postgresCaCert` | PostgreSQL CA certificate | `nil`                            |
-| `secrets.postgresClientCert` | PostgreSQL Client certificate | `nil`                            |
-| `secrets.postgresClientKey` | PostgreSQL Client key | `nil`                            |
-| `secrets.postgresPassword` | PostgreSQL User Password | `nil`                            |
-| `secrets.postgresUser` | PostgreSQL User Name | `nil`                            |
-| `secrets.samlCaCert` | CA Certificate for SAML | `nil`                            |
+| `secrets.microsoftClientId` | Client ID for Microsoft authorization. | `nil ` |
+| `secrets.microsoftClientSecret` | Client secret for Microsoft authorization. | `nil` |
+| `secrets.oauthCaCert` | CA certificate for Generic OAuth | `nil` |
+| `secrets.oauthClientId` | Application client ID for Generic OAuth | `nil` |
+| `secrets.oauthClientSecret` | Application client secret for Generic OAuth | `nil` |
+| `secrets.oidcCaCert` | CA certificate for OIDC Oauth | `nil` |
+| `secrets.oidcClientId` | Application client ID for OIDI OAuth | `nil` |
+| `secrets.oidcClientSecret` | Application client secret for OIDC OAuth | `nil` |
+| `secrets.oldEncryptionKey` | old encryption key, used for key rotation | `nil` |
+| `secrets.postgresCaCert` | PostgreSQL CA certificate | `nil` |
+| `secrets.postgresClientCert` | PostgreSQL Client certificate | `nil` |
+| `secrets.postgresClientKey` | PostgreSQL Client key | `nil` |
+| `secrets.postgresPassword` | PostgreSQL User Password | `nil` |
+| `secrets.postgresUser` | PostgreSQL User Name | `nil` |
+| `secrets.samlCaCert` | CA Certificate for SAML | `nil` |
 | `secrets.sessionSigningKey` | Concourse Session Signing Private Key | *See [values.yaml](values.yaml)* |
-| `secrets.syslogCaCert` | SSL certificate to verify Syslog server | `nil`                            |
-| `secrets.teamAuthorizedKeys` | Array of team names and worker public keys for external workers | `nil`                            |
-| `secrets.vaultAuthParam` | Paramter to pass when logging in via the backend | `nil`                            |
-| `secrets.vaultCaCert` | CA certificate use to verify the vault server SSL cert | `nil`                            |
-| `secrets.vaultClientCert` | Vault Client Certificate | `nil`                            |
-| `secrets.vaultClientKey` | Vault Client Key | `nil`                            |
-| `secrets.vaultClientToken` | Vault periodic client token | `nil`                            |
-| `secrets.webTlsCert` | TLS certificate for the web component to terminate TLS connections | `nil`                            |
-| `secrets.webTlsKey` | An RSA private key, used to encrypt HTTPS traffic  | `nil`                            |
-| `secrets.webTlsCaCert` | TLS CA certificate for the web component to terminate TLS connections | `nil`                            |
+| `secrets.syslogCaCert` | SSL certificate to verify Syslog server | `nil` |
+| `secrets.teamAuthorizedKeys` | Array of team names and worker public keys for external workers | `nil` |
+| `secrets.vaultAuthParam` | Paramter to pass when logging in via the backend | `nil` |
+| `secrets.vaultCaCert` | CA certificate use to verify the vault server SSL cert | `nil` |
+| `secrets.vaultClientCert` | Vault Client Certificate | `nil` |
+| `secrets.vaultClientKey` | Vault Client Key | `nil` |
+| `secrets.vaultClientToken` | Vault periodic client token | `nil` |
+| `secrets.webTlsCert` | TLS certificate for the web component to terminate TLS connections | `nil` |
+| `secrets.webTlsKey` | An RSA private key, used to encrypt HTTPS traffic  | `nil` |
+| `secrets.webTlsCaCert` | TLS CA certificate for the web component to terminate TLS connections | `nil` |
 | `secrets.workerKeyPub` | Concourse Worker Public Key | *See [values.yaml](values.yaml)* |
 | `secrets.workerKey` | Concourse Worker Private Key | *See [values.yaml](values.yaml)* |
 | `secrets.workerAdditionalCerts` | Concourse Worker Additional Certificates | *See [values.yaml](values.yaml)* |
