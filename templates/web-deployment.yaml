@@ -388,6 +388,10 @@ spec:
             - name: CONCOURSE_RESOURCE_WITH_WEBHOOK_CHECKING_INTERVAL
               value: {{ .Values.concourse.web.resourceWithWebhookCheckingInterval | quote }}
             {{- end }}
+             {{- if .Values.concourse.web.resourceTypeCheckingInterval }}
+            - name: CONCOURSE_RESOURCE_TYPE_CHECKING_INTERVAL
+              value: {{ .Values.concourse.web.resourceTypeCheckingInterval | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.baseResourceTypeDefaults }}
             - name: CONCOURSE_BASE_RESOURCE_TYPE_DEFAULTS
               value: /brt-defaults.yml

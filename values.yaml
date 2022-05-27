@@ -303,6 +303,10 @@ concourse:
     ##
     resourceWithWebhookCheckingInterval: 1m
 
+    ## Interval on which to check for new versions of any resource types 
+    ##
+    resourceTypeCheckingInterval: 1m
+
     ## Configuration file for specifying defaults for base resource types
     ## Ref: https://concourse-ci.org/concourse-web.html#resource-defaults
     ## Example:
