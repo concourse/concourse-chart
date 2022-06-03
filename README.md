@@ -100,9 +100,9 @@ The following table lists the configurable parameters of the Concourse chart and
 | `postgresql.persistence.size` | Persistent Volume Storage Size | `8Gi` |
 | `postgresql.persistence.storageClass` | Concourse data Persistent Volume Storage Class | `nil` |
 | `persistence.worker.selector` | Concourse Worker Persistent Volume selector | `nil` |
-| `postgresql.postgresqlDatabase` | PostgreSQL Database to create | `concourse` |
-| `postgresql.postgresqlPassword` | PostgreSQL Password for the new user | `concourse` |
-| `postgresql.postgresqlUsername` | PostgreSQL User to create | `concourse` |
+| `postgresql.auth.database` | PostgreSQL Database to create | `concourse` |
+| `postgresql.auth.password` | PostgreSQL Password for the new user | `concourse` |
+| `postgresql.auth.username` | PostgreSQL User to create | `concourse` |
 | `rbac.apiVersion` | RBAC version | `v1beta1` |
 | `rbac.create` | Enables creation of RBAC resources | `true` |
 | `rbac.webServiceAccountName` | Name of the service account to use for web pods if `rbac.create` is `false` | `default` |
@@ -502,7 +502,7 @@ web:
 
 ### PostgreSQL
 
-By default, this chart uses a PostgreSQL database deployed as a chart dependency (see the [PostgreSQL chart](https://github.com/bitnami/charts/blob/master/bitnami/postgresql/README.md)), with default values for username, password, and database name. These can be modified by setting the `postgresql.*` values.
+By default, this chart uses a PostgreSQL database deployed as a chart dependency (see the [PostgreSQL chart](https://github.com/bitnami/charts/blob/master/bitnami/postgresql/README.md)), with default values for username, password, and database name. These can be modified by setting the `postgresql.auth.*` values.
 
 You can also bring your own PostgreSQL. To do so, set `postgresql.enabled` to `false`, and then configure Concourse's `postgres` values (`concourse.web.postgres.*`).
 
