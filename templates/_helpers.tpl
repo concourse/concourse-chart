@@ -422,14 +422,14 @@ Return concourse environment variables for postgresql configuration
 - name: CONCOURSE_POSTGRES_HOST
   value: {{ template "concourse.postgresql.fullname" . }}
 - name: CONCOURSE_POSTGRES_USER
-  value: {{ .Values.postgresql.postgresqlUsername | quote }}
+  value: {{ .Values.postgresql.auth.username | quote }}
 - name: CONCOURSE_POSTGRES_PASSWORD
   valueFrom:
     secretKeyRef:
       name: {{ template "concourse.postgresql.fullname" . }}
-      key: postgresql-password
+      key: password
 - name: CONCOURSE_POSTGRES_DATABASE
-  value: {{ .Values.postgresql.postgresqlDatabase | quote }}
+  value: {{ .Values.postgresql.auth.database | quote }}
 {{- else }}
 {{- if .Values.concourse.web.postgres.host }}
 - name: CONCOURSE_POSTGRES_HOST

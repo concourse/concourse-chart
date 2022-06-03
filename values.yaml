@@ -119,6 +119,7 @@ concourse:
 
     ## Enable P2P volume streaming between all wokrers.
     ## By default all volume streming goes through the web nodes.
+    ## NOTE: All workers must be on the same LAN network.
     ##
     enablep2pVolumeStreaming: false
 
@@ -2610,7 +2611,7 @@ persistence:
     #     app-volume: "concourse"
 
 ## Configuration values for the postgresql dependency.
-## Ref: https://github.com/helm/charts/blob/master/stable/postgresql/README.md
+## Ref: https://github.com/bitnami/charts/blob/master/bitnami/postgresql/README.md
 ##
 postgresql:
 
@@ -2629,18 +2630,19 @@ postgresql:
   ##
   fullnameOverride:
 
-  ### PostgreSQL User to create.
-  ##
-  postgresqlUsername: concourse
+  auth:
+    ### PostgreSQL User to create.
+    ##
+    username: concourse
 
-  ## PostgreSQL Password for the new user.
-  ## If not set, a random 10 characters password will be used.
-  ##
-  postgresqlPassword: concourse
+    ## PostgreSQL Password for the new user.
+    ## If not set, a random 10 characters password will be used.
+    ##
+    password: concourse
 
-  ## PostgreSQL Database to create.
-  ##
-  postgresqlDatabase: concourse
+    ## PostgreSQL Database to create.
+    ##
+    database: concourse
 
   ## Allows for setting a specific cluster ip for the PostgreSQL
   ## service.
