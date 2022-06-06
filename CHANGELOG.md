@@ -60,6 +60,4 @@ in concourse/concourse#5141 (part of 6.0), riemann was completely removed, makin
 
 # v17.0.0:
 
-- Upgrade the PostgreSQL Chart to v11. As the backward compatibility is not guarantee when upgrading the PostgreSQL chart to this major version, a major bump was needed. Please refer to [PostgreSQL Chart](https://docs.bitnami.com/kubernetes/infrastructure/postgresql/administration/upgrade/) for details.
-
-
+- Upgrade the PostgreSQL Chart to v11. As the backward compatibility is not guarantee when upgrading the PostgreSQL chart to this major version, a major bump was needed. Please refer to [PostgreSQL Chart](https://docs.bitnami.com/kubernetes/infrastructure/postgresql/administration/upgrade#to-1100) for details.

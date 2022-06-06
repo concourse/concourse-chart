@@ -2611,7 +2611,7 @@ persistence:
     #     app-volume: "concourse"
 
 ## Configuration values for the postgresql dependency.
-## Ref: https://github.com/bitnami/charts/blob/master/bitnami/postgresql/README.md
+## Ref: https://artifacthub.io/packages/helm/bitnami/postgresql/11.6.3
 ##
 postgresql:
 
