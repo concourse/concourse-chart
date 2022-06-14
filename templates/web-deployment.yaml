@@ -8,6 +8,9 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
+    {{- with .Values.web.labels }}
+{{ toYaml . | trim | indent 4 }}
+    {{- end }}
 spec:
   replicas: {{ .Values.web.replicas }}
 {{- if .Values.web.strategy }}
