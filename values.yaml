@@ -2136,6 +2136,17 @@ web:
   ##
   additionalAffinities:
 
+  ## Additional Labels to be added to the web deployment.
+  ##
+  ## Example:
+  ##   key1: "value1"
+  ##   key2: "value2"
+  ##
+  ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/#web-application-with-a-database
+  ##
+  labels: {}
+
   ## Additional Labels to be added to the web pods.
   ##
   ## Example:
@@ -2143,8 +2154,9 @@ web:
   ##   key2: "value2"
   ##
   ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/#web-application-with-a-database
   ##
-  labels: {}
+  podLabels: {}
 
   ## Annotations for the web nodes.
   ##
