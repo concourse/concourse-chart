@@ -25,7 +25,7 @@ spec:
       labels:
         app: {{ template "concourse.web.fullname" . }}
         release: "{{ .Release.Name }}"
-        {{- with .Values.web.labels }}
+        {{- with .Values.web.podLabels }}
 {{ toYaml . | trim | indent 8 }}
         {{- end }}
       annotations:
