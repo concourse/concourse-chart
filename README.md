@@ -198,7 +198,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.ingress.rulesOverride` | Concourse Web Ingress rules (override) (alternate to `web.ingress.hosts`) | `[]` |
 | `web.ingress.tls` | Concourse Web Ingress TLS configuration | `[]` |
 | `web.keySecretsPath` | Specify the mount directory of the web keys secrets | `/concourse-keys` |
-| `web.labels`| Additional labels to be added to the worker pods | `{}` |
+| `web.labels`| Additional labels to be added to the web deployment `metadata.labels` | `{}` |
 | `web.livenessProbe.failureThreshold` | Minimum consecutive failures for the probe to be considered failed after having succeeded | `5` |
 | `web.livenessProbe.httpGet.path` | Path to access on the HTTP server when performing the healthcheck | `/api/v1/info` |
 | `web.livenessProbe.httpGet.port` | Name or number of the port to access on the container | `atc` |
@@ -207,6 +207,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.livenessProbe.timeoutSeconds` | Number of seconds after which the probe times out | `3` |
 | `web.nameOverride` | Override the Concourse Web components name | `nil` |
 | `web.nodeSelector` | Node selector for web nodes | `{}` |
+| `web.podLabels`| Additional labels to be added to the web deployment `spec.template.metadata.labels`, setting pods `metadata.labels` | `{}` |
 | `web.postgresqlSecretsPath` | Specify the mount directory of the web postgresql secrets | `/concourse-postgresql` |
 | `web.prometheus.enabled` | Enable the Prometheus metrics endpoint | `false` |
 | `web.prometheus.bindIp` | IP to listen on to expose Prometheus metrics | `0.0.0.0` |
@@ -670,7 +671,7 @@ secrets:
 
 You can specify either `conjurAuthnApiKey` that corresponds to the Conjur host OR `conjurAuthnTokenFile` if running in K8s or IAM.
 
-If your Conjur instance is deployed with a self-signed SSL certifcate, you will need to set `conjurCACert` property in your `values.yaml`. 
+If your Conjur instance is deployed with a self-signed SSL certifcate, you will need to set `conjurCACert` property in your `values.yaml`.
 
 #### AWS Systems Manager Parameter Store (SSM)
 
@@ -754,8 +755,8 @@ Instead, you may add a comment specifying the default, such as
       ##
       pipelineSecretTemplate:
 
-  ``` 
+  ```
 
 This prevents the behaviour drifting from that of the binary in case the binary's default values change.
-  
+
 We understand that the comment stating the binary's default can become stale. The current solution is a suboptimal one. It may be improved in the future by generating a list of the default values from the binary.
