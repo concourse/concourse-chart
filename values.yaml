@@ -453,7 +453,7 @@ concourse:
       ##
       socket:
 
-      ## Whether or not to use SSL.
+      ## Whether or not to use SSL (currently supporting disbale, require, verify-ca, verify-full).
       ##
       sslmode: disable
 
