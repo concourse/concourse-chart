@@ -15,7 +15,7 @@ sources:
   - https://github.com/concourse/concourse
 dependencies:
   - name: postgresql
-    version: 11.9.10
+    version: 11.9.11
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled
 maintainers:
