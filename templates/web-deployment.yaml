@@ -409,6 +409,13 @@ spec:
             - name: CONCOURSE_NO_INPUT_CONTAINER_PLACEMENT_STRATEGY
               value: {{ .Values.concourse.web.noInputContainerPlacementStrategy | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.checkContainerPlacementStrategies }}
+            - name: CONCOURSE_CHECK_CONTAINER_PLACEMENT_STRATEGY
+              value: {{ .Values.concourse.web.checkContainerPlacementStrategies | join "," | quote }}
+            {{- else if .Values.concourse.web.checkContainerPlacementStrategy }}
+            - name: CONCOURSE_CHECK_CONTAINER_PLACEMENT_STRATEGY
+              value: {{ .Values.concourse.web.checkContainerPlacementStrategy | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.limitActiveTasks }}
             - name: CONCOURSE_MAX_ACTIVE_TASKS_PER_WORKER
               value: {{ .Values.concourse.web.limitActiveTasks | quote }}
