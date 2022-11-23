@@ -1,0 +1,163 @@
+{{- if .Values.windows_worker.enabled -}}
+{{- if eq .Values.windows_worker.kind "Deployment" }}
+apiVersion: {{ template "concourse.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ template "concourse.windows_worker.fullname" . }}
+  labels:
+    app: {{ template "concourse.windows_worker.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  {{- if not .Values.concourse.worker.autoscaling.maxReplicas }}
+  replicas: {{ .Values.windows_worker.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ template "concourse.windows_worker.fullname" . }}
+      release: "{{ .Release.Name }}"
+  template:
+    metadata:
+      labels:
+        app: {{ template "concourse.windows_worker.fullname" . }}
+        release: "{{ .Release.Name }}"
+        {{- with .Values.windows_worker.labels }}
+{{ toYaml . | trim | indent 8 }}
+        {{- end }}
+      {{- if .Values.windows_worker.annotations }}
+      annotations:
+{{ toYaml .Values.windows_worker.annotations | indent 8 }}
+      {{- end }}
+    spec:
+    {{- if .Values.windows_worker.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.windows_worker.nodeSelector | indent 8 }}
+    {{- end }}
+      serviceAccountName: {{ if .Values.rbac.create }}{{ template "concourse.windows_worker.fullname" . }}{{ else }}{{ .Values.rbac.workerServiceAccountName }}{{ end }}
+      {{- if .Values.windows_worker.tolerations }}
+      tolerations:
+{{ toYaml .Values.windows_worker.tolerations | indent 8 }}
+      {{- end }}
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.imagePullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
+      {{- if .Values.windows_worker.priorityClassName }}
+      priorityClassName: {{ .Values.windows_worker.priorityClassName }}
+      {{- end }}
+      {{- if .Values.windows_worker.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.windows_worker.terminationGracePeriodSeconds }}
+      {{- end }}
+      initContainers:
+      {{- if .Values.windows_worker.extraInitContainers }}
+      {{- toYaml .Values.windows_worker.extraInitContainers | nindent 8 }}
+      {{- end }}
+      containers:
+      {{- if .Values.windows_worker.sidecarContainers }}
+      {{- toYaml .Values.windows_worker.sidecarContainers | nindent 8 }}
+      {{- end }}
+        - name: {{ template "concourse.windows_worker.fullname" . }}
+          {{- if .Values.windows_imageDigest }}
+          image: "{{ .Values.windows_image }}@{{ .Values.windows_imageDigest }}"
+          {{- else }}
+          image: "{{ .Values.windows_image }}:{{ .Values.windows_imageTag }}"
+          {{- end }}
+          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          args:
+            - worker
+{{- if .Values.windows_worker.livenessProbe }}
+          livenessProbe:
+{{ toYaml .Values.windows_worker.livenessProbe | indent 12 }}
+{{- end }}
+{{- if .Values.windows_worker.readinessProbe }}
+          readinessProbe:
+{{ toYaml .Values.windows_worker.readinessProbe | indent 12 }}
+{{- end }}
+          env:
+{{- include "concourse.worker.env" . | indent 12 }}
+{{- if .Values.windows_worker.env }}
+{{ toYaml .Values.windows_worker.env | indent 12 }}
+{{- end }}
+          ports:
+            - name: worker-hc
+              containerPort: {{ .Values.concourse.worker.healthcheckBindPort }}
+{{- if .Values.windows_worker.resources }}
+          resources:
+{{ toYaml .Values.windows_worker.resources | indent 12 }}
+{{- end }}
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: concourse-keys
+              mountPath: {{ .Values.windows_worker.keySecretsPath | quote }}
+              readOnly: true
+            {{- if and (not (kindIs "invalid" .Values.secrets.workerAdditionalCerts)) (.Values.secrets.workerAdditionalCerts | toString) }}
+            - name: worker-additional-certs
+              mountPath: "{{ .Values.windows_worker.certsPath }}/worker-additional-certs.pem"
+              subPath: worker-additional-certs.pem
+              readOnly: true
+            {{- end }}
+
+{{- if .Values.windows_worker.additionalVolumeMounts }}
+{{ toYaml .Values.windows_worker.additionalVolumeMounts | indent 12 }}
+{{- end }}
+      affinity:
+{{- if .Values.windows_worker.additionalAffinities }}
+{{ toYaml .Values.windows_worker.additionalAffinities | indent 8 }}
+{{- end }}
+        podAntiAffinity:
+          {{- if .Values.windows_worker.hardAntiAffinity }}
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+{{- if .Values.windows_worker.hardAntiAffinityLabels }}
+{{ toYaml .Values.windows_worker.hardAntiAffinityLabels | indent 16 }}
+{{- else }}
+                app: {{ template "concourse.windows_worker.fullname" . }}
+                release: {{ .Release.Name | quote }}
+{{- end }}
+            topologyKey: kubernetes.io/hostname
+          {{- else }}
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: {{ template "concourse.windows_worker.fullname" . }}
+                  release: {{ .Release.Name | quote }}
+          {{- end }}
+      volumes:
+{{- if .Values.windows_worker.additionalVolumes }}
+{{ toYaml .Values.windows_worker.additionalVolumes | indent 8 }}
+{{- end }}
+        - name: pre-stop-hook
+          configMap:
+            name: {{ template "concourse.worker.fullname" . }}
+        - name: concourse-keys
+          secret:
+            secretName: {{ template "concourse.worker.fullname" . }}
+            defaultMode: 0400
+            items:
+              - key: host-key-pub
+                path: host_key.pub
+              - key: worker-key
+                path: worker_key
+        {{- if and (not (kindIs "invalid" .Values.secrets.workerAdditionalCerts)) (.Values.secrets.workerAdditionalCerts | toString) }}
+        - name: worker-additional-certs
+          secret:
+            secretName: {{ template "concourse.worker.fullname" . }}
+            optional: true
+            items:
+              - key: worker-additional-certs
+                path: worker-additional-certs.pem
+        {{- end }}
+      {{- if semverCompare "^1.7-0" .Capabilities.KubeVersion.GitVersion }}
+  strategy:
+{{ toYaml .Values.windows_worker.updateStrategy | indent 4 }}
+      {{- end }}
+{{- end }}
+{{- end }}

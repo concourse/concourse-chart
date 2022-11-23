@@ -15,6 +15,8 @@ fullnameOverride:
 ## Concourse image to use in both Web and Worker containers.
 ##
 image: concourse/concourse
+windows_image: foundationalinfrastructure/concourse-windows
+
 
 ## Concourse image tag.
 ## ps.: release candidates are published under `concourse/concourse-rc` instead
@@ -22,11 +24,13 @@ image: concourse/concourse
 ## Ref: https://hub.docker.com/r/concourse/concourse/tags/
 ##
 imageTag: "7.8.3"
+windows_imageTag: "latest"
 
 ## Specific image digest to use in place of a tag.
 ## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
 ##
 imageDigest:
+windows_imageDigest:
 
 ## Specify a imagePullPolicy regarding the fetching of container images.
 ## Ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -2588,6 +2592,242 @@ worker:
   ##
   emptyDirSize:
 
+## Configuration values for Concourse windows Worker components.
+## For more information regarding the characteristics of
+## Concourse Workers, see https://concourse-ci.org/concourse-worker.html
+##
+windows_worker:
+
+  ## Enable or disable the worker component.
+  ## This can allow users to create web only releases by setting this to false
+  ##
+  enabled: false
+
+  ## Selects kind of Deployment. Valid Options are: StatefulSet | Deployment
+  ## Using Deployment leads to ephemeral workers. Meaning workers do not
+  ## share state between restarts
+  ##
+  kind: StatefulSet
+
+  ## Override the components name (defaults to worker).
+  ##
+  nameOverride:
+
+  ## Removes any previous state created in `concourse.worker.workDir`.
+  ##
+  cleanUpWorkDirOnStart: true
+
+  ## Number of replicas.
+  ##
+  replicas: 2
+
+  ## Array of extra containers to run alongside the Concourse worker
+  ## container.
+  ##
+  ## Example:
+  ##
+  ## - name: myapp-container
+  ##   image: busybox
+  ##   command: ['sh', '-c', 'echo Hello && sleep 3600']
+  ##
+  sidecarContainers: []
+
+  ## Array of extra initContainers to run alongside the Concourse worker
+  ## container.
+  ##
+  ## Example:
+  ## - name: myapp-init-container
+  ##   image: busybox
+  ##   command: ['sh', '-c', 'echo Hello && sleep 3600']
+  ##
+  extraInitContainers: []
+
+  ## Minimum number of workers available after an eviction
+  ## Ref: https://kubernetes.io/docs/admin/disruptions/
+  ##
+  minAvailable: 1
+
+  ## Configures the liveness probe used to determine if the Worker component is up.
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+  ##
+  livenessProbe:
+    failureThreshold: 5
+    initialDelaySeconds: 10
+    periodSeconds: 15
+    timeoutSeconds: 3
+    httpGet:
+      path: /
+      port: worker-hc
+
+  ## Configures the readiness probes.
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+  ##
+  readinessProbe: {}
+
+  ## Configure resource requests and limits.
+  ## Ref: https://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+
+  ## Configure additional environment variables for the
+  ## worker container(s)
+  ##
+  ## Example:
+  ##
+  ##   - name: CONCOURSE_NAME
+  ##     value: "anything"
+  ##
+  env: []
+
+  ## For managing where secrets should be mounted for worker agents
+  ##
+  keySecretsPath: "c:/concourse-keys"
+
+  workDir: "c:/concourse-work-dir"
+
+  ## For managing where additional certs should be added into a worker.
+  ## You can add additional certs with secrets.workerAdditionalCerts
+  ##
+  certsPath: "c:/etc/ssl/certs"
+
+  ## Configure additional volumeMounts for the
+  ## worker container(s)
+  ##
+  ## Example:
+  ##   - name: concourse-baggageclaim
+  ##     mountPath: /baggageclaim
+  ##
+  additionalVolumeMounts: []
+
+  ## Additional Labels to be added to the worker pods.
+  ##
+  ## Example:
+  ##   key1: "value1"
+  ##   key2: "value2"
+  ##
+  ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  ##
+  labels: {}
+
+  ## Annotations to be added to the worker pods.
+  ##
+  ## Example:
+  ##
+  ##   iam.amazonaws.com/role: arn:aws:iam::123456789012:role/concourse
+  ##
+  annotations: {}
+
+  ## Node selector for the worker nodes.
+  ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
+  ##
+  nodeSelector: {}
+
+  ## Additional affinities to add to the worker pods.
+  ## Useful if you prefer to run workers on non-spot instances, for example.
+  ##
+  ## Example:
+  ##
+  ##   nodeAffinity:
+  ##     preferredDuringSchedulingIgnoredDuringExecution:
+  ##       - weight: 50
+  ##         preference:
+  ##           matchExpressions:
+  ##             - key: spot
+  ##               operator: NotIn
+  ##               values:
+  ##                 - "true"
+  ##
+  additionalAffinities: {}
+
+  ## Configure additional volumes for the
+  ## worker container(s).
+  ## Example:
+  ##
+  ##  - name: concourse-baggageclaim
+  ##    hostPath:
+  ##      path: /dev/nvme0n1
+  ##      type: BlockDevice
+  ##
+  ##
+  ## As a special exception, this allows taking over the `concourse-work-dir`
+  ## volume (from the default emptyDir) if `persistence.enabled` is false:
+  ##
+  ##   additionalVolumes:
+  ##     - name: concourse-work-dir
+  ##       hostPath:
+  ##         path: /mnt/locally-mounted-fast-disk/concourse
+  ##         type: DirectoryOrCreate
+  ##
+  additionalVolumes: []
+
+  ## Whether the workers should be forced to run on separate nodes.
+  ## This is accomplished by setting their AntiAffinity with requiredDuringSchedulingIgnoredDuringExecution as opposed to preferred
+  ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#inter-pod-affinity-and-anti-affinity-beta-feature
+  ##
+  hardAntiAffinity: false
+
+  ## Set of labels to use in the hard anti affinity rule.
+  ##
+  ## Example:
+  ##   hardAntiAffinity: true
+  ##   hardAntiAffinityLabels:
+  ##     application: concourse
+  ##
+  hardAntiAffinityLabels: {}
+
+  ## Tolerations for the worker nodes.
+  ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  ##
+  ## For example:
+  ##
+  ##   - key: "toleration=key"
+  ##     operator: "Equal"
+  ##     value: "value"
+  ##     effect: "NoSchedule"
+  ##
+  tolerations: []
+
+  ## Pod priority class to assign to worker pods.
+  ## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#pod-priority
+  priorityClassName:
+
+  ## Time to allow the pod to terminate before being forcefully terminated. This should provide time for
+  ## the worker to retire, i.e. drain its tasks. See https://concourse-ci.org/worker-internals.html for worker
+  ## lifecycle semantics.
+  ##
+  terminationGracePeriodSeconds: 60
+
+  ## Strategy for StatefulSet updates (requires Kubernetes 1.6+)
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset
+  ##
+  ## Strategy for Deployment updates
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+  ##
+  updateStrategy:
+    type: RollingUpdate
+#    rollingUpdate:
+#      maxSurge: 25%
+#      maxUnavailable: 1
+
+  ## Pod Management strategy (requires Kubernetes 1.7+)
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
+  ##
+  ## "OrderedReady" is default. "Parallel" means worker pods will launch or terminate
+  ## in parallel.
+  ##
+  ## Ignored for Kind Deployment
+  podManagementPolicy: Parallel
+
+  ## When persistance is disabled this value will be used to limit the emptyDir volume size
+  ## Ref: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
+  ##
+  ## Example: 20Gi
+  ##
+  emptyDirSize:
+  
 ## Persistent Volume Storage configuration.
 ## Ref: https://kubernetes.io/docs/user-guide/persistent-volumes
 ##
