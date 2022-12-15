@@ -1500,13 +1500,6 @@ concourse:
         ##
         userNameKey: username
 
-        ## Comma separated list of whitelisted domains when using Google
-        ## If this field is nonempty, only users from a listed domain will be allowed to log in
-        ## For example,
-        ## hostedDomains: domain.com,domain2.com,domain3.com
-        ##
-        hostedDomains:
-
         ## Disable OIDC groups claim fetching
         ##
         disableGroups:
