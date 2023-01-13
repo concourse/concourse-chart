@@ -1308,10 +1308,6 @@ spec:
             - name: CONCOURSE_OIDC_GROUPS_KEY
               value: {{ .Values.concourse.web.auth.oidc.groupsKey | quote}}
             {{- end }}
-            {{- if .Values.concourse.web.auth.oidc.hostedDomains }}
-            - name: CONCOURSE_OIDC_HOSTED_DOMAINS
-              value: {{ .Values.concourse.web.auth.oidc.hostedDomains | quote }}
-            {{- end }}
             {{- if .Values.concourse.web.auth.oidc.useCaCert }}
             - name: CONCOURSE_OIDC_CA_CERT
               value: "{{ .Values.web.authSecretsPath }}/oidc_ca.cert"
