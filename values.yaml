@@ -2629,9 +2629,7 @@ persistence:
     #     app-volume: "concourse"
 
     # Add labels to worker volumeClaimTemplate
-    labels: 
-      test: yesyes
-      really: nono
+    labels: {}
 
 ## Configuration values for the postgresql dependency.
 ## Ref: https://artifacthub.io/packages/helm/bitnami/postgresql/11.6.3
