@@ -94,6 +94,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `persistence.worker.accessMode` | Concourse Worker Persistent Volume Access Mode | `ReadWriteOnce` |
 | `persistence.worker.size` | Concourse Worker Persistent Volume Storage Size | `20Gi` |
 | `persistence.worker.storageClass` | Concourse Worker Persistent Volume Storage Class | `generic` |
+| `persistence.worker.labels` | Concourse Worker Persistent Volume Labels | `{}` |
 | `postgresql.enabled` | Enable PostgreSQL as a chart dependency | `true` |
 | `postgresql.persistence.accessModes` | Persistent Volume Access Mode | `["ReadWriteOnce"]` |
 | `postgresql.persistence.enabled` | Enable PostgreSQL persistence using Persistent Volume Claims | `true` |
