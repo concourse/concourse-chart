@@ -1792,6 +1792,12 @@ concourse:
       ## Path to a dumb init executable, defaults to /usr/local/concourse/bin/init
       initBin:
 
+      ## Path to the oci hooks dir, defaults to none
+      ociHooksDir:
+
+      ## Path to a seccomp filter override, defaults to a restrictive default set
+      seccompProfile:
+
       ## Path to CNI network plugins, defaults to /usr/local/concourse/bin
       cniPluginsDir:
 
