@@ -2635,7 +2635,7 @@ persistence:
     #     app-volume: "concourse"
 
 ## Configuration values for the postgresql dependency.
-## Ref: https://artifacthub.io/packages/helm/bitnami/postgresql/11.6.3
+## Ref: https://artifacthub.io/packages/helm/bitnami/postgresql/11.9.8
 ##
 postgresql:
 
@@ -2673,34 +2673,39 @@ postgresql:
   service:
     clusterIP:
 
-  ## Persistent Volume Storage configuration for PostgreSQL.
+  ## Configuration for the primary database of the PostgreSQL subchart,
+  ## i.e. the instance used by the web component.
   ##
-  ## Ref: https://kubernetes.io/docs/user-guide/persistent-volumes
-  ##
-  persistence:
-    ## Enable PostgreSQL persistence using Persistent Volume Claims.
-    ##
-    enabled: true
+  primary:
 
-    ## Persistent Volume Storage Class to be used by PersistentVolumes created
-    ## for PostgreSQL.
+    ## Persistent Volume Storage configuration for PostgreSQL.
     ##
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
+    ## Ref: https://kubernetes.io/docs/user-guide/persistent-volumes
     ##
-    storageClass:
+    persistence:
+      ## Enable PostgreSQL persistence using Persistent Volume Claims.
+      ##
+      enabled: true
 
-    ## Persistent Volume Access Mode.
-    ##
-    accessModes:
-      - ReadWriteOnce
+      ## Persistent Volume Storage Class to be used by PersistentVolumes created
+      ## for PostgreSQL.
+      ##
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+      ##   GKE, AWS & OpenStack)
+      ##
+      storageClass:
 
-    ## Persistent Volume Storage Size.
-    ##
-    size: 8Gi
+      ## Persistent Volume Access Mode.
+      ##
+      accessModes:
+        - ReadWriteOnce
+
+      ## Persistent Volume Storage Size.
+      ##
+      size: 8Gi
 
 ## For Kubernetes RBAC support:
 ##
