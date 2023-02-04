@@ -230,6 +230,8 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.service.api.loadBalancerSourceRanges` | Concourse Web API Service Load Balancer Source IP ranges | `nil` |
 | `web.service.api.tlsNodePort` | Sets the nodePort for api tls when using `NodePort` | `nil` |
 | `web.service.api.type` | Concourse Web API service type | `ClusterIP` |
+| `web.service.api.port.name` | Sets the port name for web service with `targetPort` `atc` | `atc` |
+| `web.service.api.tlsPort.name` | Sets the port name for web service with `targetPort` `atc-tls` | `atc-tls` |
 | `web.service.workerGateway.annotations` | Concourse Web workerGateway Service annotations | `nil` |
 | `web.service.workerGateway.labels` | Additional concourse web workerGateway service labels | `nil` |
 | `web.service.workerGateway.loadBalancerIP` | The IP to use when web.service.workerGateway.type is LoadBalancer | `nil` |
