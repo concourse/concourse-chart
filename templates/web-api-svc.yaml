@@ -33,14 +33,14 @@ spec:
   loadBalancerIP: {{ .Values.web.service.api.loadBalancerIP }}
   {{- end }}
   ports:
-  - name: atc
+  - name: ({ .Values.concourse.web.service.atc.port.name }}
     port: {{ .Values.concourse.web.bindPort }}
     targetPort: atc
     {{- if and (eq "NodePort" .Values.web.service.api.type) .Values.web.service.api.NodePort }}
     nodePort: {{ .Values.web.service.api.NodePort}}
     {{- end }}
 {{- if .Values.concourse.web.tls.enabled }}
-  - name: atc-tls
+  - name: ({ .Values.concourse.web.service.atc-tls.port.name }}
     port: {{ .Values.concourse.web.tls.bindPort }}
     targetPort: atc-tls
     {{- if and (eq "NodePort" .Values.web.service.api.type) .Values.web.service.api.tlsNodePort }}
