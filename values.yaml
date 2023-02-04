@@ -2239,6 +2239,14 @@ web:
       ##
       tlsNodePort:
 
+      ## When using thirdy party service mesh providers such as istio, port name ovverrides can be set to meet the default `http` naming convention
+      ##
+      port:
+        name: atc
+      
+      tlsPort:
+        name: atc-tls
+      
     workerGateway:
       ## For minikube, set this to ClusterIP, elsewhere use LoadBalancer or NodePort
       ## Ref: https://kubernetes.io/docs/user-guide/services/#publishing-services---service-types
