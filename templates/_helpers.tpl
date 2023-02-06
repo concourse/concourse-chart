@@ -304,6 +304,14 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_CONTAINERD_INIT_BIN
   value: {{ .Values.concourse.worker.containerd.initBin | quote }}
 {{- end }}
+{{- if .Values.concourse.worker.containerd.ociHooksDir }}
+- name: CONCOURSE_CONTAINERD_OCI_HOOKS_DIR
+  value: {{ .Values.concourse.worker.containerd.ociHooksDir | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.containerd.seccompProfile }}
+- name: CONCOURSE_CONTAINERD_SECCOMP_PROFILE
+  value: {{ .Values.concourse.worker.containerd.seccompProfile | quote }}
+{{- end }}
 {{- if .Values.concourse.worker.containerd.cniPluginsDir }}
 - name: CONCOURSE_CONTAINERD_CNI_PLUGINS_DIR
   value: {{ .Values.concourse.worker.containerd.cniPluginsDir | quote }}
