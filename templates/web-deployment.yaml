@@ -58,6 +58,10 @@ spec:
           image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           {{- end }}
           args: ["migrate", "--migrate-to-latest-version"]
+          {{- if .Values.web.securityContext }}
+          securityContext:
+          {{- toYaml .Values.web.securityContext | nindent 12 }}
+          {{- end }}          
           env:
 {{- include "concourse.postgresql.env" . | indent 12 }}
           volumeMounts:
