@@ -92,6 +92,12 @@ concourse:
     ##
     defaultTaskTimeout:
 
+    ## Work will be distributed to other ATCs when this number of go routines is reached.
+    ##
+    ## Example: 50000
+    ##
+    numGoroutineThreshold:
+
     ## The maximum number of open connections for the API connection pool.
     ##
     apiMaxConns:
