@@ -111,6 +111,10 @@ spec:
             - name: CONCOURSE_DEFAULT_TASK_TIMEOUT
               value: {{ .Values.concourse.web.defaultTaskTimeout | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.numGoroutineThreshold }}
+            - name: CONCOURSE_NUM_GOROUTINE_THRESHOLD
+              value: {{ .Values.concourse.web.numGoroutineThreshold | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.apiMaxConns }}
             - name: CONCOURSE_API_MAX_CONNS
               value: {{ .Values.concourse.web.apiMaxConns | quote }}
