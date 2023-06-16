@@ -1,5 +1,5 @@
 {{- if .Values.worker.enabled -}}
-apiVersion: policy/v1
+apiVersion: policy/{{ .Values.worker.apiVersion }}
 kind: PodDisruptionBudget
 metadata:
   name: {{ template "concourse.worker.fullname" . }}
