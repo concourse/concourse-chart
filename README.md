@@ -248,6 +248,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.tlsSecretsPath` | Where in the container the web TLS secrets should be mounted | `/concourse-web-tls` |
 | `web.tolerations` | Tolerations for the web nodes | `[]` |
 | `web.vaultSecretsPath` | Specify the mount directory of the web vault secrets | `/concourse-vault` |
+| `worker.apiVersion` | Policy version | `v1` |
 | `worker.additionalAffinities` | Additional affinities to apply to worker pods. E.g: node affinity | `{}` |
 | `worker.additionalVolumeMounts` | VolumeMounts to be added to the worker pods | `nil` |
 | `worker.additionalVolumes` | Volumes to be added to the worker pods | `nil` |
