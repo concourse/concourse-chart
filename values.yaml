@@ -2634,6 +2634,9 @@ persistence:
     #   matchLabels:
     #     app-volume: "concourse"
 
+    # Add labels to worker volumeClaimTemplate
+    labels: {}
+
 ## Configuration values for the postgresql dependency.
 ## Ref: https://artifacthub.io/packages/helm/bitnami/postgresql/11.9.8
 ##
