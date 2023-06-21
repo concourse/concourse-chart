@@ -53,11 +53,13 @@ spec:
       {{- if .Values.worker.terminationGracePeriodSeconds }}
       terminationGracePeriodSeconds: {{ .Values.worker.terminationGracePeriodSeconds }}
       {{- end }}
-      {{- if .Values.worker.cleanUpWorkDirOnStart }}
+      {{- if or .Values.worker.cleanUpWorkDirOnStart .Values.worker.extraInitContainers }}
       initContainers:
+      {{- end }}
       {{- if .Values.worker.extraInitContainers }}
       {{- toYaml .Values.worker.extraInitContainers | nindent 8 }}
       {{- end }}
+      {{- if .Values.worker.cleanUpWorkDirOnStart }}
         - name: {{ template "concourse.worker.fullname" . }}-init-rm
           {{- if .Values.imageDigest }}
           image: "{{ .Values.image }}@{{ .Values.imageDigest }}"
