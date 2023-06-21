@@ -195,6 +195,12 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: concourse-work-dir
+      {{- if .Values.persistence.worker.labels }}
+        labels:
+      {{- with .Values.persistence.worker.labels }}
+{{ toYaml . | trim | indent 10 }}
+      {{- end }}
+      {{- end }}
       spec:
       {{- if .Values.persistence.worker.selector }}
         selector: {{- .Values.persistence.worker.selector | toYaml | nindent 10 }}
