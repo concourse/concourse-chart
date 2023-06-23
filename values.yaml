@@ -1593,10 +1593,6 @@ concourse:
     ##
     shutdownSignal: SIGUSR2
 
-    ## Policy Version
-    ##
-    apiVersion: v1
-
     ## Duration after which the registration should be swapped to another random SSH gateway.
     ##
     rebalanceInterval:
