@@ -363,6 +363,10 @@ spec:
             - name: CONCOURSE_STREAMING_ARTIFACTS_COMPRESSION
               value: {{ .Values.concourse.web.streamingArtifactsCompression | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.streamingSizeLimitation }}
+            - name: CONCOURSE_STREAMING_SIZE_LIMITATION
+              value: {{ .Values.concourse.web.streamingSizeLimitation | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.debugBindIp }}
             - name: CONCOURSE_DEBUG_BIND_IP
               value: {{ .Values.concourse.web.debugBindIp | quote }}
@@ -479,6 +483,14 @@ spec:
             {{- if .Values.concourse.web.defaultTaskMemoryLimit }}
             - name: CONCOURSE_DEFAULT_TASK_MEMORY_LIMIT
               value: {{ .Values.concourse.web.defaultTaskMemoryLimit | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.numGoroutineThreshold }}
+            - name: CONCOURSE_NUM_GOROUTINE_THRESHOLD
+              value: {{ .Values.concourse.web.numGoroutineThreshold | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.dbNotificationBusQueueSize }}
+            - name: CONCOURSE_DB_NOTIFICATION_BUS_QUEUE_SIZE
+              value: {{ .Values.concourse.web.dbNotificationBusQueueSize | quote }}
             {{- end }}
 {{- include "concourse.postgresql.env" . | indent 12 }}
             {{- if .Values.concourse.web.kubernetes.enabled }}
