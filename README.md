@@ -200,6 +200,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.ingress.tls` | Concourse Web Ingress TLS configuration | `[]` |
 | `web.keySecretsPath` | Specify the mount directory of the web keys secrets | `/concourse-keys` |
 | `web.labels`| Additional labels to be added to the web deployment `metadata.labels` | `{}` |
+| `web.deploymentAnnotations` | Additional annotations to be added to the web deployment `metadata.annotations` | `{}` |
 | `web.livenessProbe.failureThreshold` | Minimum consecutive failures for the probe to be considered failed after having succeeded | `5` |
 | `web.livenessProbe.httpGet.path` | Path to access on the HTTP server when performing the healthcheck | `/api/v1/info` |
 | `web.livenessProbe.httpGet.port` | Name or number of the port to access on the container | `atc` |
@@ -261,6 +262,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.hardAntiAffinity` | Should the workers be forced (as opposed to preferred) to be on different nodes? | `false` |
 | `worker.hardAntiAffinityLabels` | Set of labels used for hard anti affinity rule | `{}` |
 | `worker.keySecretsPath` | Specify the mount directory of the worker keys secrets | `/concourse-keys` |
+| `worker.deploymentAnnotations` | Additional annotations to be added to the worker deployment `metadata.annotations` | `{}` |
 | `worker.certsPath` | Specify the path for additional worker certificates | `/etc/ssl/certs` |
 | `worker.kind` | Choose between `StatefulSet` to preserve state or `Deployment` for ephemeral workers | `StatefulSet` |
 | `worker.livenessProbe.failureThreshold` | Minimum consecutive failures for the probe to be considered failed after having succeeded | `5` |

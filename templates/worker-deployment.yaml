@@ -4,6 +4,10 @@ apiVersion: {{ template "concourse.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
   name: {{ template "concourse.worker.fullname" . }}
+  {{- if .Values.worker.deploymentAnnotations }}
+  annotations:
+{{ toYaml .Values.worker.deploymentAnnotations | indent 4 }}
+  {{- end }}
   labels:
     app: {{ template "concourse.worker.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"

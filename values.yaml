@@ -2146,6 +2146,17 @@ web:
   ##
   labels: {}
 
+  ## Additional Annotations to be added to the web deployment
+  ## Per Kubernetes spec, the values of each annotation must be a string.
+  ##
+  ## Example:
+  ##   key1: "value1"
+  ##   key2: "value2"
+  ##
+  ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  deploymentAnnotations: {}
+
   ## Additional Labels to be added to the web pods.
   ##
   ## Example:
@@ -2473,6 +2484,17 @@ worker:
   ##     mountPath: /baggageclaim
   ##
   additionalVolumeMounts: []
+
+  ## Additional Annotations to be added to the web deployment
+  ## Per Kubernetes spec, the values of each annotation must be a string.
+  ##
+  ## Example:
+  ##   key1: "value1"
+  ##   key2: "value2"
+  ##
+  ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  deploymentAnnotations: {}
 
   ## Additional Labels to be added to the worker pods.
   ##
