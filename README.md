@@ -101,9 +101,9 @@ The following table lists the configurable parameters of the Concourse chart and
 | `postgresql.persistence.size` | Persistent Volume Storage Size | `8Gi` |
 | `postgresql.persistence.storageClass` | Concourse data Persistent Volume Storage Class | `nil` |
 | `persistence.worker.selector` | Concourse Worker Persistent Volume selector | `nil` |
-| `postgresql.postgresqlDatabase` | PostgreSQL Database to create | `concourse` |
-| `postgresql.postgresqlPassword` | PostgreSQL Password for the new user | `concourse` |
-| `postgresql.postgresqlUsername` | PostgreSQL User to create | `concourse` |
+| `postgresql.auth.database` | PostgreSQL Database to create | `concourse` |
+| `postgresql.auth.password` | PostgreSQL Password for the new user | `concourse` |
+| `postgresql.auth.username` | PostgreSQL User to create | `concourse` |
 | `rbac.apiVersion` | RBAC version | `v1beta1` |
 | `rbac.create` | Enables creation of RBAC resources | `true` |
 | `rbac.webServiceAccountName` | Name of the service account to use for web pods if `rbac.create` is `false` | `default` |
