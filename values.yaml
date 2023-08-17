@@ -92,6 +92,12 @@ concourse:
     ##
     defaultTaskTimeout:
 
+    ## Work will be distributed to other ATCs when this number of go routines is reached.
+    ##
+    ## Example: 50000
+    ##
+    numGoroutineThreshold:
+
     ## The maximum number of open connections for the API connection pool.
     ##
     apiMaxConns:
@@ -314,9 +320,13 @@ concourse:
     ##
     baseResourceTypeDefaults: ""
 
-    ## Compression to use when streaming artifacts (values: zstd, gzip)
+    ## Compression to use when streaming artifacts (values: zstd, gzip, raw)
     ##
     streamingArtifactsCompression:
+
+    ## Internal volume streaming size limitation in MB. In case of small limitation
+    ## needed, float can be used like 0.01.
+    streamingSizeLimitation:
 
     ## Method by which a worker is selected during container placement.
     ## Possible values: volume-locality | random | fewest-build-containers | limit-active-tasks | limit-active-containers | limit-active-volumes
@@ -438,6 +448,13 @@ concourse:
     ## Default maximum memory per task, 0 means unlimited.
     ##
     defaultTaskMemoryLimit:
+
+    ## Work will be distributed to other ATCs when this number of go routines is reached.
+    numGoroutineThreshold:
+
+    ## DB notification bus queue size, default is 10000. If UI often misses loading
+    ## running build logs, then consider to increase the queue size.
+    dbNotificationBusQueueSize: 10000
 
     ## The number of days after which a pipeline will be automatically paused #
     ## if none of its jobs have run in less than the given number of days. A #
