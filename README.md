@@ -252,6 +252,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.vaultSecretsPath` | Specify the mount directory of the web vault secrets | `/concourse-vault` |
 | `worker.additionalAffinities` | Additional affinities to apply to worker pods. E.g: node affinity | `{}` |
 | `worker.additionalVolumeMounts` | VolumeMounts to be added to the worker pods | `nil` |
+| `worker.additionalPorts` | Additional ports to be added to worker pods | `[]` |
 | `worker.additionalVolumes` | Volumes to be added to the worker pods | `nil` |
 | `worker.annotations` | Annotations to be added to the worker pods | `{}` |
 | `worker.autoscaling` | Enable and configure pod autoscaling | `{}` |
