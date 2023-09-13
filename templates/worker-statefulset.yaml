@@ -117,6 +117,9 @@ spec:
           ports:
             - name: worker-hc
               containerPort: {{ .Values.concourse.worker.healthcheckBindPort }}
+{{- if .Values.worker.additionalPorts }}
+{{ toYaml .Values.worker.additionalPorts | indent 12 }}
+{{- end }}
 {{- if .Values.worker.resources }}
           resources:
 {{ toYaml .Values.worker.resources | indent 12 }}
