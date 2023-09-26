@@ -83,6 +83,7 @@ The following table lists the configurable parameters of the Concourse chart and
 
 | Parameter               | Description                           | Default                                                    |
 | ----------------------- | ----------------------------------    | ---------------------------------------------------------- |
+| `concourse.web.auth.userIDFieldPerConnector` | Define how to display user ID for each authentication connector. | `nil` |
 | `fullnameOverride` | Provide a name to substitute for the full names of resources | `nil` |
 | `imageDigest` | Specific image digest to use in place of a tag. | `nil` |
 | `imagePullPolicy` | Concourse image pull policy | `IfNotPresent` |
