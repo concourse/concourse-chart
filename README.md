@@ -87,13 +87,14 @@ The following table lists the configurable parameters of the Concourse chart and
 | `imageDigest` | Specific image digest to use in place of a tag. | `nil` |
 | `imagePullPolicy` | Concourse image pull policy | `IfNotPresent` |
 | `imagePullSecrets` | Array of imagePullSecrets in the namespace for pulling images | `[]` |
-| `imageTag` | Concourse image version | `7.9.0` |
+| `imageTag` | Concourse image version | `7.11.0` |
 | `image` | Concourse image | `concourse/concourse` |
 | `nameOverride` | Provide a name in place of `concourse` for `app:` labels | `nil` |
 | `persistence.enabled` | Enable Concourse persistence using Persistent Volume Claims | `true` |
 | `persistence.worker.accessMode` | Concourse Worker Persistent Volume Access Mode | `ReadWriteOnce` |
 | `persistence.worker.size` | Concourse Worker Persistent Volume Storage Size | `20Gi` |
 | `persistence.worker.storageClass` | Concourse Worker Persistent Volume Storage Class | `generic` |
+| `persistence.worker.labels` | Concourse Worker Persistent Volume Labels | `{}` |
 | `postgresql.enabled` | Enable PostgreSQL as a chart dependency | `true` |
 | `postgresql.persistence.accessModes` | Persistent Volume Access Mode | `["ReadWriteOnce"]` |
 | `postgresql.persistence.enabled` | Enable PostgreSQL persistence using Persistent Volume Claims | `true` |
@@ -199,6 +200,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.ingress.tls` | Concourse Web Ingress TLS configuration | `[]` |
 | `web.keySecretsPath` | Specify the mount directory of the web keys secrets | `/concourse-keys` |
 | `web.labels`| Additional labels to be added to the web deployment `metadata.labels` | `{}` |
+| `web.deploymentAnnotations` | Additional annotations to be added to the web deployment `metadata.annotations` | `{}` |
 | `web.livenessProbe.failureThreshold` | Minimum consecutive failures for the probe to be considered failed after having succeeded | `5` |
 | `web.livenessProbe.httpGet.path` | Path to access on the HTTP server when performing the healthcheck | `/api/v1/info` |
 | `web.livenessProbe.httpGet.port` | Name or number of the port to access on the container | `atc` |
@@ -250,6 +252,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.vaultSecretsPath` | Specify the mount directory of the web vault secrets | `/concourse-vault` |
 | `worker.additionalAffinities` | Additional affinities to apply to worker pods. E.g: node affinity | `{}` |
 | `worker.additionalVolumeMounts` | VolumeMounts to be added to the worker pods | `nil` |
+| `worker.additionalPorts` | Additional ports to be added to worker pods | `[]` |
 | `worker.additionalVolumes` | Volumes to be added to the worker pods | `nil` |
 | `worker.annotations` | Annotations to be added to the worker pods | `{}` |
 | `worker.autoscaling` | Enable and configure pod autoscaling | `{}` |
@@ -260,6 +263,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.hardAntiAffinity` | Should the workers be forced (as opposed to preferred) to be on different nodes? | `false` |
 | `worker.hardAntiAffinityLabels` | Set of labels used for hard anti affinity rule | `{}` |
 | `worker.keySecretsPath` | Specify the mount directory of the worker keys secrets | `/concourse-keys` |
+| `worker.deploymentAnnotations` | Additional annotations to be added to the worker deployment `metadata.annotations` | `{}` |
 | `worker.certsPath` | Specify the path for additional worker certificates | `/etc/ssl/certs` |
 | `worker.kind` | Choose between `StatefulSet` to preserve state or `Deployment` for ephemeral workers | `StatefulSet` |
 | `worker.livenessProbe.failureThreshold` | Minimum consecutive failures for the probe to be considered failed after having succeeded | `5` |

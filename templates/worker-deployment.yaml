@@ -4,6 +4,10 @@ apiVersion: {{ template "concourse.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
   name: {{ template "concourse.worker.fullname" . }}
+  {{- if .Values.worker.deploymentAnnotations }}
+  annotations:
+{{ toYaml .Values.worker.deploymentAnnotations | indent 4 }}
+  {{- end }}
   labels:
     app: {{ template "concourse.worker.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
@@ -90,6 +94,9 @@ spec:
           ports:
             - name: worker-hc
               containerPort: {{ .Values.concourse.worker.healthcheckBindPort }}
+{{- if .Values.worker.additionalPorts }}
+{{ toYaml .Values.worker.additionalPorts | indent 12 }}
+{{- end }}
 {{- if .Values.worker.resources }}
           resources:
 {{ toYaml .Values.worker.resources | indent 12 }}
