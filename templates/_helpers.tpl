@@ -78,7 +78,7 @@ Creates the address of the TSA service.
 Determine version of Kubernetes cluster
 */}}
 {{- define "concourse.kubeVersion" -}}
-{{- print (.Capabilities.KubeVersion.GitVersion | replace "v" "") -}}
+{{- print (.Capabilities.KubeVersion.Version | replace "v" "") -}}
 {{- end -}}
 
 {{/*
