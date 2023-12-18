@@ -573,6 +573,10 @@ spec:
             - name: CONCOURSE_AWS_SSM_TEAM_SECRET_TEMPLATE
               value: {{ .Values.concourse.web.awsSsm.teamSecretTemplate | quote }}
             {{- end }}
+            {{- if.Values.concourse.web.awsSsm.sharedPath }}
+            - name: CONCOURSE_AWS_SSM_SHARED_PATH
+              value: {{ .Values.concourse.web.awsSsm.sharedPath | quote }}
+            {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.vault.enabled }}
             - name: CONCOURSE_VAULT_URL
