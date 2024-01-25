@@ -62,6 +62,10 @@ spec:
           image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           {{- end }}
           args: ["migrate", "--migrate-to-latest-version"]
+          {{- if .Values.web.securityContext }}
+          securityContext:
+          {{- toYaml .Values.web.securityContext | nindent 12 }}
+          {{- end }}          
           env:
 {{- include "concourse.postgresql.env" . | indent 12 }}
           volumeMounts:
@@ -234,14 +238,6 @@ spec:
             {{- if .Values.concourse.web.secretCachePurgeInterval }}
             - name: CONCOURSE_SECRET_CACHE_PURGE_INTERVAL
               value: {{ .Values.concourse.web.secretCachePurgeInterval | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.awsSecretsManager.region }}
-            - name: CONCOURSE_AWS_SECRETSMANAGER_REGION
-              value: {{ .Values.concourse.web.awsSecretsManager.region | quote }}
-            {{- end }}
-            {{- if .Values.concourse.web.awsSsm.region }}
-            - name: CONCOURSE_AWS_SSM_REGION
-              value: {{ .Values.concourse.web.awsSsm.region | quote }}
             {{- end }}
             {{- if .Values.concourse.web.tracing.serviceName }}
             - name: CONCOURSE_TRACING_SERVICE_NAME
@@ -536,6 +532,10 @@ spec:
             - name: CONCOURSE_AWS_SECRETSMANAGER_PIPELINE_SECRET_TEMPLATE
               value: {{ .Values.concourse.web.awsSecretsManager.pipelineSecretTemplate | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.awsSecretsManager.region }}
+            - name: CONCOURSE_AWS_SECRETSMANAGER_REGION
+              value: {{ .Values.concourse.web.awsSecretsManager.region | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.awsSecretsManager.teamSecretTemplate }}
             - name: CONCOURSE_AWS_SECRETSMANAGER_TEAM_SECRET_TEMPLATE
               value: {{ .Values.concourse.web.awsSecretsManager.teamSecretTemplate | quote }}
@@ -569,9 +569,17 @@ spec:
             - name: CONCOURSE_AWS_SSM_PIPELINE_SECRET_TEMPLATE
               value: {{ .Values.concourse.web.awsSsm.pipelineSecretTemplate | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.awsSsm.region }}
+            - name: CONCOURSE_AWS_SSM_REGION
+              value: {{ .Values.concourse.web.awsSsm.region | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.awsSsm.teamSecretTemplate }}
             - name: CONCOURSE_AWS_SSM_TEAM_SECRET_TEMPLATE
               value: {{ .Values.concourse.web.awsSsm.teamSecretTemplate | quote }}
+            {{- end }}
+            {{- if.Values.concourse.web.awsSsm.sharedPath }}
+            - name: CONCOURSE_AWS_SSM_SHARED_PATH
+              value: {{ .Values.concourse.web.awsSsm.sharedPath | quote }}
             {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.vault.enabled }}

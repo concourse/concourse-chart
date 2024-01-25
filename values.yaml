@@ -583,6 +583,9 @@ concourse:
       ##
       teamSecretTemplate: /concourse/{{.Team}}/{{.Secret}}
 
+      ## Path under which to lookup shared credentials.
+      ##
+      sharedPath:
 
     ## Configuration for using Vault as a credential manager.
     ## Ref: https://concourse-ci.org/creds.html#vault
@@ -2501,6 +2504,16 @@ worker:
   ##     mountPath: /baggageclaim
   ##
   additionalVolumeMounts: []
+  
+  ## Additional ports to be added to worker pods
+  ## Example:
+  ##   - containerPort: 7788
+  ##     name: worker-bc
+  ##     protocol: TCP
+  ##
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/
+  ##
+  additionalPorts: []
 
   ## Additional Annotations to be added to the web deployment
   ## Per Kubernetes spec, the values of each annotation must be a string.
