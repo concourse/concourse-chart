@@ -628,6 +628,13 @@ concourse:
       ##
       authBackend: ""
 
+      ## Path to file containing a Vault authentication token. This is particularly useful in
+      ## combination with the Vault Agent sidecar.
+      ##
+      ## Example: /vault/secrets/token
+      ##
+      tokenPath: ""
+
       ## if the Vault authentication backend requires params from secrets, set this to true,
       ## and provide a value in secrets (field `vault-client-auth-param`).
       ##

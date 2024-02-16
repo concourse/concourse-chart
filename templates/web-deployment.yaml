@@ -603,12 +603,16 @@ spec:
             - name: CONCOURSE_VAULT_CA_CERT
               value: "{{ .Values.web.vaultSecretsPath }}/ca.cert"
             {{- end }}
-            {{- if eq .Values.concourse.web.vault.authBackend "token" }}
+            {{- if eq .Values.concourse.web.vault.authBackend "token" and eq .Values.concourse.web.vault.tokenPath ""}}
             - name: CONCOURSE_VAULT_CLIENT_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ template "concourse.web.fullname" . }}
                   key: vault-client-token
+            {{- end }}
+            {{- if not eq .Values.concourse.web.vault.tokenPath ""}}
+            - name: CONCOURSE_VAULT_CLIENT_TOKEN_PATH
+              value: "{{ .Values.concourse.web.vault.tokenPath | quote }}"
             {{- end }}
             {{- if eq .Values.concourse.web.vault.authBackend "cert" }}
             - name: CONCOURSE_VAULT_CLIENT_CERT
