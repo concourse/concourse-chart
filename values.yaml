@@ -1799,9 +1799,22 @@ concourse:
       ## Maximum container capacity. 0 means no limit. Defaults to 250.
       maxContainers:
 
-      ## Network range to use for dynamically allocated container subnets, defaults to "10.80.0.0/16"
-      ##
+      ## Network range to use for dynamically allocated container subnets
+      ## defaults to "10.80.0.0/16"
       networkPool:
+
+      ## Enable and configure IPv6 for containers on the worker
+      ipv6:
+
+        ## Enables IPv6 networking in the Containerd CNI
+        enabled: false
+
+        ## Network range to use for dynamically allocated container
+        ## subnets, defaults to "fd9c:31a6:c759::/64"
+        pool:
+
+        ## Disables masquerading of container traffic with the workers address
+        disableMasquerade:
 
       ## Time to wait for requests to Containerd to complete. 0 means no timeout.
       requestTimeout:
