@@ -296,6 +296,18 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_CONTAINERD_NETWORK_POOL
   value: {{ .Values.concourse.worker.containerd.networkPool | quote }}
 {{- end }}
+{{- if .Values.concourse.worker.containerd.ipv6.enabled }}
+- name: CONCOURSE_CONTAINERD_V6_ENABLE
+  value: {{ .Values.concourse.worker.containerd.ipv6.enabled | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.containerd.ipv6.pool }}
+- name: CONCOURSE_CONTAINERD_V6_POOL
+  value: {{ .Values.concourse.worker.containerd.ipv6.pool | quote }}
+{{- end }}
+{{- if .Values.concourse.worker.containerd.ipv6.disableMasquerade }}
+- name: CONCOURSE_CONTAINERD_V6_DISABLE_MASQUERADE
+  value: {{ .Values.concourse.worker.containerd.ipv6.disableMasquerade | quote }}
+{{- end }}
 {{- if .Values.concourse.worker.containerd.requestTimeout }}
 - name: CONCOURSE_CONTAINERD_REQUEST_TIMEOUT
   value: {{ .Values.concourse.worker.containerd.requestTimeout | quote }}
