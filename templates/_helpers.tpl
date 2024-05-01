@@ -370,7 +370,7 @@ Return concourse environment variables for worker configuration
 {{- end }}
 {{- if .Values.concourse.worker.baggageclaim.p2pInterfaceFamily }}
 - name: CONCOURSE_BAGGAGECLAIM_P2P_INTERFACE_FAMILY
-  value: {{ .Values.concourse.worker.baggageclaim.p2pInterfaceFamily }}
+  value: {{ .Values.concourse.worker.baggageclaim.p2pInterfaceFamily | quote }}
 {{- end }}
 {{- if .Values.concourse.worker.baggageclaim.p2pInterfaceNamePattern }}
 - name: CONCOURSE_BAGGAGECLAIM_P2P_INTERFACE_NAME_PATTERN
