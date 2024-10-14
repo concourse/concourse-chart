@@ -1715,7 +1715,7 @@ concourse:
 
     ## Runtime to use with the worker. Possible values: guardian, containerd, houdini.
     ## Please note that Houdini is insecure and doesn't run 'tasks' in containers.
-    runtime:
+    runtime: containerd
 
     tsa:
 
