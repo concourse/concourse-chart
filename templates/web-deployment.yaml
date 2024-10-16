@@ -395,6 +395,10 @@ spec:
             - name: CONCOURSE_RESOURCE_CHECKING_INTERVAL
               value: {{ .Values.concourse.web.resourceCheckingInterval | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.resourceTypeCheckingInterval }}
+            - name: CONCOURSE_RESOURCE_TYPE_CHECKING_INTERVAL
+              value: {{ .Values.concourse.web.resourceTypeCheckingInterval | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.resourceWithWebhookCheckingInterval }}
             - name: CONCOURSE_RESOURCE_WITH_WEBHOOK_CHECKING_INTERVAL
               value: {{ .Values.concourse.web.resourceWithWebhookCheckingInterval | quote }}
