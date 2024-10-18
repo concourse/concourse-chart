@@ -307,7 +307,7 @@ concourse:
 
     ## Interval on which to check for new versions of resource types.
     ##
-    resourceCheckingInterval: 1m
+    resourceTypeCheckingInterval: 1m
 
     ## Interval on which to check for new versions of any resources that have
     ## configured a webhook token
