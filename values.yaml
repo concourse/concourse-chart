@@ -499,7 +499,8 @@ concourse:
       ##
       database: atc
 
-      ## Whether or not to use the binary_parameter option
+      ## Whether to use the binary_parameter option from the lib/pq driver that
+      ## Concourse uses to connect to PostgreSQL
       ##
       binaryParameter: false
 
