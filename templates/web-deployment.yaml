@@ -1579,7 +1579,6 @@ spec:
         - name: concourse-keys
           secret:
             secretName: {{ template "concourse.web.fullname" . }}
-            defaultMode: 0400
             items:
               - key: host-key
                 path: host_key
@@ -1591,7 +1590,6 @@ spec:
         - name: team-authorized-keys
           secret:
             secretName: {{ template "concourse.web.fullname" . }}
-            defaultMode: 0400
             items:
             {{- range .Values.secrets.teamAuthorizedKeys }}
             - key: {{ .team }}-team-authorized-key
@@ -1603,7 +1601,6 @@ spec:
         - name: web-tls
           secret:
             secretName: {{ template "concourse.web.fullname" . }}
-            defaultMode: 0400
             items:
               - key: web-tls-cert
                 path: client.cert
@@ -1619,7 +1616,6 @@ spec:
         - name: vault-keys
           secret:
             secretName: {{ template "concourse.web.fullname" . }}
-            defaultMode: 0400
             items:
             {{- if .Values.concourse.web.vault.useCaCert }}
               - key: vault-ca-cert
@@ -1636,7 +1632,6 @@ spec:
         - name: credhub-keys
           secret:
             secretName: {{ template "concourse.web.fullname" . }}
-            defaultMode: 0400
             items:
             {{- if .Values.concourse.web.credhub.useCaCert }}
               - key: credhub-ca-cert
@@ -1647,7 +1642,6 @@ spec:
         - name: conjur-keys
           secret:
             secretName: {{ template "concourse.web.fullname" . }}
-            defaultMode: 0400
             items:
             {{- if .Values.secrets.conjurCACert }}
               - key: conjur-ca-cert
@@ -1658,7 +1652,6 @@ spec:
         - name: postgresql-keys
           secret:
             secretName: {{ template "concourse.web.fullname" . }}
-            defaultMode: 0400
             items:
               - key: postgresql-ca-cert
                 path: ca.cert
@@ -1671,7 +1664,6 @@ spec:
         - name: syslog-keys
           secret:
             secretName: {{ template "concourse.web.fullname" . }}
-            defaultMode: 0400
             items:
               - key: syslog-ca-cert
                 path: ca.cert
@@ -1684,7 +1676,6 @@ spec:
         - name: auth-keys
           secret:
             secretName: {{ template "concourse.web.fullname" . }}
-            defaultMode: 0400
             items:
               {{- if .Values.concourse.web.auth.cf.useCaCert }}
               - key: cf-ca-cert
