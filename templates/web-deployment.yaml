@@ -611,7 +611,7 @@ spec:
             - name: CONCOURSE_VAULT_CA_CERT
               value: "{{ .Values.web.vaultSecretsPath }}/ca.cert"
             {{- end }}
-            {{- if eq .Values.concourse.web.vault.authBackend "token" and not .Values.concourse.web.vault.tokenPath }}
+            {{- if and (eq .Values.concourse.web.vault.authBackend "token") (not .Values.concourse.web.vault.tokenPath) }}
             - name: CONCOURSE_VAULT_CLIENT_TOKEN
               valueFrom:
                 secretKeyRef:
