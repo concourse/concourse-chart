@@ -1070,6 +1070,13 @@ concourse:
       ## Either "local" or "ldap". Defaults to "local".
       passwordConnector:
 
+      # Define how to display user ID for each authentication connector.
+      # Format is <connector>:<fieldname>. Valid field names are user_id,
+      # name, username and email, where name maps to claims field username,
+      # and username maps to claims field preferred username.
+      #
+      userIDFieldPerConnector: ""
+
       mainTeam:
 
         ## Configuration file for specifying the main teams params.
@@ -1091,13 +1098,6 @@ concourse:
         ## that the users were added (`secrets.localUsers`).
         ##
         localUser: "test"
-
-        # Define how to display user ID for each authentication connector.
-        # Format is <connector>:<fieldname>. Valid field names are user_id,
-        # name, username and email, where name maps to claims field username,
-        # and username maps to claims field preferred username.
-        #
-        userIDFieldPerConnector: ""
 
         ## Authentication (Main Team) (CloudFoundry)
         ##
