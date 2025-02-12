@@ -21,7 +21,7 @@ image: concourse/concourse
 ##      of `concourse/concourse`.
 ## Ref: https://hub.docker.com/r/concourse/concourse/tags/
 ##
-imageTag: "7.11.0"
+imageTag: "7.12.1"
 
 ## Specific image digest to use in place of a tag.
 ## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
@@ -305,6 +305,10 @@ concourse:
     ##
     resourceCheckingInterval: 1m
 
+    ## Interval on which to check for new versions of resource types.
+    ##
+    resourceCheckingInterval: 1m
+
     ## Interval on which to check for new versions of any resources that have
     ## configured a webhook token
     ##
@@ -495,6 +499,11 @@ concourse:
       ##
       database: atc
 
+      ## Whether to use the binary_parameter option from the lib/pq driver that
+      ## Concourse uses to connect to PostgreSQL
+      ##
+      binaryParameter: false
+
 
     kubernetes:
       ## Enable the use of Kubernetes Secrets as the credential provider for
@@ -583,6 +592,9 @@ concourse:
       ##
       teamSecretTemplate: /concourse/{{.Team}}/{{.Secret}}
 
+      ## Path under which to lookup shared credentials.
+      ##
+      sharedPath:
 
     ## Configuration for using Vault as a credential manager.
     ## Ref: https://concourse-ci.org/creds.html#vault
@@ -627,6 +639,13 @@ concourse:
       ## Currently supported backends: token, approle, cert.
       ##
       authBackend: ""
+
+      ## Path to file containing a Vault authentication token. This is particularly useful in
+      ## combination with the Vault Agent sidecar.
+      ##
+      ## Example: /vault/secrets/token
+      ##
+      tokenPath: ""
 
       ## if the Vault authentication backend requires params from secrets, set this to true,
       ## and provide a value in secrets (field `vault-client-auth-param`).
@@ -1705,7 +1724,7 @@ concourse:
 
     ## Runtime to use with the worker. Possible values: guardian, containerd, houdini.
     ## Please note that Houdini is insecure and doesn't run 'tasks' in containers.
-    runtime:
+    runtime: containerd
 
     tsa:
 
@@ -1799,9 +1818,22 @@ concourse:
       ## Maximum container capacity. 0 means no limit. Defaults to 250.
       maxContainers:
 
-      ## Network range to use for dynamically allocated container subnets, defaults to "10.80.0.0/16"
-      ##
+      ## Network range to use for dynamically allocated container subnets
+      ## defaults to "10.80.0.0/16"
       networkPool:
+
+      ## Enable and configure IPv6 for containers on the worker
+      ipv6:
+
+        ## Enables IPv6 networking in the Containerd CNI
+        enabled: false
+
+        ## Network range to use for dynamically allocated container
+        ## subnets, defaults to "fd9c:31a6:c759::/64"
+        pool:
+
+        ## Disables masquerading of container traffic with the workers address
+        disableMasquerade:
 
       ## Time to wait for requests to Containerd to complete. 0 means no timeout.
       requestTimeout:

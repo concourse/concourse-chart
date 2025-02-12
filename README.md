@@ -87,7 +87,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `imageDigest` | Specific image digest to use in place of a tag. | `nil` |
 | `imagePullPolicy` | Concourse image pull policy | `IfNotPresent` |
 | `imagePullSecrets` | Array of imagePullSecrets in the namespace for pulling images | `[]` |
-| `imageTag` | Concourse image version | `7.11.0` |
+| `imageTag` | Concourse image version | `7.12.1` |
 | `image` | Concourse image | `concourse/concourse` |
 | `nameOverride` | Provide a name in place of `concourse` for `app:` labels | `nil` |
 | `persistence.enabled` | Enable Concourse persistence using Persistent Volume Claims | `true` |
@@ -250,6 +250,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.tlsSecretsPath` | Where in the container the web TLS secrets should be mounted | `/concourse-web-tls` |
 | `web.tolerations` | Tolerations for the web nodes | `[]` |
 | `web.vaultSecretsPath` | Specify the mount directory of the web vault secrets | `/concourse-vault` |
+| `web.vault.tokenPath` | Specify the path to a file containing a vault client authentication token | `nil` |
 | `worker.additionalAffinities` | Additional affinities to apply to worker pods. E.g: node affinity | `{}` |
 | `worker.additionalVolumeMounts` | VolumeMounts to be added to the worker pods | `nil` |
 | `worker.additionalPorts` | Additional ports to be added to worker pods | `[]` |

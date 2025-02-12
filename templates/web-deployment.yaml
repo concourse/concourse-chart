@@ -65,7 +65,7 @@ spec:
           {{- if .Values.web.securityContext }}
           securityContext:
           {{- toYaml .Values.web.securityContext | nindent 12 }}
-          {{- end }}          
+          {{- end }}
           env:
 {{- include "concourse.postgresql.env" . | indent 12 }}
           volumeMounts:
@@ -395,6 +395,10 @@ spec:
             - name: CONCOURSE_RESOURCE_CHECKING_INTERVAL
               value: {{ .Values.concourse.web.resourceCheckingInterval | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.resourceTypeCheckingInterval }}
+            - name: CONCOURSE_RESOURCE_TYPE_CHECKING_INTERVAL
+              value: {{ .Values.concourse.web.resourceTypeCheckingInterval | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.resourceWithWebhookCheckingInterval }}
             - name: CONCOURSE_RESOURCE_WITH_WEBHOOK_CHECKING_INTERVAL
               value: {{ .Values.concourse.web.resourceWithWebhookCheckingInterval | quote }}
@@ -577,6 +581,10 @@ spec:
             - name: CONCOURSE_AWS_SSM_TEAM_SECRET_TEMPLATE
               value: {{ .Values.concourse.web.awsSsm.teamSecretTemplate | quote }}
             {{- end }}
+            {{- if.Values.concourse.web.awsSsm.sharedPath }}
+            - name: CONCOURSE_AWS_SSM_SHARED_PATH
+              value: {{ .Values.concourse.web.awsSsm.sharedPath | quote }}
+            {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.vault.enabled }}
             - name: CONCOURSE_VAULT_URL
@@ -603,12 +611,16 @@ spec:
             - name: CONCOURSE_VAULT_CA_CERT
               value: "{{ .Values.web.vaultSecretsPath }}/ca.cert"
             {{- end }}
-            {{- if eq .Values.concourse.web.vault.authBackend "token" }}
+            {{- if and (eq .Values.concourse.web.vault.authBackend "token") (not .Values.concourse.web.vault.tokenPath) }}
             - name: CONCOURSE_VAULT_CLIENT_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ template "concourse.web.fullname" . }}
                   key: vault-client-token
+            {{- end }}
+            {{- if .Values.concourse.web.vault.tokenPath }}
+            - name: CONCOURSE_VAULT_CLIENT_TOKEN_PATH
+              value: "{{ .Values.concourse.web.vault.tokenPath | quote }}"
             {{- end }}
             {{- if eq .Values.concourse.web.vault.authBackend "cert" }}
             - name: CONCOURSE_VAULT_CLIENT_CERT
