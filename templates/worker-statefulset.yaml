@@ -231,7 +231,7 @@ spec:
             {{- end }}
       {{- end }}
   {{- end }}
-  {{- if semverCompare "^1.7-0" .Capabilities.KubeVersion.GitVersion }}
+  {{- if semverCompare "^1.7-0" .Capabilities.KubeVersion.Version }}
   updateStrategy:
 {{ toYaml .Values.worker.updateStrategy | indent 4 }}
   {{- end }}
