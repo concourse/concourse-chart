@@ -171,7 +171,7 @@ spec:
               - key: worker-additional-certs
                 path: worker-additional-certs.pem
         {{- end }}
-      {{- if semverCompare "^1.7-0" .Capabilities.KubeVersion.GitVersion }}
+      {{- if semverCompare "^1.7-0" .Capabilities.KubeVersion.Version }}
   strategy:
 {{ toYaml .Values.worker.updateStrategy | indent 4 }}
       {{- end }}
