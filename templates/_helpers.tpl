@@ -244,7 +244,7 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_GARDEN_REQUEST_TIMEOUT
   value: {{ .Values.concourse.worker.garden.requestTimeout | quote }}
 {{- end }}
-{{- if .Values.concourse.worker.garden.maxContainers }}
+{{- if .Values.concourse.worker.garden.maxContainers | ne nil }}
 - name: CONCOURSE_GARDEN_MAX_CONTAINERS
   value: {{ .Values.concourse.worker.garden.maxContainers | quote }}
 {{- end }}
@@ -288,7 +288,7 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_CONTAINERD_ALLOW_HOST_ACCESS
   value: {{ .Values.concourse.worker.containerd.allowHostAccess | quote }}
 {{- end }}
-{{- if .Values.concourse.worker.containerd.maxContainers }}
+{{- if .Values.concourse.worker.containerd.maxContainers | ne nil }}
 - name: CONCOURSE_CONTAINERD_MAX_CONTAINERS
   value: {{ .Values.concourse.worker.containerd.maxContainers | quote }}
 {{- end }}
