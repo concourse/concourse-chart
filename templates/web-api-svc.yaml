@@ -33,7 +33,7 @@ spec:
   loadBalancerIP: {{ .Values.web.service.api.loadBalancerIP }}
   {{- end }}
   ports:
-  - name: ({ .Values.concourse.web.service.api.port.name }}
+  - name: {{ .Values.concourse.web.service.api.port.name }}
     port: {{ .Values.concourse.web.bindPort }}
     targetPort: atc
     {{- if and (eq "NodePort" .Values.web.service.api.type) .Values.web.service.api.NodePort }}
