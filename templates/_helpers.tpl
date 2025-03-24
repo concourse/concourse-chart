@@ -497,9 +497,5 @@ Return concourse environment variables for postgresql configuration
 - name: CONCOURSE_POSTGRES_DATABASE
   value: {{ .Values.concourse.web.postgres.database | quote }}
 {{- end }}
-{{- if .Values.concourse.web.postgres.binaryParameter }}
-- name: CONCOURSE_POSTGRES_BINARY_PARAMETERS
-  value: {{ .Values.concourse.web.postgres.binaryParameter | quote }}
-{{- end }}
 {{- end -}}
 {{- end -}}

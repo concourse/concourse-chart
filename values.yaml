@@ -499,11 +499,6 @@ concourse:
       ##
       database: atc
 
-      ## Whether to use the binary_parameter option from the lib/pq driver that
-      ## Concourse uses to connect to PostgreSQL
-      ##
-      binaryParameter: false
-
 
     kubernetes:
       ## Enable the use of Kubernetes Secrets as the credential provider for
