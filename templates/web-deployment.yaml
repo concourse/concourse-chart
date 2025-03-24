@@ -846,6 +846,10 @@ spec:
             - name: CONCOURSE_CONTENT_SECURITY_POLICY
               value: {{ .Values.concourse.web.contentSecurityPolicy | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.strictTransportPolicy }}
+            - name: CONCOURSE_STRICT_TRANSPORT_SECURITY
+              value: {{ .Values.concourse.web.strictTransportPolicy | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.gc.interval }}
             - name: CONCOURSE_GC_INTERVAL
               value: {{ .Values.concourse.web.gc.interval | quote }}

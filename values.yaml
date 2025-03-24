@@ -956,6 +956,11 @@ concourse:
     ##
     contentSecurityPolicy:
 
+    ## The value to set for Strict-Transport-Security header. If omitted, the default
+    ## value in the Concourse binary is used.
+    ##
+    strictTransportPolicy:
+
     gc:
       ## Interval on which to perform garbage collection.
       ##
