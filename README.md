@@ -394,6 +394,7 @@ mv worker-key worker/worker-key
 mv session-signing-key web/session-signing-key
 mv host-key web/host-key
 cp worker/worker-key-pub web/worker-key-pub
+mv local-users web/local-users
 
 # other concourse secrets (there may be more than the 3 listed below)
 mv encryption-key concourse/encryption-key
@@ -436,7 +437,7 @@ persistence:
   worker:
     ## Persistent Volume Storage Class.
     ##
-    class: generic
+    storageClass: generic
 
     ## Persistent Volume Access Mode.
     ##
@@ -512,9 +513,9 @@ web:
 
 By default, this chart uses a PostgreSQL database deployed as a chart dependency (see the [PostgreSQL chart](https://github.com/bitnami/charts/blob/master/bitnami/postgresql/README.md)), with default values for username, password, and database name. These can be modified by setting the `postgresql.auth.*` values.
 
-You can also bring your own PostgreSQL. To do so, set `postgresql.enabled` to `false`, and then configure Concourse's `postgres` values (`concourse.web.postgres.*`).
+You can also bring your own PostgreSQL. To do so, set `postgresql.enabled` to `false`, and then configure Concourse's `postgres` values (`concourse.web.postgres.*`) See [values.yaml](values.yaml).
 
-Note that some values get set in the form of secrets, like `postgresql-user`, `postgresql-password`, and others (see [templates/web-secrets.yaml](templates/web-secrets.yaml) for possible values and the [secrets section](#secrets) on this README for guidance on how to set those secrets).
+Note that Concourse (by default) will attempt to read in some values directly from secrets. Therefore, these values do not have to be explicitly passed into Concourse as individual arguments, or as members of lists or files. (e.g. Part of values.yaml, etc.) Some examples of these secret values are: `postgresql-user`, `postgresql-password` (in secret "[my-release]-concourse" or "[my-release]-web"), and others. See [templates/web-secrets.yaml](templates/web-secrets.yaml) for possible values and the [secrets section](#secrets) on this README for guidance on how to set those secrets.
 
 ### Credential Management
 
