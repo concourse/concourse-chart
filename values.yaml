@@ -499,11 +499,6 @@ concourse:
       ##
       database: atc
 
-      ## Whether to use the binary_parameter option from the lib/pq driver that
-      ## Concourse uses to connect to PostgreSQL
-      ##
-      binaryParameter: false
-
 
     kubernetes:
       ## Enable the use of Kubernetes Secrets as the credential provider for
@@ -955,6 +950,11 @@ concourse:
     ## value in the Concourse binary is used.
     ##
     contentSecurityPolicy:
+
+    ## The value to set for Strict-Transport-Security header. If omitted, the default
+    ## value in the Concourse binary is used.
+    ##
+    strictTransportPolicy:
 
     gc:
       ## Interval on which to perform garbage collection.
@@ -1849,6 +1849,12 @@ concourse:
 
       ## Path to CNI network plugins, defaults to /usr/local/concourse/bin
       cniPluginsDir:
+
+      ## How many privileges privileged containers get. Options are 'full'
+      ## (default), 'fuse-only', 'ignore'. 'full' is equivalent to root on host.
+      ## 'ignore' means no extra privileges. 'fuse-only' means enough privileges
+      ## to use fuse-overlayfs.
+      privilegedMode:
 
     ## API endpoint of an externally managed Garden server to use instead of
     ## running the embedded Garden server.

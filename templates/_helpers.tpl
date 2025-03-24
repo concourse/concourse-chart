@@ -328,6 +328,10 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_CONTAINERD_CNI_PLUGINS_DIR
   value: {{ .Values.concourse.worker.containerd.cniPluginsDir | quote }}
 {{- end }}
+{{- if .Values.concourse.worker.containerd.privilegedMode }}
+- name: CONCOURSE_CONTAINERD_PRIVILEGED_MODE
+  value: {{ .Values.concourse.worker.containerd.privilegedMode | quote }}
+{{- end }}
 {{- if .Values.concourse.worker.baggageclaim.logLevel }}
 - name: CONCOURSE_BAGGAGECLAIM_LOG_LEVEL
   value: {{ .Values.concourse.worker.baggageclaim.logLevel | quote }}
@@ -496,10 +500,6 @@ Return concourse environment variables for postgresql configuration
 {{- if .Values.concourse.web.postgres.database }}
 - name: CONCOURSE_POSTGRES_DATABASE
   value: {{ .Values.concourse.web.postgres.database | quote }}
-{{- end }}
-{{- if .Values.concourse.web.postgres.binaryParameter }}
-- name: CONCOURSE_POSTGRES_BINARY_PARAMETERS
-  value: {{ .Values.concourse.web.postgres.binaryParameter | quote }}
 {{- end }}
 {{- end -}}
 {{- end -}}
