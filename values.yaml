@@ -2441,6 +2441,41 @@ web:
     ##
     tls:
 
+  ## Route configuration
+  ## Ref: https://gateway-api.sigs.k8s.io/api-types/httproute/
+  ##
+  route:
+
+    ## Enable HTTPRoutes
+    ##
+    enabled: false
+
+    ## Label to be added to the web route.
+    ## Example:
+    ##   my.label: my-label-value
+    ##
+    labels: {}
+
+    ## Annotations to be added to the web route.
+    ## Example:
+    ##   my.annotation: my-annotation-value
+    ##
+    annotations: {}
+
+    ## Gateway API Parent Refs
+    ## Example
+    ## - name: envoy
+    ##   namespace: networking
+    ##   sectionName: https
+    ##   group: gateway.networking.k8s.io
+    ##   kind: Gateway
+    parentRefs: {}
+
+    ## Hosts to attach to the HTTPRoute
+    ## Example:
+    ## - "concourse.example.com"
+    hosts: []
+
 ## Configuration values for Concourse Worker components.
 ## For more information regarding the characteristics of
 ## Concourse Workers, see https://concourse-ci.org/concourse-worker.html

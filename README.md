@@ -198,6 +198,11 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.ingress.ingressClassName` | IngressClass to register to | `nil` |
 | `web.ingress.rulesOverride` | Concourse Web Ingress rules (override) (alternate to `web.ingress.hosts`) | `[]` |
 | `web.ingress.tls` | Concourse Web Ingress TLS configuration | `[]` |
+| `web.route.annotations` | Concourse Web HTTPRoute annotations | `{}` |
+| `web.route.enabled` | Enable Concourse Web HTTPRoute | `false` |
+| `web.route.hosts` | Concourse Web HTTPRoutes Hostnames | `[]` |
+| `web.route.labels` | Concourse Web HTTPRoute labels | `{}` |
+| `web.route.parentRefs` | Concourse Web HTTPRoute parentRefs (gateways) | `{}` |
 | `web.keySecretsPath` | Specify the mount directory of the web keys secrets | `/concourse-keys` |
 | `web.labels`| Additional labels to be added to the web deployment `metadata.labels` | `{}` |
 | `web.deploymentAnnotations` | Additional annotations to be added to the web deployment `metadata.annotations` | `{}` |
@@ -768,3 +773,25 @@ Instead, you may add a comment specifying the default, such as
 This prevents the behaviour drifting from that of the binary in case the binary's default values change.
 
 We understand that the comment stating the binary's default can become stale. The current solution is a suboptimal one. It may be improved in the future by generating a list of the default values from the binary.
+
+## Helm Unit Test
+
+When running unit tests for helm, from the root of the repository, you can simply run the following.
+
+```bash
+helm unittest -f test/unittest/**/*.yaml .
+```
+
+If you are debugging specific tests, simply target the folder or yaml file you want to run tests on.
+
+`Folder`
+
+```bash
+helm unittest -f test/unittest/gateway-apis/*.yaml .
+```
+
+`Specific Test Suite`
+
+```bash
+helm unittest -f test/unittest/gateway-apis/web-route-test.yaml .
+```
