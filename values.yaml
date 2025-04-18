@@ -44,7 +44,6 @@ imagePullPolicy: IfNotPresent
 ##
 imagePullSecrets: []
 
-
 ## Configuration values for the Concourse application (worker and web components).
 ## The values specified here are almost direct references to the flags under the
 ## `concourse web` and `concourse worker` commands.
@@ -238,7 +237,6 @@ concourse:
     ## `web-tls-key`).
     ##
     tls:
-
       ## Enable serving HTTPS traffic directly through the web component.
       ##
       enabled: false
@@ -453,9 +451,6 @@ concourse:
     ##
     defaultTaskMemoryLimit:
 
-    ## Work will be distributed to other ATCs when this number of go routines is reached.
-    numGoroutineThreshold:
-
     ## DB notification bus queue size, default is 10000. If UI often misses loading
     ## running build logs, then consider to increase the queue size.
     dbNotificationBusQueueSize: 10000
@@ -499,6 +494,10 @@ concourse:
       ##
       database: atc
 
+      ## Whether to use the binary_parameter option from the lib/pq driver that
+      ## Concourse uses to connect to PostgreSQL
+      ##
+      binaryParameter: false
 
     kubernetes:
       ## Enable the use of Kubernetes Secrets as the credential provider for
@@ -1045,7 +1044,6 @@ concourse:
         ##
         messagesKey:
 
-
     policyCheck:
       ## Array of HTTP methods to filter through policy checking.
       ##
@@ -1097,7 +1095,6 @@ concourse:
       userIDFieldPerConnector: ""
 
       mainTeam:
-
         ## Configuration file for specifying the main teams params.
         ## Ref: https://concourse-ci.org/managing-teams.html#setting-roles
         ## Example:
@@ -1156,7 +1153,6 @@ concourse:
         ## Authentication (Main Team) (Bitbucket Cloud)
         ##
         bitbucketCloud:
-
           ## Comma-separated allow list of Bitbucket Cloud users.
           ##
           user:
@@ -1183,7 +1179,6 @@ concourse:
         ## Authentication (Main Team) (GitLab)
         ##
         gitlab:
-
           ## Comma-separated allow list of GitLab users.
           ##
           user:
@@ -1228,7 +1223,6 @@ concourse:
         ## Authentication (Main Team) (OIDC)
         ##
         oidc:
-
           ## Comma-separated allow list of OIDC users.
           ##
           user:
@@ -1240,7 +1234,6 @@ concourse:
         ## Authentication (Main Team) (Microsoft Login)
         ##
         microsoft:
-
           ## Comma-separated allow list of Microsoft users.
           ##
           user:
@@ -1727,7 +1720,6 @@ concourse:
     runtime: containerd
 
     tsa:
-
       ## TSA host(s) to forward the worker through.
       ## Only used for worker-only deployments.
       ## Example:
@@ -1782,7 +1774,6 @@ concourse:
       networkPool:
 
     containerd:
-
       ## Path to a containerd executable (non-absolute names get resolved from $PATH)."`
       bin:
 
@@ -1824,7 +1815,6 @@ concourse:
 
       ## Enable and configure IPv6 for containers on the worker
       ipv6:
-
         ## Enables IPv6 networking in the Containerd CNI
         enabled: false
 
@@ -1985,7 +1975,6 @@ concourse:
       ##
       otlpUseTls:
 
-
     ## Enable Horizontal Pod Autoscaling
     ## to use this, ephemeral worker with
     ## worker.kind: Deployment is recommended
@@ -1995,7 +1984,8 @@ concourse:
     ##   https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-custom-metrics
     ##
     ## To disable autoscaling set it to an empty map: { }
-    autoscaling: { }
+    autoscaling:
+      {}
       # maxReplicas is required to for auto scaling
       # see the following example for scaling on CPU_Utilization and on
       # a custom metric 'concourse_workers_containers'
@@ -2054,7 +2044,7 @@ web:
   ##
   args: ["web"]
 
-  ## Array of extra containers to run alongside the Concourse Web
+  ## Array of extra containers to run before Concourse Web starts
   ## container.
   ##
   ## Example:
@@ -2064,7 +2054,20 @@ web:
   ##
   sidecarContainers: []
 
-  ## Array of extra initContainers to run alongside the Concourse Web
+  ## Array of database initContainers to run before Concourse Web starts
+  ## container.
+  ##
+  ## Example:
+  ##
+  ## - name: init-db
+  ##   image: ghcr.io/home-operations/postgres-init:17.4
+  ##   envFrom:
+  ##     - secretRef:
+  ##         name: postgres-concourse
+  ##
+  databaseInitContainers: []
+
+  ## Array of extra initContainers to run before Concourse Web starts
   ## container.
   ##
   ## Example:
@@ -2361,8 +2364,6 @@ web:
       ##
       NodePort:
 
-
-
     prometheus:
       ## Additional Labels to be added to the web service.
       ##
@@ -2446,7 +2447,6 @@ web:
 ## Concourse Workers, see https://concourse-ci.org/concourse-worker.html
 ##
 worker:
-
   ## Enable or disable the worker component.
   ## This can allow users to create web only releases by setting this to false
   ##
@@ -2548,7 +2548,7 @@ worker:
   ##     mountPath: /baggageclaim
   ##
   additionalVolumeMounts: []
-  
+
   ## Additional ports to be added to worker pods
   ## Example:
   ##   - containerPort: 7788
@@ -2676,9 +2676,9 @@ worker:
   ##
   updateStrategy:
     type: RollingUpdate
-#    rollingUpdate:
-#      maxSurge: 25%
-#      maxUnavailable: 1
+  #    rollingUpdate:
+  #      maxSurge: 25%
+  #      maxUnavailable: 1
 
   ## Pod Management strategy (requires Kubernetes 1.7+)
   ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
@@ -2737,7 +2737,6 @@ persistence:
 ## Ref: https://artifacthub.io/packages/helm/bitnami/postgresql/11.9.8
 ##
 postgresql:
-
   ## Use the PostgreSQL chart dependency.
   ##
   ## Set to false if bringing your own PostgreSQL, and set the corresponding `secrets`
@@ -2776,7 +2775,6 @@ postgresql:
   ## i.e. the instance used by the web component.
   ##
   primary:
-
     ## Persistent Volume Storage configuration for PostgreSQL.
     ##
     ## Ref: https://kubernetes.io/docs/user-guide/persistent-volumes
@@ -2845,23 +2843,23 @@ podSecurityPolicy:
   ## Possible to overwrite if other types are used.
   ##
   allowedWorkerVolumes:
-  - 'secret'
-  - 'persistentVolumeClaim'
-  - 'configMap'
-  - 'downwardAPI'
-  - 'emptyDir'
-  - 'projected'
+    - "secret"
+    - "persistentVolumeClaim"
+    - "configMap"
+    - "downwardAPI"
+    - "emptyDir"
+    - "projected"
 
   ## By default use the recommended minimum set of volumes in kubernetes.
   ## Possible to overwrite if other types are used.
   ##
   allowedWebVolumes:
-  - 'secret'
-  - 'persistentVolumeClaim'
-  - 'configMap'
-  - 'downwardAPI'
-  - 'emptyDir'
-  - 'projected'
+    - "secret"
+    - "persistentVolumeClaim"
+    - "configMap"
+    - "downwardAPI"
+    - "emptyDir"
+    - "projected"
 
 ## For managing secrets using Helm
 ##
