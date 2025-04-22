@@ -494,11 +494,6 @@ concourse:
       ##
       database: atc
 
-      ## Whether to use the binary_parameter option from the lib/pq driver that
-      ## Concourse uses to connect to PostgreSQL
-      ##
-      binaryParameter: false
-
     kubernetes:
       ## Enable the use of Kubernetes Secrets as the credential provider for
       ## concourse pipelines.
@@ -1984,8 +1979,7 @@ concourse:
     ##   https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-custom-metrics
     ##
     ## To disable autoscaling set it to an empty map: { }
-    autoscaling:
-      {}
+    autoscaling: {}
       # maxReplicas is required to for auto scaling
       # see the following example for scaling on CPU_Utilization and on
       # a custom metric 'concourse_workers_containers'
