@@ -1,0 +1,151 @@
+suite: GatewayApis
+
+tests:
+  - it: Route Disabled
+    set:
+      web:
+        route:
+          enabled: false
+    template: web-route.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: Route Exposure
+    set:
+      web:
+        route:
+          enabled: true
+          parentRefs:
+            - name: test-parent
+              namespace: test-namespace
+              group: gateway.networking.k8s.io
+              sectionName: test-section
+              kind: Gateway
+          hostnames:
+            - concourse.example.com
+    template: web-route.yaml
+    asserts:
+      - equal:
+          path: spec.hostnames[0]
+          value: concourse.example.com
+      - equal:
+          path: spec.parentRefs[0].name
+          value: test-parent
+      - equal:
+          path: spec.parentRefs[0].namespace
+          value: test-namespace
+      - equal:
+          path: spec.parentRefs[0].group
+          value: gateway.networking.k8s.io
+      - equal:
+          path: spec.parentRefs[0].sectionName
+          value: test-section
+      - equal:
+          path: spec.parentRefs[0].kind
+          value: Gateway
+
+  - it: Route Extra Annotations
+    set:
+      web:
+        route:
+          enabled: true
+          annotations:
+            test.annotation: test-annotation
+          parentRefs:
+            - name: test-parent
+              namespace: test-namespace
+          hostnames:
+            - concourse.example.com
+    template: templates/web-route.yaml
+    asserts:
+      - equal:
+          path: metadata.annotations["test.annotation"]
+          value: test-annotation
+
+  - it: Route Extra Labels
+    set:
+      web:
+        route:
+          enabled: true
+          labels:
+            test.label: test-label
+          parentRefs:
+            - name: test-parent
+              namespace: test-namespace
+          hostnames:
+            - concourse.example.com
+    template: web-route.yaml
+    asserts:
+      - equal:
+          path: metadata.labels["test.label"]
+          value: test-label
+
+  - it: Route Service Exposure
+    set:
+      web:
+        route:
+          enabled: true
+          parentRefs:
+            - name: test-parent
+              namespace: test-namespace
+          hostnames:
+            - concourse.example.com
+    template: web-route.yaml
+    asserts:
+      - equal:
+          path: spec.rules[0].backendRefs[0].name
+          value: RELEASE-NAME-web
+      - equal:
+          path: spec.rules[0].matches[0].path.value
+          value: /
+      - equal:
+          path: spec.rules[0].backendRefs[0].port
+          value: 8080
+
+  - it: Multiple Hostnames
+    set:
+      web:
+        route:
+          enabled: true
+          parentRefs:
+            - name: test-parent
+              namespace: test-namespace
+          hostnames:
+            - concourse.example.com
+            - concourse.alternate.com
+    template: web-route.yaml
+    asserts:
+      - equal:
+          path: spec.hostnames[0]
+          value: concourse.example.com
+      - equal:
+          path: spec.hostnames[1]
+          value: concourse.alternate.com
+      - lengthEqual:
+          path: spec.hostnames
+          count: 2
+
+  - it: Multiple ParentRefs
+    set:
+      web:
+        route:
+          enabled: true
+          parentRefs:
+            - name: test-parent-1
+              namespace: test-namespace-1
+            - name: test-parent-2
+              namespace: test-namespace-2
+          hostnames:
+            - concourse.example.com
+    template: web-route.yaml
+    asserts:
+      - equal:
+          path: spec.parentRefs[0].name
+          value: test-parent-1
+      - equal:
+          path: spec.parentRefs[1].name
+          value: test-parent-2
+      - lengthEqual:
+          path: spec.parentRefs
+          count: 2
