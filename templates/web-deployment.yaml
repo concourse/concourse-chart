@@ -55,6 +55,9 @@ spec:
       {{- end }}
       {{- end }}
       initContainers:
+      {{- if .Values.web.databaseInitContainers }}
+      {{- toYaml .Values.web.databaseInitContainers | nindent 8 }}
+      {{- end }}
         - name: concourse-migration
           {{- if .Values.imageDigest }}
           image: "{{ .Values.image }}@{{ .Values.imageDigest }}"

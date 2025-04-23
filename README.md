@@ -246,6 +246,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.shareProcessNamespace` | Enable or disable the process namespace sharing for the web nodes | `false` |
 | `web.priorityClassName` | Sets a PriorityClass for the web pods | `nil` |
 | `web.sidecarContainers` | Array of extra containers to run alongside the Concourse web container | `nil` |
+| `web.databaseInitContainers` | Array of database init containers to run before the Concourse database migrations are applied | `nil` |
 | `web.extraInitContainers` | Array of extra init containers to run before the Concourse web container | `nil` |
 | `web.strategy` | Strategy for updates to deployment. | `{}` |
 | `web.syslogSecretsPath` | Specify the mount directory of the web syslog secrets | `/concourse-syslog` |
