@@ -10,6 +10,12 @@ metadata:
 data:
   pre-stop-hook.sh: |
     #!/bin/bash
-    kill -s {{ .Values.concourse.worker.shutdownSignal }} 1
-    while [ -e /proc/1 ]; do sleep 1; done
-
+    while true; do
+      kill -s {{ .Values.concourse.worker.shutdownSignal }} 1
+      for i in {0..60}; do
+        sleep 1
+        if ! [ -e /proc/1 ]; then
+          exit 0
+        fi
+      done
+    done

@@ -21,7 +21,7 @@ image: concourse/concourse
 ##      of `concourse/concourse`.
 ## Ref: https://hub.docker.com/r/concourse/concourse/tags/
 ##
-imageTag: "7.12.1"
+imageTag: "7.13.2"
 
 ## Specific image digest to use in place of a tag.
 ## Ref: https://kubernetes.io/docs/concepts/configuration/overview/#container-images
@@ -307,7 +307,7 @@ concourse:
 
     ## Interval on which to check for new versions of resource types.
     ##
-    resourceCheckingInterval: 1m
+    resourceTypeCheckingInterval: 1m
 
     ## Interval on which to check for new versions of any resources that have
     ## configured a webhook token
@@ -498,11 +498,6 @@ concourse:
       ## The name of the database to use.
       ##
       database: atc
-
-      ## Whether to use the binary_parameter option from the lib/pq driver that
-      ## Concourse uses to connect to PostgreSQL
-      ##
-      binaryParameter: false
 
 
     kubernetes:
@@ -955,6 +950,11 @@ concourse:
     ## value in the Concourse binary is used.
     ##
     contentSecurityPolicy:
+
+    ## The value to set for Strict-Transport-Security header. If omitted, the default
+    ## value in the Concourse binary is used.
+    ##
+    strictTransportPolicy:
 
     gc:
       ## Interval on which to perform garbage collection.
@@ -1849,6 +1849,12 @@ concourse:
 
       ## Path to CNI network plugins, defaults to /usr/local/concourse/bin
       cniPluginsDir:
+
+      ## How many privileges privileged containers get. Options are 'full'
+      ## (default), 'fuse-only', 'ignore'. 'full' is equivalent to root on host.
+      ## 'ignore' means no extra privileges. 'fuse-only' means enough privileges
+      ## to use fuse-overlayfs.
+      privilegedMode:
 
     ## API endpoint of an externally managed Garden server to use instead of
     ## running the embedded Garden server.
