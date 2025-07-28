@@ -487,6 +487,10 @@ Return concourse environment variables for postgresql configuration
 - name: CONCOURSE_POSTGRES_SSLMODE
   value: {{ .Values.concourse.web.postgres.sslmode | quote }}
 {{- end }}
+{{- if .Values.concourse.web.postgres.sslNegotiation }}
+- name: CONCOURSE_POSTGRES_SSLNEGOTIATION
+  value: {{ .Values.concourse.web.postgres.sslNegotiation | quote }}
+{{- end }}
 {{- if .Values.secrets.postgresCaCert }}
 - name: CONCOURSE_POSTGRES_CA_CERT
   value: "{{ .Values.web.postgresqlSecretsPath }}/ca.cert"
