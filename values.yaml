@@ -1798,6 +1798,13 @@ concourse:
       ##   - 2.2.2.2
       restrictedNetworks: []
 
+      ## List of hosts to be added to /etc/hosts file.
+      ## Example:
+      ## additionalHosts:
+      ##   - 1.1.1.1 example.com
+      ##   - 2.2.2.2 another.example.com
+      additionalHosts: []
+
       ## Allows containers to reach host network.
       allowHostAccess:
 
