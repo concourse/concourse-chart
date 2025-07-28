@@ -486,6 +486,11 @@ concourse:
       ##
       sslmode: disable
 
+      ## Controls how SSL encryption is negotiated with the server. (default: postgres)
+      ## Can be set to "postgres" or "direct".
+      ##
+      sslNegotiation:
+
       ## Dialing timeout. (0 means wait indefinitely)
       ##
       connectTimeout: 5m
