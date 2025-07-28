@@ -747,6 +747,19 @@ spec:
               value: {{ .Values.concourse.web.conjur.secretTemplate | quote }}
             {{- end }}
 
+            {{- if .Values.concourse.web.idToken.signingKey.checkInterval }}
+            - name: CONCOURSE_SIGNING_KEY_CHECK_INTERVAL
+              value: {{ .Values.concourse.web.idToken.signingKey.checkInterval | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.idToken.signingKey.rotationPeriod }}
+            - name: CONCOURSE_SIGNING_KEY_ROTATION_PERIOD
+              value: {{ .Values.concourse.web.idToken.signingKey.rotationPeriod | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.idToken.signingKey.gracePeriod }}
+            - name: CONCOURSE_SIGNING_KEY_GRACE_PERIOD
+              value: {{ .Values.concourse.web.idToken.signingKey.gracePeriod | quote }}
+            {{- end }}
+
             {{- if .Values.concourse.web.metrics.hostName }}
             - name: CONCOURSE_METRICS_HOST_NAME
               value: {{ .Values.concourse.web.metrics.hostName | quote }}
