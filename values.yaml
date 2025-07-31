@@ -2683,7 +2683,8 @@ worker:
   ## Ignored for Kind Deployment
   podManagementPolicy: Parallel
 
-  ## When persistance is disabled this value will be used to limit the emptyDir volume size
+  ## When persistance is disabled or using a Deployment, this value will be used
+  ## to limit the emptyDir volume size
   ## Ref: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
   ##
   ## Example: 20Gi
