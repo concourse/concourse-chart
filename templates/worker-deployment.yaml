@@ -116,6 +116,10 @@ spec:
               subPath: worker-additional-certs.pem
               readOnly: true
             {{- end }}
+            {{- if include "concourse.are-there-additional-volumes.with-the-name.concourse-work-dir" . | not }}
+            - name: concourse-work-dir
+              mountPath: {{ .Values.concourse.worker.workDir | quote }}
+            {{- end }}
 
 {{- if .Values.worker.additionalVolumeMounts }}
 {{ toYaml .Values.worker.additionalVolumeMounts | indent 12 }}
@@ -147,6 +151,13 @@ spec:
                   release: {{ .Release.Name | quote }}
           {{- end }}
       volumes:
+      {{- if include "concourse.are-there-additional-volumes.with-the-name.concourse-work-dir" . | not }}
+        - name: concourse-work-dir
+          emptyDir:
+            {{- if .Values.worker.emptyDirSize }}
+            sizeLimit: {{ .Values.worker.emptyDirSize | quote }}
+            {{- end }}
+      {{- end }}
 {{- if .Values.worker.additionalVolumes }}
 {{ toYaml .Values.worker.additionalVolumes | indent 8 }}
 {{- end }}
