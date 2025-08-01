@@ -1,0 +1,38 @@
+{{- if .Values.web.enabled -}}
+{{- if .Values.web.route.enabled -}}
+{{- $route := .Values.web.route -}}
+{{- $releaseName := .Release.Name -}}
+{{- $serviceName := include "concourse.web.fullname" . -}}
+{{- $servicePort := .Values.concourse.web.bindPort -}}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ template "concourse.web.fullname" . }}
+  labels:
+    app: {{ template "concourse.web.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+  {{- with $route.labels }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with $route.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  parentRefs:
+  {{- toYaml $route.parentRefs | nindent 2 }}
+  hostnames:
+  {{- toYaml $route.hosts | nindent 2 }}
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: {{ $serviceName }}
+      port: {{ $servicePort }}
+      namespace: {{ .Release.Namespace | quote }}
+{{- end -}}
+{{- end -}}
