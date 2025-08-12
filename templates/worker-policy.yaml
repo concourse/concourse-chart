@@ -17,4 +17,5 @@ spec:
   selector:
     matchLabels:
       app: {{ template "concourse.worker.fullname" . }}
+      release: {{ .Release.Name }}
 {{- end }}
