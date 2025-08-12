@@ -81,8 +81,8 @@ See [Configuration](#configuration) and [`values.yaml`](./values.yaml) for the c
 
 The following table lists the configurable parameters of the Concourse chart and their default values.
 
-| Parameter               | Description                           | Default                            |
-| ----------------------- | ----------------------------------    | ---------------------------------- |
+| Parameter               | Description                           | Default                                                    |
+| ----------------------- | ----------------------------------    | ---------------------------------------------------------- |
 | `fullnameOverride` | Provide a name to substitute for the full names of resources | `nil` |
 | `imageDigest` | Specific image digest to use in place of a tag. | `nil` |
 | `imagePullPolicy` | Concourse image pull policy | `IfNotPresent` |
