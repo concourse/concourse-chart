@@ -2697,6 +2697,17 @@ worker:
   ##
   terminationGracePeriodSeconds: 60
 
+  ## Controls how PVCs are deleted during the lifecycle of a StatefulSet (requires Kubernetes 1.32+)
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
+  ##
+  ## "Retain" is default functionality.
+  ## "Delete" whenDeleted - all PVCs are deleted after their Pods have been deleted
+  ## "Delete" whenScaled - only PVCs are deleted when corresponding pod being scaled down is deleted
+  ##
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+
   ## Strategy for StatefulSet updates (requires Kubernetes 1.6+)
   ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset
   ##
