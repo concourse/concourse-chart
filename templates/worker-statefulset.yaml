@@ -231,7 +231,7 @@ spec:
             {{- end }}
       {{- end }}
   {{- end }}
-  {{- if semverCompare ">=1.32-0" .Capabilities.KubeVersion.Version -}}
+  {{ if semverCompare ">=1.32-0" .Capabilities.KubeVersion.Version -}}
   persistentVolumeClaimRetentionPolicy:
 {{ toYaml .Values.worker.persistentVolumeClaimRetentionPolicy | indent 4 }}
   {{- end }}
