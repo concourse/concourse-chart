@@ -1,7 +1,7 @@
 apiVersion: v2
 name: concourse
 type: application
-version: 18.4.0
+version: 18.4.1
 appVersion: 7.14.1
 description: Concourse is a simple and scalable CI system.
 icon: https://avatars1.githubusercontent.com/u/7809479
