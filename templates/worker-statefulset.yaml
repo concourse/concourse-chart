@@ -1,6 +1,6 @@
 {{- if .Values.worker.enabled -}}
 {{- if eq .Values.worker.kind "StatefulSet" }}
-apiVersion: {{ template "concourse.statefulset.apiVersion" . }}
+apiVersion: {{ template "concourse.statefulSet.apiVersion" . }}
 kind: StatefulSet
 metadata:
   name: {{ template "concourse.worker.fullname" . }}
