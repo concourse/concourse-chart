@@ -289,6 +289,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.priorityClassName` | Sets a PriorityClass for the worker pods | `nil` |
 | `worker.terminationGracePeriodSeconds` | Upper bound for graceful shutdown to allow the worker to drain its tasks | `60` |
 | `worker.tolerations` | Tolerations for the worker nodes | `[]` |
+| `worker.persistentVolumeClaimRetentionPolicy` | `Retain` or `Delete` (requires Kubernetes >= 1.32) | `Retain` |
 | `worker.updateStrategy` | `OnDelete` or `RollingUpdate` (requires Kubernetes >= 1.7) | `RollingUpdate` |
 
 For configurable Concourse parameters, refer to [`values.yaml`](values.yaml)' `concourse` section. All parameters under this section are strictly mapped from the `concourse` binary commands.
