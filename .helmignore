@@ -20,3 +20,5 @@
 .idea/
 *.tmprojt
 tests/
+
+__snapshot__/
