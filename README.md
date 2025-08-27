@@ -200,9 +200,9 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.ingress.tls` | Concourse Web Ingress TLS configuration | `[]` |
 | `web.route.annotations` | Concourse Web HTTPRoute annotations | `{}` |
 | `web.route.enabled` | Enable Concourse Web HTTPRoute | `false` |
-| `web.route.hosts` | Concourse Web HTTPRoutes Hostnames | `[]` |
-| `web.route.labels` | Concourse Web HTTPRoute labels | `{}` |
-| `web.route.parentRefs` | Concourse Web HTTPRoute parentRefs (gateways) | `{}` |
+| `web.route.hostnames` | Concourse Web HTTPRoutes Hostnames | `[]` |
+| `web.route.parentRefs` | Concourse Web HTTPRoute parentRefs (gateways) | `[]` |
+| `web.route.labels` | Concourse Web HTTPRoute labels | `[]` |
 | `web.keySecretsPath` | Specify the mount directory of the web keys secrets | `/concourse-keys` |
 | `web.labels`| Additional labels to be added to the web deployment `metadata.labels` | `{}` |
 | `web.deploymentAnnotations` | Additional annotations to be added to the web deployment `metadata.annotations` | `{}` |

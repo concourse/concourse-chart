@@ -2469,12 +2469,12 @@ web:
     ##   sectionName: https
     ##   group: gateway.networking.k8s.io
     ##   kind: Gateway
-    parentRefs: {}
+    parentRefs: []
 
     ## Hosts to attach to the HTTPRoute
     ## Example:
     ## - "concourse.example.com"
-    hosts: []
+    hostnames: []
 
 ## Configuration values for Concourse Worker components.
 ## For more information regarding the characteristics of

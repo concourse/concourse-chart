@@ -21,10 +21,14 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  {{- if and $route.parentRefs (gt (len $route.parentRefs) 0) }}
   parentRefs:
   {{- toYaml $route.parentRefs | nindent 2 }}
+  {{- end }}
+  {{- if and $route.hostnames (gt (len $route.hostnames) 0) }}
   hostnames:
-  {{- toYaml $route.hosts | nindent 2 }}
+  {{- toYaml $route.hostnames | nindent 2 }}
+  {{- end }}
   rules:
   - matches:
     - path:
