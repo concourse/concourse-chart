@@ -1,0 +1,93 @@
+{{- if .Values.postgresql.enabled -}}
+apiVersion: "{{- template "concourse.statefulSet.apiVersion" }}"
+kind: StatefulSet
+metadata:
+  name: "{{ template "concourse.postgresql.fullname" . }}"
+  {{- if .Values.postgresql.annotations }}
+  annotations: "{{ toYaml .Values.postgresql.annotations | nindent 4 }}"
+  {{- end }}
+  labels:
+    app: "{{ template "concourse.postgresql.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    {{- with .Values.postgresql.labels }}
+{{ toYaml . | trim | indent 4 }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: "{{ template "concourse.postgresql.fullname" . }}"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "{{ template "concourse.postgresql.fullname" . }}"
+    spec:
+      resources: {{ .Values.postgresql.resources | toYaml | nindent 8 }}
+      containers:
+      - name: "{{ template "concourse.postgresql.fullname" . }}"
+        {{- if .Values.postgresql.imageDigest }}
+        image: "{{ .Values.postgresql.image }}@{{ .Values.postgresql.imageDigest }}"
+        {{- else }}
+        image: "{{ .Values.postgresql.image }}:{{ .Values.postgresql.imageTag }}"
+        {{- end }}
+        {{- if .Values.postgresql.securityContext }}
+        securityContext: {{- toYaml .Values.postgresql.securityContext | nindent 8 }}
+        {{- end }}
+        envFrom:
+        - configMapRef:
+            name: "{{ template "concourse.postgresql.fullname" . }}-env"
+        - secretRef:
+            name: "{{ template "concourse.postgresql.fullname" . }}-connection"
+        startupProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -ec
+            - exec pg_isready -U {{ .Values.postgresql.auth.user | quote }} -d "dbname={{ .Values.postgresql.auth.database }}" -h 127.0.0.1 -p 5432
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -ec
+            - exec pg_isready -U {{ .Values.postgresql.auth.user | quote }} -d "dbname={{ .Values.postgresql.auth.database }}" -h 127.0.0.1 -p 5432
+        ports:
+        - name: pgsql
+          protocol: TCP
+          containerPort: 5432
+        volumeMounts:
+    {{- if .Values.postgresql.persistence.enabled }}
+        - name: "{{ template "concourse.postgresql.fullname" . }}-data"
+          {{- if .Values.postgresql.dataVolumeMountPath }}
+          mountPath: "{{ .Values.postgresql.dataVolumeMountPath }}"
+          {{- else }}
+          mountPath: "/var/lib/postgresql"
+          {{- end }}
+    {{- end }}
+  {{- if .Values.postgresql.persistence.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: "{{ template "concourse.postgresql.fullname" . }}-data"
+      {{- if .Values.postgresql.persistence.labels }}
+        labels: {{- .Values.postgresql.persistence.labels | toYaml | nindent 10 -}}
+      {{- end }}
+      spec:
+      {{- if .Values.postgresql.persistence.selector }}
+        selector: {{- .Values.postgresql.persistence.selector | toYaml | nindent 10 }}
+      {{- end }}
+        accessModes: {{ (default (list "ReadWriteOnce") .Values.postgresql.persistence.accessMode) | toJson }}
+      {{- if .Values.postgresql.persistence.resources }}
+        resources: {{ .Values.postgresql.persistence.resources | toYaml | nindent 10 }}
+      {{- end }}
+      {{- if .Values.postgresql.persistence.storageClass }}
+      {{- if (eq "-" .Values.postgresql.persistence.storageClass) }}
+        storageClassName: ""
+      {{- else }}
+        storageClassName: "{{ .Values.postgresql.persistence.storageClass }}"
+      {{- end }}
+      {{- end }}
+  {{- else }}
+  {{- end }}
+{{- end }}
+

@@ -13,11 +13,6 @@ home: https://concourse-ci.org/
 sources:
   - https://github.com/concourse/concourse-chart
   - https://github.com/concourse/concourse
-dependencies:
-  - name: postgresql
-    version: 16.7.14
-    repository: https://charts.bitnami.com/bitnami
-    condition: postgresql.enabled
 maintainers:
   - name: concourse-team
     email: concourse@vmware.com
