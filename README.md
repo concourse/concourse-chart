@@ -120,7 +120,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `postgresql.extraArgs` | Add extra environement variables | `{}` |
 | `postgresql.sensitiveEnvironment` | Add extra sensitive env vars (will be injected with a secret) | `{}` |
 | `postgresql.persistence.enabled` | Enable PostgreSQL persistence using Persistent Volume Claims | `true` |
-| `postgresql.persistence.accessModes` | Persistent Volume Access Mode | `["ReadWriteOnce"]` |
+| `postgresql.persistence.pvcNameOverride` | Override the name of the pvc template in the postgresql statefulSet. Useful to re-use an existing pvc. | `""` |
 | `postgresql.persistence.storageClass` | Concourse data Persistent Volume Storage Class | `nil` |
 | `postgresql.persistence.accessModes` | Persistent Volume Access Mode | `["ReadWriteOnce"]` |
 | `postgresql.persistence.resources` | Set storage requests and limits | `{ "requests": { "storage": "8Gi" } }` |

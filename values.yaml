@@ -2920,6 +2920,11 @@ postgresql:
     ##
     enabled: true
 
+    ## Override the pvc template name in the postgresql statefulSet
+    ## useful to re-use a previous existing pvc
+    ##
+    pvcNameOverride:
+
     ## Persistent Volume Storage Class to be used by PersistentVolumes created
     ## for PostgreSQL.
     ##
