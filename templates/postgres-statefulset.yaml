@@ -1,5 +1,5 @@
 {{- if .Values.postgresql.enabled -}}
-apiVersion: "{{- template "concourse.statefulSet.apiVersion" }}"
+apiVersion: "{{- template "concourse.statefulSet.apiVersion" . }}"
 kind: StatefulSet
 metadata:
   name: "{{ template "concourse.postgresql.fullname" . }}"
@@ -35,6 +35,12 @@ spec:
         {{- if .Values.postgresql.securityContext }}
         securityContext: {{- toYaml .Values.postgresql.securityContext | nindent 8 }}
         {{- end }}
+        {{- if .Values.postgresql.extraArgs }}
+        args:
+        {{- range .Values.postgresql.extraArgs }}
+        - {{.}}
+        {{- end}}
+        {{- end }}
         envFrom:
         - configMapRef:
             name: "{{ template "concourse.postgresql.fullname" . }}-env"
@@ -58,9 +64,15 @@ spec:
           containerPort: 5432
         volumeMounts:
     {{- if .Values.postgresql.persistence.enabled }}
-        - name: "{{ template "concourse.postgresql.fullname" . }}-data"
+        {{- if .Values.postgresql.persistence.pvcNameOverride }}
+        - name: "{{ .Values.postgresql.persistence.pvcNameOverride }}"
+        {{- else }}
+        - name: "data"
+        {{- end }}
           {{- if .Values.postgresql.dataVolumeMountPath }}
           mountPath: "{{ .Values.postgresql.dataVolumeMountPath }}"
+          {{- else if lt 18 (int .Values.postgresql.version) }}
+          mountPath: "/var/lib/postgresql/data"
           {{- else }}
           mountPath: "/var/lib/postgresql"
           {{- end }}
@@ -68,7 +80,11 @@ spec:
   {{- if .Values.postgresql.persistence.enabled }}
   volumeClaimTemplates:
     - metadata:
-        name: "{{ template "concourse.postgresql.fullname" . }}-data"
+      {{- if .Values.postgresql.persistence.pvcNameOverride }}
+        name: "{{ .Values.postgresql.persistence.pvcNameOverride }}"
+      {{- else }}
+        name: "data"
+      {{- end }}
       {{- if .Values.postgresql.persistence.labels }}
         labels: {{- .Values.postgresql.persistence.labels | toYaml | nindent 10 -}}
       {{- end }}

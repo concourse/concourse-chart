@@ -15,7 +15,13 @@ metadata:
 {{ toYaml . | trim | indent 4 }}
     {{- end }}
 data:
+  {{- if .Values.postgresql.customPgData }}
+  PG_DATA: {{ .Values.postgresql.customPgData }}
+  {{- else if lt 18 (int .Values.postgresql.version) }}
+  PG_DATA: "/var/lib/postgresql/data/pgdata"
+  {{- else }}
   PG_DATA: "/var/lib/postgresql/{{ .Values.postgresql.version }}/docker"
+  {{- end }}
   {{- with .Values.postgresql.extra_environment }}
 {{ toYaml . | trim | indent 2 }}
   {{ end }}

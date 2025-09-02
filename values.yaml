@@ -2472,9 +2472,6 @@ web:
     ##       - concourse.domain.com
     ##
     tls:
-    - secretName: concourse-web-tls
-      hosts:
-      - concourse.l.bahl.fr
 
   ## Route configuration
   ## Ref: https://gateway-api.sigs.k8s.io/api-types/httproute/
@@ -2815,7 +2812,6 @@ persistence:
     labels: {}
 
 ## Configuration values for the postgresql dependency.
-## Ref: https://artifacthub.io/packages/helm/bitnami/postgresql/11.9.8
 ##
 postgresql:
   ## Deploy a single postgresql database with this chart.
@@ -2847,13 +2843,13 @@ postgresql:
     extraSpec:
 
   image: "postgres"
-  imageTag: "17-bookworm"
+  imageTag: "17"
   imageDigest:
 
   ## Major version of the postgresql
   ## must match the one of your docker image, will be used
   ## to infer the default PG_DATA
-  version: "17"
+  version: 17
 
   ## Customize the PG_DATA path, defaults to `/var/lib/postgres/{{version}}/docker`
   ## Ajust the dataVolumeMountPath to match with the new PG_DATA
@@ -2890,7 +2886,7 @@ postgresql:
     ## The postgres user, defaults to `concourse`
     user: "concourse"
     ## Set the database password here
-    password: "SomeSecurePasswordChangeMePlease"
+    password: "concourse"
     ## The postgres database, defaults to `concourse`
     database: "concourse"
 
@@ -2900,7 +2896,7 @@ postgresql:
   ## DO NOT set PG_DATA here, use the `postgresql.custom_pg_data`
   ##
   ## see: https://hub.docker.com/_/postgres
-  extra_environment:
+  extraEnvironment:
     ## You can add extra initdb arguments as string here
     ## it is required to add `--auth-host=scram-sha-256` if you
     ## are using `scram-sha-256` authentication.
@@ -2909,8 +2905,11 @@ postgresql:
     ## Set the postgres auth method, defaults to `scram-sha-256`
     POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
+  ## Extra container arguments, useful to override config, see: https://hub.docker.com/_/postgres#database-configuration
+  extraArgs:
+
   ## Secret values to inject to postgresql as environment variables
-  sensitive_environment:
+  sensitiveEnvironment:
 
   ## Persistent Volume Storage configuration for PostgreSQL.
   ##
