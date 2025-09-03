@@ -24,7 +24,6 @@ spec:
       labels:
         app: "{{ template "concourse.postgresql.fullname" . }}"
     spec:
-      resources: {{ .Values.postgresql.resources | toYaml | nindent 8 }}
       containers:
       - name: "{{ template "concourse.postgresql.fullname" . }}"
         {{- if .Values.postgresql.imageDigest }}
@@ -33,8 +32,9 @@ spec:
         image: "{{ .Values.postgresql.image }}:{{ .Values.postgresql.imageTag }}"
         {{- end }}
         {{- if .Values.postgresql.securityContext }}
-        securityContext: {{- toYaml .Values.postgresql.securityContext | nindent 8 }}
+        securityContext: {{- toYaml .Values.postgresql.securityContext | nindent 10 }}
         {{- end }}
+        resources: {{ .Values.postgresql.resources | toYaml | nindent 10 }}
         {{- if or .Values.postgresql.extraArgs .Values.postgresql.configOverride }}
         args:
         {{- if .Values.postgresql.configOverride }}
