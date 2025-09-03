@@ -2905,6 +2905,12 @@ postgresql:
     ## Set the postgres auth method, defaults to `scram-sha-256`
     POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
+  ## Override the default start command
+  commandOverride:
+
+  ## Override the args
+  argsOverride:
+
   ## Extra container arguments, useful to override config, see: https://hub.docker.com/_/postgres#database-configuration
   extraArgs:
 

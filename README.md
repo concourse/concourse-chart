@@ -119,6 +119,8 @@ The following table lists the configurable parameters of the Concourse chart and
 | `postgresql.auth.database` | Set the postgres database name | `concourse` |
 | `postgresql.extraEnvironment` | Add extra arguments to the postgresql command | `{}` |
 | `postgresql.extraArgs` | Add extra environement variables | `{}` |
+| `postgresql.commandOverride` | Override the command of postgres | `[]` |
+| `postgresql.argsOverride` | Override the args of postgres | `[]` |
 | `postgresql.sensitiveEnvironment` | Add extra sensitive env vars (will be injected with a secret) | `{}` |
 | `postgresql.persistence.enabled` | Enable PostgreSQL persistence using Persistent Volume Claims | `true` |
 | `postgresql.persistence.pvcNameOverride` | Override the name of the pvc template in the postgresql statefulSet. Useful to re-use an existing pvc. | `""` |

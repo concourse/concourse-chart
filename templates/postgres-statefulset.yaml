@@ -35,11 +35,22 @@ spec:
         securityContext: {{- toYaml .Values.postgresql.securityContext | nindent 10 }}
         {{- end }}
         resources: {{ .Values.postgresql.resources | toYaml | nindent 10 }}
+
+        {{- if .Values.postgresql.commandOverride }}
+        command: {{- toYaml .Values.postgresql.commandOverride | nindent 10 }}
+        {{- end }}
+
         {{- if or .Values.postgresql.extraArgs .Values.postgresql.configOverride }}
         args:
-        {{- if .Values.postgresql.configOverride }}
+        {{- if and .Values.postgresql.configOverride (not .Values.postgresql.argsOverride) }}
         - -c
         - config_file=/etc/postgresql/config-override/postgresql.conf
+        {{- end }}
+        {{- if .Values.postgresql.argsOverride }}
+        {{- range .Values.postgresql.argsOverride }}
+        - {{.}}
+        {{- end}}
+
         {{- end }}
         {{- range .Values.postgresql.extraArgs }}
         - {{.}}
