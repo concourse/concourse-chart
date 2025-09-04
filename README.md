@@ -122,6 +122,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `postgresql.commandOverride` | Override the command of postgres | `[]` |
 | `postgresql.argsOverride` | Override the args of postgres | `[]` |
 | `postgresql.sensitiveEnvironment` | Add extra sensitive env vars (will be injected with a secret) | `{}` |
+| `postgresql.lifecycle` | Add a lifecycle attribute to the postgresql container, see [the k8s docs](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#lifecycle) | `nil` |
 | `postgresql.persistence.enabled` | Enable PostgreSQL persistence using Persistent Volume Claims | `true` |
 | `postgresql.persistence.pvcNameOverride` | Override the name of the pvc template in the postgresql statefulSet. Useful to re-use an existing pvc. | `""` |
 | `postgresql.persistence.storageClass` | Concourse data Persistent Volume Storage Class | `nil` |

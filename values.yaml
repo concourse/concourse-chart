@@ -2920,6 +2920,10 @@ postgresql:
   ## Secret values to inject to postgresql as environment variables
   sensitiveEnvironment:
 
+  ## Add lifecycle options to postgresql
+  ##
+  lifecycle:
+
   ## Persistent Volume Storage configuration for PostgreSQL.
   ##
   ## Ref: https://kubernetes.io/docs/user-guide/persistent-volumes

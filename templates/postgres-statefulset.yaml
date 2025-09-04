@@ -77,6 +77,9 @@ spec:
         - name: pgsql
           protocol: TCP
           containerPort: 5432
+        {{- if .Values.postgresql.lifecycle }}
+        lifecycle: {{- toYaml .Values.postgresql.lifecycle | nindent 10 }}
+        {{- end }}
         volumeMounts:
     {{- if .Values.postgresql.persistence.enabled }}
         {{- if .Values.postgresql.persistence.pvcNameOverride }}
