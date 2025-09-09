@@ -105,13 +105,14 @@ The following table lists the configurable parameters of the Concourse chart and
 | `postgresql.image` | Set the image repository | `postgres` |
 | `postgresql.imageTag` | Set the image tag, exclusive with imageDigest. | `17` |
 | `postgresql.imageDigest` | Set the image tag, exclusive with the imageTag | `""` |
-| `postgresql.version` | Set the postgresql version, must match the one of your image | `17` |
+| `postgresql.version` | Set the postgresql major version, must match the one of your image. | `17` |
 | `postgresql.customPgData` | Customize the PG_DATA path, defaults to `/var/lib/postgres/{{postgresql.version}}/docker`. Ajust the dataVolumeMountPath to match with the new PG_DATA. e.g `/opt/postgresql/data` | `"17"` |
 | `postgresql.dataVolumeMountPath` | The mountPath of the volume that will contains the PG_DATA e.g `/opt/postgresql` | `nil` |
 | `postgresql.securityContext` | Add securityContext attributes to the statefulSet | `nil` |
 | `postgresql.annotations` | Add annotations to the postgresql statefulset | `nil` |
 | `postgresql.secretAnnotations` | Add annotations to the secret | `nil` |
 | `postgresql.configMapAnnotations` | Add annotations to the environment configmap | `nil` |
+| `postgresql.configOverride` | Override the default postgresql config file | `nil` |
 | `postgresql.resources` | Set the resources for the statefulSet | `{"requests":{"cpu":"250m","ephemeral-storage":"50Mi","memory":"256Mi"},"limits":{"cpu":"500m","ephemeral-storage":"2Gi","memory":"512Mi"}}` |
 | `postgresql.auth.user` | Set the postgres user | `concourse` |
 | `postgresql.auth.password` | Set the postgres password | `concourse` |

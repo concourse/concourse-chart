@@ -2908,6 +2908,9 @@ postgresql:
   ## Extra container arguments, useful to override config, see: https://hub.docker.com/_/postgres#database-configuration
   extraArgs:
 
+  ## Override the postgresql.conf configuration file with the content of this value
+  configOverride:
+
   ## Secret values to inject to postgresql as environment variables
   sensitiveEnvironment:
 

@@ -35,8 +35,12 @@ spec:
         {{- if .Values.postgresql.securityContext }}
         securityContext: {{- toYaml .Values.postgresql.securityContext | nindent 8 }}
         {{- end }}
-        {{- if .Values.postgresql.extraArgs }}
+        {{- if or .Values.postgresql.extraArgs .Values.postgresql.configOverride }}
         args:
+        {{- if .Values.postgresql.configOverride }}
+        - -c
+        - config_file=/etc/postgresql/config-override/postgresql.conf
+        {{- end }}
         {{- range .Values.postgresql.extraArgs }}
         - {{.}}
         {{- end}}
@@ -77,6 +81,16 @@ spec:
           mountPath: "/var/lib/postgresql"
           {{- end }}
     {{- end }}
+    {{- if .Values.postgresql.configOverride }}
+        - name: "config-override"
+          mountPath: "/etc/postgresql/config-override"
+    {{- end }}
+{{- if .Values.postgresql.configOverride }}
+      volumes:
+      - name: "config-override"
+        configMap:
+          name: "{{ template "concourse.postgresql.fullname" . }}-config-override"
+{{- end }}
   {{- if .Values.postgresql.persistence.enabled }}
   volumeClaimTemplates:
     - metadata:
