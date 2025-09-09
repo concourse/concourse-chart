@@ -71,7 +71,7 @@ spec:
         {{- end }}
           {{- if .Values.postgresql.dataVolumeMountPath }}
           mountPath: "{{ .Values.postgresql.dataVolumeMountPath }}"
-          {{- else if lt 18 (int .Values.postgresql.version) }}
+          {{- else if (lt (int .Values.postgresql.version) 18) }}
           mountPath: "/var/lib/postgresql/data"
           {{- else }}
           mountPath: "/var/lib/postgresql"
