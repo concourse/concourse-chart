@@ -61,3 +61,11 @@ in concourse/concourse#5141 (part of 6.0), riemann was completely removed, makin
 # v17.0.0:
 
 - Upgrade the PostgreSQL Chart to v11. As the backward compatibility is not guarantee when upgrading the PostgreSQL chart to this major version, a major bump was needed. Please refer to [PostgreSQL Chart](https://docs.bitnami.com/kubernetes/infrastructure/postgresql/administration/upgrade#to-1100) for details.
+
+# v18.0.0:
+
+- Upgrade the PostgreSQL Chart to v16. As the backward compatibility is not guarantee when upgrading the PostgreSQL chart to this major version, a major bump was needed.
+
+# v19.0.0:
+
+- Removed the [bitnami/postgresql](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) chart dependency (see [bitnami/charts#35164](https://github.com/bitnami/charts/issues/35164)) and replaced it with a StatefulSet that deploys the `postgres` image from Docker Hub. See [this comment](https://github.com/concourse/concourse-chart/pull/389#issuecomment-3253724558) for a migration guide. Reminder that the PostgreSQL dependency has never been intended for production usage. [#389](https://github.com/concourse/concourse-chart/pull/389).
