@@ -42,7 +42,7 @@ $ helm delete my-release
 
 The command removes nearly all the Kubernetes components associated with the chart and deletes the release.
 
-> ps: By default, a [namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) is created for the `main` team named after `${RELEASE}-main` and is kept untouched after a `helm delete`.
+> PS: By default, a [namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) is created for the `main` team named after `${RELEASE}-main` and is kept untouched after a `helm delete`.
 > See the [Configuration section](#configuration) for how to control the behavior.
 
 
@@ -97,7 +97,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `persistence.worker.labels` | Concourse Worker Persistent Volume Labels | `{}` |
 | `postgresql.enabled` | Enable PostgreSQL as a chart dependency | `true` |
 | `postgresql.fullnameOverride` | Provide a name to substitute for the full name of postgresql resources | `nil` |
-| `postgresql.labels` | Add additionnal labels to the postgresql statefulSet | `{}` |
+| `postgresql.labels` | Add additional labels to the postgresql statefulSet | `{}` |
 | `postgresql.service.enabled` | Enable postgresql service | `true` |
 | `postgresql.service.type` | Service type | `ClusterIP` |
 | `postgresql.service.clusterIPs` | Hardcode services IPs | `[]` |
@@ -106,7 +106,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `postgresql.imageTag` | Set the image tag, exclusive with imageDigest. | `17` |
 | `postgresql.imageDigest` | Set the image tag, exclusive with the imageTag | `""` |
 | `postgresql.version` | Set the postgresql major version, must match the one of your image. | `17` |
-| `postgresql.customPgData` | Customize the PG_DATA path, defaults to `/var/lib/postgres/{{postgresql.version}}/docker`. Ajust the dataVolumeMountPath to match with the new PG_DATA. e.g `/opt/postgresql/data` | `"17"` |
+| `postgresql.customPgData` | Customize the PG_DATA path, defaults to `/var/lib/postgres/{{postgresql.version}}/docker`. Adjust the dataVolumeMountPath to match with the new PG_DATA. e.g `/opt/postgresql/data` | `"17"` |
 | `postgresql.dataVolumeMountPath` | The mountPath of the volume that will contains the PG_DATA e.g `/opt/postgresql` | `nil` |
 | `postgresql.securityContext` | Add securityContext attributes to the statefulSet | `nil` |
 | `postgresql.annotations` | Add annotations to the postgresql statefulset | `nil` |
@@ -118,7 +118,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `postgresql.auth.password` | Set the postgres password | `concourse` |
 | `postgresql.auth.database` | Set the postgres database name | `concourse` |
 | `postgresql.extraEnvironment` | Add extra arguments to the postgresql command | `{}` |
-| `postgresql.extraArgs` | Add extra environement variables | `{}` |
+| `postgresql.extraArgs` | Add extra environment variables | `{}` |
 | `postgresql.commandOverride` | Override the command of postgres | `[]` |
 | `postgresql.argsOverride` | Override the args of postgres | `[]` |
 | `postgresql.sensitiveEnvironment` | Add extra sensitive env vars (will be injected with a secret) | `{}` |
@@ -247,7 +247,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.prometheus.ServiceMonitor.enabled` | Enable the creation of a serviceMonitor object for the Prometheus operator | `false` |
 | `web.prometheus.ServiceMonitor.interval` | The interval the Prometheus endpoint is scraped | `30s` |
 | `web.prometheus.ServiceMonitor.namespace` | The namespace where the serviceMonitor object has to be created | `nil` |
-| `web.prometheus.ServiceMonitor.labels` | Additional lables for the serviceMonitor object | `nil` |
+| `web.prometheus.ServiceMonitor.labels` | Additional labels for the serviceMonitor object | `nil` |
 | `web.prometheus.ServiceMonitor.metricRelabelings` | Relabel metrics as defined [here](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_configs) | `nil` |
 | `web.readinessProbe.httpGet.path` | Path to access on the HTTP server when performing the healthcheck | `/api/v1/info` |
 | `web.readinessProbe.httpGet.port` | Name or number of the port to access on the container | `atc` |
@@ -711,7 +711,7 @@ secrets:
 
 You can specify either `conjurAuthnApiKey` that corresponds to the Conjur host OR `conjurAuthnTokenFile` if running in K8s or IAM.
 
-If your Conjur instance is deployed with a self-signed SSL certifcate, you will need to set `conjurCACert` property in your `values.yaml`.
+If your Conjur instance is deployed with a self-signed SSL certificate, you will need to set `conjurCACert` property in your `values.yaml`.
 
 #### AWS Systems Manager Parameter Store (SSM)
 
@@ -749,7 +749,7 @@ Where `<kms-key-arn>` is the ARN of the KMS key used to encrypt the secrets in P
 
 To use Secrets Manager, set `concourse.web.kubernetes.enabled` to false, and set `concourse.web.awsSecretsManager.enabled` to true.
 
-Authentication can be configured to use an access key and secret key as well as a session token. This is done by setting `concourse.web.awsSecretsManager.keyAuth.enabled` to `true`. Alternatively, if it set to `false`, AWS IAM role based authentication (instance or pod credentials) is assumed. To use a session token, `concourse.web.awsSecretsManger.useSessionToken` should be set to `true`. The secret values can be managed using the values specified in this helm chart or separately. For more details, see https://concourse-ci.org/creds.html#asm.
+Authentication can be configured to use an access key and secret key as well as a session token. This is done by setting `concourse.web.awsSecretsManager.keyAuth.enabled` to `true`. Alternatively, if it set to `false`, AWS IAM role based authentication (instance or pod credentials) is assumed. To use a session token, `concourse.web.awsSecretsManager.useSessionToken` should be set to `true`. The secret values can be managed using the values specified in this helm chart or separately. For more details, see https://concourse-ci.org/creds.html#asm.
 
 For a given Concourse *team*, a pipeline looks for secrets in Secrets Manager using either `/concourse/{team}/{secret}` or `/concourse/{team}/{pipeline}/{secret}`; the patterns can be overridden using the `concourse.web.awsSecretsManager.teamSecretTemplate` and `concourse.web.awsSecretsManager.pipelineSecretTemplate` settings.
 
