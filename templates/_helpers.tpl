@@ -96,9 +96,9 @@ to strip that out.
 {{- end -}}
 
 {{/*
-Return the appropriate apiVersion for statefulset.
+Return the appropriate apiVersion for statefulSet.
 */}}
-{{- define "concourse.statefulset.apiVersion" -}}
+{{- define "concourse.statefulSet.apiVersion" -}}
 {{- $version := include "concourse.kubeVersion" . -}}
 {{- if semverCompare "<1.9-0" $version -}}
 {{- print "apps/v1beta2" -}}
@@ -452,12 +452,12 @@ Return concourse environment variables for postgresql configuration
 - name: CONCOURSE_POSTGRES_HOST
   value: {{ template "concourse.postgresql.fullname" . }}
 - name: CONCOURSE_POSTGRES_USER
-  value: {{ .Values.postgresql.auth.username | quote }}
+  value: {{ .Values.postgresql.auth.user | quote }}
 - name: CONCOURSE_POSTGRES_PASSWORD
   valueFrom:
     secretKeyRef:
-      name: {{ template "concourse.postgresql.fullname" . }}
-      key: password
+      name: "{{ template "concourse.postgresql.fullname" . }}-connection"
+      key: POSTGRES_PASSWORD
 - name: CONCOURSE_POSTGRES_DATABASE
   value: {{ .Values.postgresql.auth.database | quote }}
 {{- else }}

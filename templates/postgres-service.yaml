@@ -1,0 +1,35 @@
+{{- if .Values.postgresql.service.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "concourse.postgresql.fullname" . }}
+  labels:
+    app: {{ template "concourse.postgresql.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    {{- with .Values.postgresql.labels }}
+{{ toYaml . | trim | indent 4 }}
+    {{- end }}
+  {{- if .Values.postgresql.annotations }}
+  annotations: "{{ toYaml .Values.postgresql.annotations | nindent 4 }}"
+  {{- end }}
+spec:
+  type: {{ .Values.postgresql.service.type }}
+  ports:
+  - name: pgsql
+    port: 5432
+    targetPort: pgsql
+    protocol: TCP
+  selector:
+    app: {{ template "concourse.postgresql.fullname" . }}
+  {{- if eq .Values.postgresql.service.type "ClusterIP" }}
+  {{- if .Values.postgresql.service.clusterIPs }}
+  clusterIPs: {{- .Values.postgresql.service.clusterIPs | mustToJson }}
+  {{- end }}
+  {{- end }}
+  {{- with .Values.postgresql.service.extraSpec }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+{{- end }}
+

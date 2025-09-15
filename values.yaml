@@ -469,6 +469,8 @@ concourse:
     ## Configurations regarding how the web component is able to connect to a postgres
     ## instance.
     ##
+    ## Defaults to values that connects to the database integrated in this chart.
+    ##
     postgres:
       ## The host to connect to.
       ##
@@ -2446,7 +2448,7 @@ web:
     ##   kubernetes.io/ingress.class: nginx
     ##   kubernetes.io/tls-acme: 'true'
     ##
-    annotations: {}
+    annotations:
 
     ## Hostnames.
     ## Either `hosts` or `rulesOverride` must be provided if Ingress is enabled.
@@ -2810,10 +2812,9 @@ persistence:
     labels: {}
 
 ## Configuration values for the postgresql dependency.
-## Ref: https://artifacthub.io/packages/helm/bitnami/postgresql/11.9.8
 ##
 postgresql:
-  ## Use the PostgreSQL chart dependency.
+  ## Deploy a single postgresql database with this chart.
   ##
   ## Set to false if bringing your own PostgreSQL, and set the corresponding `secrets`
   ## fields that correspond to the PostgreSQL variables that `concourse web` should use
@@ -2828,57 +2829,136 @@ postgresql:
   ##
   fullnameOverride:
 
-  auth:
-    ### PostgreSQL User to create.
-    ##
-    username: concourse
+  labels: {}
 
-    ## PostgreSQL Password for the new user.
-    ## If not set, a random 10 characters password will be used.
-    ##
-    password: concourse
-
-    ## PostgreSQL Database to create.
-    ##
-    database: concourse
-
-  ## Allows for setting a specific cluster ip for the PostgreSQL
-  ## service.
+  ## Service settings for postgresql
   service:
-    clusterIP:
+    ## Enable the service
+    enabled: true
+    ## Define the type of service, default to ClusterIP
+    type: "ClusterIP"
+    ## Define this option if you want to hardcode the ip
+    clusterIPs:
+    ## Add `.spec` attributes to the service
+    extraSpec:
 
-  ## Configuration for the primary database of the PostgreSQL subchart,
-  ## i.e. the instance used by the web component.
+  image: "postgres"
+  imageTag: "17"
+  imageDigest:
+
+  ## Major version of the postgresql
+  ## must match the one of your docker image, will be used
+  ## to infer the default PG_DATA
+  version: 17
+
+  ## Customize the PG_DATA path, defaults to `/var/lib/postgres/{{version}}/docker`
+  ## Ajust the dataVolumeMountPath to match with the new PG_DATA
+  ## e.g `/opt/postgresql/data`
+  customPgData:
+  ## The mountPath of the volume that will contains the PG_DATA
+  ## e.g `/opt/postgresql`
+  dataVolumeMountPath:
+  ## Add securityContext attributes to the statefulSet
+  securityContext:
+  ## Add annotations to the postgresql statefulset
+  annotations:
+  ## Add annotations to the secret
+  secretAnnotations:
+  ## Add annotations to the environment configmap
+  configMapAnnotations:
+
+  ## Define postgresql resources requests and limits
+  resources:
+    requests:
+      cpu: 250m
+      ephemeral-storage: 50Mi
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      ephemeral-storage: 2Gi
+      memory: 512Mi
+
+  ## Setup postgresql auth info, will be fed to concourse
+  ## Those will be given to postgres using the standard env vars
+  ## POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB
   ##
-  primary:
-    ## Persistent Volume Storage configuration for PostgreSQL.
+  auth:
+    ## The postgres user, defaults to `concourse`
+    user: "concourse"
+    ## Set the database password here
+    password: "concourse"
+    ## The postgres database, defaults to `concourse`
+    database: "concourse"
+
+  ## Postgresql environment variables. Use this to configure the database
+  ## we expose the same env vars as the official postgres image
+  ## don't expose the secret here, use the `secrets` value.
+  ## DO NOT set PG_DATA here, use the `postgresql.custom_pg_data`
+  ##
+  ## see: https://hub.docker.com/_/postgres
+  extraEnvironment:
+    ## You can add extra initdb arguments as string here
+    ## it is required to add `--auth-host=scram-sha-256` if you
+    ## are using `scram-sha-256` authentication.
+    POSTGRES_INITDB_ARGS: >
+      --auth-host=scram-sha-256
+    ## Set the postgres auth method, defaults to `scram-sha-256`
+    POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+
+  ## Override the default start command
+  commandOverride:
+
+  ## Override the args
+  argsOverride:
+
+  ## Extra container arguments, useful to override config, see: https://hub.docker.com/_/postgres#database-configuration
+  extraArgs:
+
+  ## Override the postgresql.conf configuration file with the content of this value
+  configOverride:
+
+  ## Secret values to inject to postgresql as environment variables
+  sensitiveEnvironment:
+
+  ## Add lifecycle options to postgresql
+  ##
+  lifecycle:
+
+  ## Persistent Volume Storage configuration for PostgreSQL.
+  ##
+  ## Ref: https://kubernetes.io/docs/user-guide/persistent-volumes
+  ##
+  persistence:
+    ## Enable PostgreSQL persistence using Persistent Volume Claims.
     ##
-    ## Ref: https://kubernetes.io/docs/user-guide/persistent-volumes
+    enabled: true
+
+    ## Override the pvc template name in the postgresql statefulSet
+    ## useful to re-use a previous existing pvc
     ##
-    persistence:
-      ## Enable PostgreSQL persistence using Persistent Volume Claims.
-      ##
-      enabled: true
+    pvcNameOverride:
 
-      ## Persistent Volume Storage Class to be used by PersistentVolumes created
-      ## for PostgreSQL.
-      ##
-      ## If defined, storageClassName: <storageClass>
-      ## If set to "-", storageClassName: "", which disables dynamic provisioning
-      ## If undefined (the default) or set to null, no storageClassName spec is
-      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-      ##   GKE, AWS & OpenStack)
-      ##
-      storageClass:
+    ## Persistent Volume Storage Class to be used by PersistentVolumes created
+    ## for PostgreSQL.
+    ##
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    storageClass:
 
-      ## Persistent Volume Access Mode.
-      ##
-      accessModes:
-        - ReadWriteOnce
+    ## Persistent Volume Access Mode.
+    ##
+    accessModes:
+    - ReadWriteOnce
 
-      ## Persistent Volume Storage Size.
-      ##
-      size: 8Gi
+    ## Persistent Volume Storage Resources.
+    ##
+    resources:
+      requests:
+        storage: "8Gi"
 
 ## For Kubernetes RBAC support:
 ##
