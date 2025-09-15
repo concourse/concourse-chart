@@ -1,0 +1,137 @@
+{{- if .Values.postgresql.enabled -}}
+apiVersion: "{{- template "concourse.statefulSet.apiVersion" . }}"
+kind: StatefulSet
+metadata:
+  name: "{{ template "concourse.postgresql.fullname" . }}"
+  {{- if .Values.postgresql.annotations }}
+  annotations: "{{ toYaml .Values.postgresql.annotations | nindent 4 }}"
+  {{- end }}
+  labels:
+    app: "{{ template "concourse.postgresql.fullname" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    {{- with .Values.postgresql.labels }}
+{{ toYaml . | trim | indent 4 }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: "{{ template "concourse.postgresql.fullname" . }}"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "{{ template "concourse.postgresql.fullname" . }}"
+    spec:
+      containers:
+      - name: "{{ template "concourse.postgresql.fullname" . }}"
+        {{- if .Values.postgresql.imageDigest }}
+        image: "{{ .Values.postgresql.image }}@{{ .Values.postgresql.imageDigest }}"
+        {{- else }}
+        image: "{{ .Values.postgresql.image }}:{{ .Values.postgresql.imageTag }}"
+        {{- end }}
+        {{- if .Values.postgresql.securityContext }}
+        securityContext: {{- toYaml .Values.postgresql.securityContext | nindent 10 }}
+        {{- end }}
+        resources: {{ .Values.postgresql.resources | toYaml | nindent 10 }}
+
+        {{- if .Values.postgresql.commandOverride }}
+        command: {{- toYaml .Values.postgresql.commandOverride | nindent 10 }}
+        {{- end }}
+
+        {{- if or .Values.postgresql.extraArgs .Values.postgresql.configOverride }}
+        args:
+        {{- if and .Values.postgresql.configOverride (not .Values.postgresql.argsOverride) }}
+        - -c
+        - config_file=/etc/postgresql/config-override/postgresql.conf
+        {{- end }}
+        {{- if .Values.postgresql.argsOverride }}
+        {{- range .Values.postgresql.argsOverride }}
+        - {{.}}
+        {{- end}}
+
+        {{- end }}
+        {{- range .Values.postgresql.extraArgs }}
+        - {{.}}
+        {{- end}}
+        {{- end }}
+        envFrom:
+        - configMapRef:
+            name: "{{ template "concourse.postgresql.fullname" . }}-env"
+        - secretRef:
+            name: "{{ template "concourse.postgresql.fullname" . }}-connection"
+        startupProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -ec
+            - exec pg_isready -U {{ .Values.postgresql.auth.user | quote }} -d "dbname={{ .Values.postgresql.auth.database }}" -h 127.0.0.1 -p 5432
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -ec
+            - exec pg_isready -U {{ .Values.postgresql.auth.user | quote }} -d "dbname={{ .Values.postgresql.auth.database }}" -h 127.0.0.1 -p 5432
+        ports:
+        - name: pgsql
+          protocol: TCP
+          containerPort: 5432
+        {{- if .Values.postgresql.lifecycle }}
+        lifecycle: {{- toYaml .Values.postgresql.lifecycle | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+    {{- if .Values.postgresql.persistence.enabled }}
+        {{- if .Values.postgresql.persistence.pvcNameOverride }}
+        - name: "{{ .Values.postgresql.persistence.pvcNameOverride }}"
+        {{- else }}
+        - name: "data"
+        {{- end }}
+          {{- if .Values.postgresql.dataVolumeMountPath }}
+          mountPath: "{{ .Values.postgresql.dataVolumeMountPath }}"
+          {{- else if (lt (int .Values.postgresql.version) 18) }}
+          mountPath: "/var/lib/postgresql/data"
+          {{- else }}
+          mountPath: "/var/lib/postgresql"
+          {{- end }}
+    {{- end }}
+    {{- if .Values.postgresql.configOverride }}
+        - name: "config-override"
+          mountPath: "/etc/postgresql/config-override"
+    {{- end }}
+{{- if .Values.postgresql.configOverride }}
+      volumes:
+      - name: "config-override"
+        configMap:
+          name: "{{ template "concourse.postgresql.fullname" . }}-config-override"
+{{- end }}
+  {{- if .Values.postgresql.persistence.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+      {{- if .Values.postgresql.persistence.pvcNameOverride }}
+        name: "{{ .Values.postgresql.persistence.pvcNameOverride }}"
+      {{- else }}
+        name: "data"
+      {{- end }}
+      {{- if .Values.postgresql.persistence.labels }}
+        labels: {{- .Values.postgresql.persistence.labels | toYaml | nindent 10 -}}
+      {{- end }}
+      spec:
+      {{- if .Values.postgresql.persistence.selector }}
+        selector: {{- .Values.postgresql.persistence.selector | toYaml | nindent 10 }}
+      {{- end }}
+        accessModes: {{ (default (list "ReadWriteOnce") .Values.postgresql.persistence.accessMode) | toJson }}
+      {{- if .Values.postgresql.persistence.resources }}
+        resources: {{ .Values.postgresql.persistence.resources | toYaml | nindent 10 }}
+      {{- end }}
+      {{- if .Values.postgresql.persistence.storageClass }}
+      {{- if (eq "-" .Values.postgresql.persistence.storageClass) }}
+        storageClassName: ""
+      {{- else }}
+        storageClassName: "{{ .Values.postgresql.persistence.storageClass }}"
+      {{- end }}
+      {{- end }}
+  {{- else }}
+  {{- end }}
+{{- end }}
+

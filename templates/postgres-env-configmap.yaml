@@ -1,0 +1,21 @@
+{{- if .Values.postgresql.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ template "concourse.postgresql.fullname" . }}-env"
+  {{- if .Values.postgresql.configMapAnnotations }}
+  annotations: "{{ toYaml .Values.postgresql.annotations | nindent 4 }}"
+  {{- end }}
+  labels:
+    app: {{ template "concourse.postgresql.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    {{- with .Values.postgresql.labels }}
+{{ toYaml . | trim | indent 4 }}
+    {{- end }}
+data:
+  {{- with .Values.postgresql.extraEnvironment }}
+{{ toYaml . | trim | indent 2 }}
+  {{- end }}
+{{- end }}
