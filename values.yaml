@@ -2843,7 +2843,7 @@ postgresql:
     extraSpec:
 
   image: "postgres"
-  imageTag: "7.14.2"
+  imageTag: "17"
   imageDigest:
 
   ## Major version of the postgresql
