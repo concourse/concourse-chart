@@ -24,6 +24,21 @@ spec:
       labels:
         app: "{{ template "concourse.postgresql.fullname" . }}"
     spec:
+    {{- if .Values.postgresql.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.postgresql.nodeSelector | indent 8 }}
+    {{- end }}
+      serviceAccountName: "{{ .Values.rbac.postgresqlServiceAccountName }}"
+      {{- if .Values.postgresql.tolerations }}
+      tolerations:
+{{ toYaml .Values.postgresql.tolerations | indent 8 }}
+      {{- end }}
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.imagePullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
       containers:
       - name: "{{ template "concourse.postgresql.fullname" . }}"
         {{- if .Values.postgresql.imageDigest }}

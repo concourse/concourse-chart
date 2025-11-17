@@ -2098,6 +2098,13 @@ web:
   ##
   databaseInitContainers: []
 
+  ## Configuration values for InitContainer that runs Concourse database migrations
+  concourseMigration:
+    ## Configure resource requests and limits.
+    ## Ref: https://kubernetes.io/docs/user-guide/compute-resources/
+    ##
+    resources: {}
+
   ## Array of extra initContainers to run before Concourse Web starts
   ## container.
   ##
@@ -2878,6 +2885,14 @@ postgresql:
       ephemeral-storage: 2Gi
       memory: 512Mi
 
+  ## Tolerations for the postgresql.
+  tolerations: []
+
+  ## Node selector for the postgresql.
+  ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
+  ##
+  nodeSelector: {}
+
   ## Setup postgresql auth info, will be fed to concourse
   ## Those will be given to postgres using the standard env vars
   ## POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB
@@ -2984,6 +2999,10 @@ rbac:
 
   ## Any annotations required for the worker Service Account
   workerServiceAccountAnnotations: {}
+
+  ## The name of the service account to use for postgresql pods if rbac.create is false
+  ##
+  postgresqlServiceAccountName: default
 
 ## For managing podSecurityPolicies. To make sure rbac objects are also created
 ## for the use of the podsecuritypolicy objects,

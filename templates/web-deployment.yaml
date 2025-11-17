@@ -69,6 +69,10 @@ spec:
           securityContext:
           {{- toYaml .Values.web.securityContext | nindent 12 }}
           {{- end }}
+{{- if .Values.web.concourseMigration.resources }}
+          resources:
+{{ toYaml .Values.web.concourseMigration.resources | indent 12 }}
+{{- end }}
           env:
 {{- include "concourse.postgresql.env" . | indent 12 }}
           volumeMounts:
