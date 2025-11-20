@@ -253,6 +253,16 @@ concourse:
     ##
     externalUrl:
 
+    ## URL to use as the OIDC issuer for IDToken generation. If not set,
+    ## defaults to externalUrl. Useful for when your Concourse is not available
+    ## over the public internet but you need the OIDC endpoints publicly available.
+    ##
+    ## Ref: https://concourse-ci.org/idtoken-credential-manager.html
+    ##
+    ## Example: http://oidc.example.com
+    ##
+    oidcIssuerUrl:
+
     encryption:
       ## Enable encryption of pipeline configuration. Encryption keys can be set via secrets
       ## (`encryption-key` and `old-encryption-key` fields).
