@@ -334,6 +334,10 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_CONTAINERD_CNI_PLUGINS_DIR
   value: {{ .Values.concourse.worker.containerd.cniPluginsDir | quote }}
 {{- end }}
+{{- if .Values.concourse.worker.containerd.logLevel }}
+- name: CONCOURSE_CONTAINERD_LOG_LEVEL
+  value: {{ .Values.concourse.worker.containerd.logLevel | quote }}
+{{- end }}
 {{- if .Values.concourse.worker.containerd.privilegedMode }}
 - name: CONCOURSE_CONTAINERD_PRIVILEGED_MODE
   value: {{ .Values.concourse.worker.containerd.privilegedMode | quote }}
