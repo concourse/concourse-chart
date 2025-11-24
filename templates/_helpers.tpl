@@ -487,6 +487,10 @@ Return concourse environment variables for postgresql configuration
     secretKeyRef:
       name: {{ template "concourse.web.fullname" . }}
       key: postgresql-password
+{{- if .Values.concourse.web.postgres.applicationName }}
+- name: CONCOURSE_POSTGRES_APPLICATION_NAME
+  value: {{ .Values.concourse.web.postgres.applicationName | quote }}
+{{- end }}
 {{- if .Values.concourse.web.postgres.sslmode }}
 - name: CONCOURSE_POSTGRES_SSLMODE
   value: {{ .Values.concourse.web.postgres.sslmode | quote }}

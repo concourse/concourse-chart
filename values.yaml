@@ -494,6 +494,10 @@ concourse:
       ##
       socket:
 
+      ## Application name for connection tracking in pg_stat_activity. Defaults to 'concourse'.
+      ##
+      applicationName:
+
       ## Whether or not to use SSL.
       ##
       sslmode: disable
