@@ -341,7 +341,6 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.labels` | Additional labels to be added to the worker pods | `{}` |
 | `worker.securityContext` | Security context for the worker container | `nil` |
 
-
 For configurable Concourse parameters, refer to [`values.yaml`](values.yaml)' `concourse` section. All parameters under this section are strictly mapped from the `concourse` binary commands.
 
 For example if one needs to configure the Concourse external URL, the param `concourse` -> `web` -> `externalUrl` should be set, which is equivalent to running the `concourse` binary as `concourse web --external-url`.
