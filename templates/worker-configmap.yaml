@@ -8,6 +8,10 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
+  post-start-hook.sh: |
+    #!/bin/bash
+    losetup -d $(losetup -a | grep "volumes\.img (deleted)" | cut -d: -f1)
+    exit 0
   pre-stop-hook.sh: |
     #!/bin/bash
     while true; do

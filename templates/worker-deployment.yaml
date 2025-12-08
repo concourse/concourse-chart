@@ -81,6 +81,11 @@ spec:
 {{ toYaml .Values.worker.readinessProbe | indent 12 }}
 {{- end }}
           lifecycle:
+            postStart:
+              exec:
+                command:
+                  - "/bin/bash"
+                  - "/post-start-hook.sh"
             preStop:
               exec:
                 command:
@@ -107,6 +112,9 @@ spec:
             - name: concourse-keys
               mountPath: {{ .Values.worker.keySecretsPath | quote }}
               readOnly: true
+            - name: concourse-worker
+              mountPath: /post-start-hook.sh
+              subPath: post-start-hook.sh
             - name: concourse-worker
               mountPath: /pre-stop-hook.sh
               subPath: pre-stop-hook.sh
