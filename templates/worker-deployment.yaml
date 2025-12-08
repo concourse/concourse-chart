@@ -107,7 +107,7 @@ spec:
             - name: concourse-keys
               mountPath: {{ .Values.worker.keySecretsPath | quote }}
               readOnly: true
-            - name: pre-stop-hook
+            - name: concourse-worker
               mountPath: /pre-stop-hook.sh
               subPath: pre-stop-hook.sh
             {{- if and (not (kindIs "invalid" .Values.secrets.workerAdditionalCerts)) (.Values.secrets.workerAdditionalCerts | toString) }}
@@ -161,7 +161,7 @@ spec:
 {{- if .Values.worker.additionalVolumes }}
 {{ toYaml .Values.worker.additionalVolumes | indent 8 }}
 {{- end }}
-        - name: pre-stop-hook
+        - name: concourse-worker
           configMap:
             name: {{ template "concourse.worker.fullname" . }}
         - name: concourse-keys
