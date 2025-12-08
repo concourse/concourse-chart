@@ -339,7 +339,6 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.persistentVolumeClaimRetentionPolicy` | `Retain` or `Delete` (requires Kubernetes >= 1.32) | `Retain` |
 | `worker.updateStrategy` | `OnDelete` or `RollingUpdate` (requires Kubernetes >= 1.7) | `RollingUpdate` |
 | `worker.labels` | Additional labels to be added to the worker pods | `{}` |
-| `worker.securityContext` | Security context for the worker container | `nil` |
 
 For configurable Concourse parameters, refer to [`values.yaml`](values.yaml)' `concourse` section. All parameters under this section are strictly mapped from the `concourse` binary commands.
 
