@@ -280,6 +280,11 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.service.workerGateway.type` | Concourse Web workerGateway service type | `ClusterIP` |
 | `web.service.prometheus.annotations` | Concourse Web Prometheus Service annotations | `nil` |
 | `web.service.prometheus.labels` | Additional concourse web prometheus service labels | `nil` |
+| `web.service.prometheus.type` | Concourse Web Prometheus service type | `ClusterIP` |
+| `web.service.prometheus.clusterIP` | The IP to use when web.service.prometheus.type is ClusterIP | `nil` |
+| `web.service.prometheus.loadBalancerIP` | The IP to use when web.service.prometheus.type is LoadBalancer | `nil` |
+| `web.service.prometheus.loadBalancerSourceRanges` | Concourse Web Prometheus Service Load Balancer Source IP ranges | `nil` |
+| `web.service.prometheus.NodePort` | Sets the nodePort for prometheus when using `NodePort` | `nil` |
 | `web.shareProcessNamespace` | Enable or disable the process namespace sharing for the web nodes | `false` |
 | `web.priorityClassName` | Sets a PriorityClass for the web pods | `nil` |
 | `web.sidecarContainers` | Array of extra containers to run alongside the Concourse web container | `nil` |
@@ -296,11 +301,6 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.teamSecretsPath` | Specify the mount directory of the team authorized keys secrets | `/team-authorized-keys` |
 | `web.conjurSecretsPath` | Specify the mount directory of the web conjur secrets | `/concourse-conjur` |
 | `web.concourseMigration.resources` | Resource requests/limits for the database migration init container | `{}` |
-| `web.service.prometheus.type` | Concourse Web Prometheus service type | `ClusterIP` |
-| `web.service.prometheus.clusterIP` | The IP to use when web.service.prometheus.type is ClusterIP | `nil` |
-| `web.service.prometheus.loadBalancerIP` | The IP to use when web.service.prometheus.type is LoadBalancer | `nil` |
-| `web.service.prometheus.loadBalancerSourceRanges` | Concourse Web Prometheus Service Load Balancer Source IP ranges | `nil` |
-| `web.service.prometheus.NodePort` | Sets the nodePort for prometheus when using `NodePort` | `nil` |
 | `worker.additionalAffinities` | Additional affinities to apply to worker pods. E.g: node affinity | `{}` |
 | `worker.additionalVolumeMounts` | VolumeMounts to be added to the worker pods | `nil` |
 | `worker.additionalPorts` | Additional ports to be added to worker pods | `[]` |
