@@ -466,6 +466,11 @@ concourse:
     ##
     peerAddress:
 
+    ## Set to true if the cluster uses IPv6. This wraps the pod IP in square brackets
+    ## as required for IPv6 addresses in CONCOURSE_PEER_ADDRESS.
+    ##
+    peerAddressUseIPv6: false
+
     ## Configurations regarding how the web component is able to connect to a postgres
     ## instance.
     ##
