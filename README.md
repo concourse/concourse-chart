@@ -93,7 +93,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `persistence.enabled` | Enable Concourse persistence using Persistent Volume Claims | `true` |
 | `persistence.worker.accessMode` | Concourse Worker Persistent Volume Access Mode | `ReadWriteOnce` |
 | `persistence.worker.size` | Concourse Worker Persistent Volume Storage Size | `20Gi` |
-| `persistence.worker.storageClass` | Concourse Worker Persistent Volume Storage Class | `generic` |
+| `persistence.worker.storageClass` | Concourse Worker Persistent Volume Storage Class | `nil` |
 | `persistence.worker.labels` | Concourse Worker Persistent Volume Labels | `{}` |
 | `postgresql.enabled` | Enable PostgreSQL as a chart dependency | `true` |
 | `postgresql.fullnameOverride` | Provide a name to substitute for the full name of postgresql resources | `nil` |
@@ -129,7 +129,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `postgresql.persistence.accessModes` | Persistent Volume Access Mode | `["ReadWriteOnce"]` |
 | `postgresql.persistence.resources` | Set storage requests and limits | `{ "requests": { "storage": "8Gi" } }` |
 | `persistence.worker.selector` | Concourse Worker Persistent Volume selector | `nil` |
-| `rbac.apiVersion` | RBAC version | `v1beta1` |
+| `rbac.apiVersion` | RBAC version | `v1` |
 | `rbac.create` | Enables creation of RBAC resources | `true` |
 | `rbac.webServiceAccountName` | Name of the service account to use for web pods if `rbac.create` is `false` | `default` |
 | `rbac.webServiceAccountAnnotations` | Any annotations to be attached to the web service account | `{}` |
@@ -321,6 +321,25 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.tolerations` | Tolerations for the worker nodes | `[]` |
 | `worker.persistentVolumeClaimRetentionPolicy` | `Retain` or `Delete` (requires Kubernetes >= 1.32) | `Retain` |
 | `worker.updateStrategy` | `OnDelete` or `RollingUpdate` (requires Kubernetes >= 1.7) | `RollingUpdate` |
+| `worker.labels` | Additional labels to be added to the worker pods | `{}` |
+| `worker.securityContext` | Security context for the worker container | `nil` |
+| `web.securityContext` | Security context for the web container | `nil` |
+| `concourse.web.peerAddressUseIPv6` | Set to true if the cluster uses IPv6. Wraps the pod IP in square brackets for CONCOURSE_PEER_ADDRESS | `false` |
+| `web.teamSecretsPath` | Specify the mount directory of the team authorized keys secrets | `/team-authorized-keys` |
+| `web.conjurSecretsPath` | Specify the mount directory of the web conjur secrets | `/concourse-conjur` |
+| `web.concourseMigration.resources` | Resource requests/limits for the database migration init container | `{}` |
+| `web.service.prometheus.type` | Concourse Web Prometheus service type | `ClusterIP` |
+| `web.service.prometheus.clusterIP` | The IP to use when web.service.prometheus.type is ClusterIP | `nil` |
+| `web.service.prometheus.loadBalancerIP` | The IP to use when web.service.prometheus.type is LoadBalancer | `nil` |
+| `web.service.prometheus.loadBalancerSourceRanges` | Concourse Web Prometheus Service Load Balancer Source IP ranges | `nil` |
+| `web.service.prometheus.NodePort` | Sets the nodePort for prometheus when using `NodePort` | `nil` |
+| `postgresql.tolerations` | Tolerations for the postgresql pods | `[]` |
+| `postgresql.nodeSelector` | Node selector for the postgresql pods | `{}` |
+| `rbac.postgresqlServiceAccountName` | Name of the service account to use for postgresql pods if `rbac.create` is `false` | `default` |
+| `secrets.clientId` | Client ID for web interface login | `nil` |
+| `secrets.clientSecret` | Client secret for web interface login | `nil` |
+| `secrets.tsaClientId` | Client ID for TSA login | `nil` |
+| `secrets.tsaClientSecret` | Client secret for TSA login | `nil` |
 
 For configurable Concourse parameters, refer to [`values.yaml`](values.yaml)' `concourse` section. All parameters under this section are strictly mapped from the `concourse` binary commands.
 
