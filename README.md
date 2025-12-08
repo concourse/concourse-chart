@@ -324,7 +324,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.labels` | Additional labels to be added to the worker pods | `{}` |
 | `worker.securityContext` | Security context for the worker container | `nil` |
 | `web.securityContext` | Security context for the web container | `nil` |
-| `concourse.web.peerAddressUseIPv6` | Set to true if the cluster uses IPv6. Wraps the pod IP in square brackets for CONCOURSE_PEER_ADDRESS | `false` |
+| `web.peerAddressUseIPv6` | Set to true if the cluster uses IPv6. Wraps the pod IP in square brackets for CONCOURSE_PEER_ADDRESS | `false` |
 | `web.teamSecretsPath` | Specify the mount directory of the team authorized keys secrets | `/team-authorized-keys` |
 | `web.conjurSecretsPath` | Specify the mount directory of the web conjur secrets | `/concourse-conjur` |
 | `web.concourseMigration.resources` | Resource requests/limits for the database migration init container | `{}` |
