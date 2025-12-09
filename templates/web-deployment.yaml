@@ -1426,7 +1426,11 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             - name: CONCOURSE_PEER_ADDRESS
+              {{- if .Values.concourse.web.peerAddressUseIPv6 }}
+              value: "[$(POD_IP)]"
+              {{- else }}
               value: "$(POD_IP)"
+              {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.tsa.logLevel }}
             - name: CONCOURSE_TSA_LOG_LEVEL
