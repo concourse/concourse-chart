@@ -14,11 +14,12 @@ data:
     exit 0
   pre-stop-hook.sh: |
     #!/bin/bash
+    pid=$(pgrep -o -f "entrypoint.sh worker")
     while true; do
-      kill -s {{ .Values.concourse.worker.shutdownSignal }} 1
+      kill -s {{ .Values.concourse.worker.shutdownSignal }} $pid
       for i in {0..60}; do
         sleep 1
-        if ! [ -e /proc/1 ]; then
+        if ! [ -e /proc/$pid ]; then
           exit 0
         fi
       done
