@@ -108,6 +108,7 @@ spec:
 {{- end }}
           securityContext:
             privileged: true
+          shareProcessNamespace: true
           volumeMounts:
             - name: concourse-keys
               mountPath: {{ .Values.worker.keySecretsPath | quote }}
@@ -124,6 +125,34 @@ spec:
               subPath: worker-additional-certs.pem
               readOnly: true
             {{- end }}
+            {{- if include "concourse.are-there-additional-volumes.with-the-name.concourse-work-dir" . | not }}
+            - name: concourse-work-dir
+              mountPath: {{ .Values.concourse.worker.workDir | quote }}
+            {{- end }}
+        - name: teardown
+          image: cgr.dev/chainguard/wolfi-base
+          command: ["/usr/bin/sh", "-c", "sh /entrypoint.sh"]
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - "/usr/bin/sh"
+                  - "-c"
+                  - "sh /pre-stop-hook.sh 2>&1"
+          env:
+            {{- if .Values.concourse.worker.workDir }}
+            - name: CONCOURSE_WORK_DIR
+              value: {{ .Values.concourse.worker.workDir | quote }}
+            {{- end }}
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: concourse-worker
+              mountPath: /entrypoint.sh
+              subPath: teardown-entrypoint.sh
+            - name: concourse-worker
+              mountPath: /pre-stop-hook.sh
+              subPath: teardown-pre-stop-hook.sh
             {{- if include "concourse.are-there-additional-volumes.with-the-name.concourse-work-dir" . | not }}
             - name: concourse-work-dir
               mountPath: {{ .Values.concourse.worker.workDir | quote }}

@@ -24,3 +24,30 @@ data:
         fi
       done
     done
+  teardown-entrypoint.sh: |
+    #!/usr/bin/sh
+    apk add --no-cache losetup
+    while true; do
+      pid=$(pgrep -o -f "entrypoint.sh worker")
+      # Get loop devices from the main container and store them
+      nsenter --mount=/proc/${pid}/ns/mnt mount | grep loop | cut -d\  -f1 > /tmp/loopdev.txt
+      sleep 60
+    done
+  teardown-pre-stop-hook.sh: |
+    #!/usr/bin/sh
+    while true; do
+      if ! pgrep concourse >/dev/null 2>&1; then
+
+        # Wait until filesystem is no longer busy
+        while (lsof | grep "${CONCOURSE_WORK_DIR}/volumes") >/dev/null 2>&1; do
+          sleep 1
+        done
+
+        # Detach main container loop devices
+        cat /tmp/loopdev.txt | xargs -r -n1 losetup -d
+
+        exit 0
+      fi
+
+      sleep 1
+    done
