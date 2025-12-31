@@ -15,5 +15,5 @@ sources:
   - https://github.com/concourse/concourse
 maintainers:
   - name: concourse-team
-    email: concourse@vmware.com
+    email: team@concourse-ci.org
 engine: gotpl
