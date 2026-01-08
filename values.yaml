@@ -2506,7 +2506,6 @@ web:
   ## Ref: https://gateway-api.sigs.k8s.io/api-types/httproute/
   ##
   route:
-
     ## Enable HTTPRoutes
     ##
     enabled: false
@@ -2974,6 +2973,11 @@ postgresql:
     ## useful to re-use a previous existing pvc
     ##
     pvcNameOverride:
+
+    ## Subdirectory of the volume to mount as the data directory.
+    ## Useful when the volume is shared or has a specific directory structure.
+    ##
+    subPath:
 
     ## Persistent Volume Storage Class to be used by PersistentVolumes created
     ## for PostgreSQL.

@@ -109,6 +109,9 @@ spec:
           {{- else }}
           mountPath: "/var/lib/postgresql"
           {{- end }}
+          {{- if .Values.postgresql.persistence.subPath }}
+          subPath: {{ .Values.postgresql.persistence.subPath | quote }}
+          {{- end }}
     {{- end }}
     {{- if .Values.postgresql.configOverride }}
         - name: "config-override"
@@ -149,4 +152,3 @@ spec:
   {{- else }}
   {{- end }}
 {{- end }}
-
