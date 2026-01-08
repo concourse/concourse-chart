@@ -15,6 +15,9 @@ metadata:
 {{ toYaml . | trim | indent 4 }}
     {{- end }}
 data:
+  {{- if .Values.postgresql.customPgData }}
+  PGDATA: {{ .Values.postgresql.customPgData | quote }}
+  {{- end }}
   {{- with .Values.postgresql.extraEnvironment }}
 {{ toYaml . | trim | indent 2 }}
   {{- end }}
