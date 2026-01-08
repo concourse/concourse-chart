@@ -2852,6 +2852,10 @@ postgresql:
   ##
   enabled: true
 
+  image: "postgres"
+  imageTag: "17"
+  imageDigest:
+
   ## Provide a name to substitute for the full name of postgresql resources
   ## ps.: Resources will not be appended with "-postgresql"
   ##
@@ -2860,42 +2864,59 @@ postgresql:
   labels: {}
 
   ## Service settings for postgresql
+  ##
   service:
     ## Enable the service
+    ##
     enabled: true
-    ## Define the type of service, default to ClusterIP
-    type: "ClusterIP"
-    ## Define this option if you want to hardcode the ip
-    clusterIPs:
-    ## Add `.spec` attributes to the service
-    extraSpec:
 
-  image: "postgres"
-  imageTag: "17"
-  imageDigest:
+    ## Define the type of service, default to ClusterIP
+    ##
+    type: "ClusterIP"
+
+    ## Define this option if you want to hardcode the ip
+    ##
+    clusterIPs:
+
+    ## Add `.spec` attributes to the service
+    ##
+    extraSpec:
 
   ## Major version of the postgresql
   ## must match the one of your docker image, will be used
   ## to infer the default PG_DATA
   version: 17
 
-  ## Customize the PG_DATA path, defaults to `/var/lib/postgres/{{version}}/docker`
-  ## Ajust the dataVolumeMountPath to match with the new PG_DATA
+  ## Customize the PG_DATA path. Defaults to `/var/lib/postgres/{{version}}/docker`
+  ## defined by the container on Docker Hub.
+  ## Make sure to ajust the dataVolumeMountPath to match with the new PG_DATA
   ## e.g `/opt/postgresql/data`
+  ##
   customPgData:
-  ## The mountPath of the volume that will contains the PG_DATA
+
+  ## The mountPath of the volume that will contain the PG_DATA directory
   ## e.g `/opt/postgresql`
+  ##
   dataVolumeMountPath:
+
   ## Add securityContext attributes to the statefulSet
+  ##
   securityContext:
+
   ## Add annotations to the postgresql statefulset
+  ##
   annotations:
+
   ## Add annotations to the secret
+  ##
   secretAnnotations:
+
   ## Add annotations to the environment configmap
+  ##
   configMapAnnotations:
 
   ## Define postgresql resources requests and limits
+  ##
   resources:
     requests:
       cpu: 250m
@@ -2907,6 +2928,7 @@ postgresql:
       memory: 512Mi
 
   ## Tolerations for the postgresql.
+  ##
   tolerations: []
 
   ## Node selector for the postgresql.
@@ -2920,10 +2942,16 @@ postgresql:
   ##
   auth:
     ## The postgres user, defaults to `concourse`
+    ##
     user: "concourse"
+
     ## Set the database password here
+    ##
+
     password: "concourse"
+
     ## The postgres database, defaults to `concourse`
+    ##
     database: "concourse"
 
   ## Postgresql environment variables. Use this to configure the database
@@ -2942,18 +2970,23 @@ postgresql:
     POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
 
   ## Override the default start command
+  ##
   commandOverride:
 
   ## Override the args
+  ##
   argsOverride:
 
   ## Extra container arguments, useful to override config, see: https://hub.docker.com/_/postgres#database-configuration
+  ##
   extraArgs:
 
   ## Override the postgresql.conf configuration file with the content of this value
+  ##
   configOverride:
 
   ## Secret values to inject to postgresql as environment variables
+  ##
   sensitiveEnvironment:
 
   ## Add lifecycle options to postgresql
@@ -3016,14 +3049,16 @@ rbac:
   ##
   webServiceAccountName: default
 
-  ## Any annotations required for the web Service Account
+  ## Any annotations required for the web Service Account
+  ##
   webServiceAccountAnnotations: {}
 
   ## The name of the service account to use for worker pods if rbac.create is false
   ##
   workerServiceAccountName: default
 
-  ## Any annotations required for the worker Service Account
+  ## Any annotations required for the worker Service Account
+  ##
   workerServiceAccountAnnotations: {}
 
   ## The name of the service account to use for postgresql pods if rbac.create is false
