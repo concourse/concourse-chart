@@ -125,6 +125,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `postgresql.lifecycle` | Add a lifecycle attribute to the postgresql container, see [the k8s docs](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#lifecycle) | `nil` |
 | `postgresql.persistence.enabled` | Enable PostgreSQL persistence using Persistent Volume Claims | `true` |
 | `postgresql.persistence.pvcNameOverride` | Override the name of the pvc template in the postgresql statefulSet. Useful to re-use an existing pvc. | `""` |
+| `postgresql.persistence.subPath` | Subdirectory of the volume to mount as the data directory. | `nil` |
 | `postgresql.persistence.storageClass` | Concourse data Persistent Volume Storage Class | `nil` |
 | `postgresql.persistence.accessModes` | Persistent Volume Access Mode | `["ReadWriteOnce"]` |
 | `postgresql.persistence.resources` | Set storage requests and limits | `{ "requests": { "storage": "8Gi" } }` |

@@ -352,6 +352,10 @@ spec:
               value: {{ .Values.concourse.web.externalUrl | quote }}
             {{- end }}
             {{- end }}
+            {{- if .Values.concourse.web.oidcIssuerUrl }}
+            - name: CONCOURSE_OIDC_ISSUER_URL
+              value: {{ .Values.concourse.web.oidcIssuerUrl | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.encryption.enabled }}
             - name: CONCOURSE_ENCRYPTION_KEY
               valueFrom:
