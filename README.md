@@ -564,6 +564,8 @@ web:
 
 By default, this chart deploys a single postgresql instance as a statefulSet, the conection details will be shared with concourse. You can change the connection details using the attributes of the `postgresql.auth`.
 
+**🚩The Postgres in this chart is not considered production-ready. It's good for getting started with deploying Concourse with Helm, but you should move to a managed PostgreSQL if your instance begins to scale up.**
+
 You can also bring your own PostgreSQL. To do so, set `postgresql.enabled` to `false`, and then configure Concourse's `postgres` values (`concourse.web.postgres.*`) See [values.yaml](values.yaml).
 
 Note that Concourse (by default) will attempt to read in some values directly from secrets. Therefore, these values do not have to be explicitly passed into Concourse as individual arguments, or as members of lists or files. (e.g. Part of values.yaml, etc.) Some examples of these secret values are: `postgresql-user`, `postgresql-password` (in secret "[my-release]-concourse" or "[my-release]-web"), and others. See [templates/web-secrets.yaml](templates/web-secrets.yaml) for possible values and the [secrets section](#secrets) on this README for guidance on how to set those secrets.
