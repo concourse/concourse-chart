@@ -222,6 +222,10 @@ spec:
             - name: CONCOURSE_ENABLE_REDACT_SECRETS
               value: {{ .Values.concourse.web.enableRedactSecrets | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.disableRedactSecrets }}
+            - name: CONCOURSE_DISABLE_REDACT_SECRETS
+              value: {{ .Values.concourse.web.disableRedactSecrets | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.secretRetryAttempts }}
             - name: CONCOURSE_SECRET_RETRY_ATTEMPTS
               value: {{ .Values.concourse.web.secretRetryAttempts | quote }}
