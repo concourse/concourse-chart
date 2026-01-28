@@ -114,11 +114,11 @@ concourse:
     ##
     enableBuildRerunWhenWorkerDisappears: false
 
-    ## Enable the experimental across step to be used in jobs. The API is subject to change.
+    ## DEPRECATED - Across step is always enabled
     ##
     enableAcrossStep: false
 
-    ## Enable the creation of instanced pipelines.
+    ## DEPRECATED - Pipeline instances are always enabled
     ##
     enablePipelineInstances: false
 
@@ -188,9 +188,14 @@ concourse:
     ##
     enableVolumeAuditing: false
 
-    ## Enable redacting secrets in build logs.
+    ## DEPRECATED: Secret redaction is on by default.
+    ## See disableRedactSecrets to turn it off.
     ##
     enableRedactSecrets:
+
+    ## Disable redacting secrets in build logs.
+    ##
+    disableRedactSecrets:
 
     ## The number of attempts secret will be retried to be fetched,
     ## in case a retryable error happens.
