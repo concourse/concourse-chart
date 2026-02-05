@@ -81,6 +81,11 @@ spec:
 {{ toYaml .Values.worker.readinessProbe | indent 12 }}
 {{- end }}
           lifecycle:
+            postStart:
+              exec:
+                command:
+                  - "/bin/bash"
+                  - "/post-start-hook.sh"
             preStop:
               exec:
                 command:
@@ -103,11 +108,15 @@ spec:
 {{- end }}
           securityContext:
             privileged: true
+          shareProcessNamespace: true
           volumeMounts:
             - name: concourse-keys
               mountPath: {{ .Values.worker.keySecretsPath | quote }}
               readOnly: true
-            - name: pre-stop-hook
+            - name: concourse-worker
+              mountPath: /post-start-hook.sh
+              subPath: post-start-hook.sh
+            - name: concourse-worker
               mountPath: /pre-stop-hook.sh
               subPath: pre-stop-hook.sh
             {{- if and (not (kindIs "invalid" .Values.secrets.workerAdditionalCerts)) (.Values.secrets.workerAdditionalCerts | toString) }}
@@ -116,6 +125,34 @@ spec:
               subPath: worker-additional-certs.pem
               readOnly: true
             {{- end }}
+            {{- if include "concourse.are-there-additional-volumes.with-the-name.concourse-work-dir" . | not }}
+            - name: concourse-work-dir
+              mountPath: {{ .Values.concourse.worker.workDir | quote }}
+            {{- end }}
+        - name: teardown
+          image: cgr.dev/chainguard/wolfi-base
+          command: ["/usr/bin/sh", "-c", "sh /entrypoint.sh"]
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - "/usr/bin/sh"
+                  - "-c"
+                  - "sh /pre-stop-hook.sh 2>&1"
+          env:
+            {{- if .Values.concourse.worker.workDir }}
+            - name: CONCOURSE_WORK_DIR
+              value: {{ .Values.concourse.worker.workDir | quote }}
+            {{- end }}
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: concourse-worker
+              mountPath: /entrypoint.sh
+              subPath: teardown-entrypoint.sh
+            - name: concourse-worker
+              mountPath: /pre-stop-hook.sh
+              subPath: teardown-pre-stop-hook.sh
             {{- if include "concourse.are-there-additional-volumes.with-the-name.concourse-work-dir" . | not }}
             - name: concourse-work-dir
               mountPath: {{ .Values.concourse.worker.workDir | quote }}
@@ -161,7 +198,7 @@ spec:
 {{- if .Values.worker.additionalVolumes }}
 {{ toYaml .Values.worker.additionalVolumes | indent 8 }}
 {{- end }}
-        - name: pre-stop-hook
+        - name: concourse-worker
           configMap:
             name: {{ template "concourse.worker.fullname" . }}
         - name: concourse-keys
