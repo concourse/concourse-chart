@@ -342,6 +342,12 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_CONTAINERD_PRIVILEGED_MODE
   value: {{ .Values.concourse.worker.containerd.privilegedMode | quote }}
 {{- end }}
+{{- if .Values.concourse.worker.containerd.allowedDevices }}
+{{- range .Values.concourse.worker.containerd.allowedDevices }}
+- name: CONCOURSE_CONTAINERD_ALLOWED_DEVICE
+  value: {{ . | title | quote }}
+{{- end }}
+{{- end }}
 {{- if .Values.concourse.worker.baggageclaim.logLevel }}
 - name: CONCOURSE_BAGGAGECLAIM_LOG_LEVEL
   value: {{ .Values.concourse.worker.baggageclaim.logLevel | quote }}

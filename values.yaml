@@ -1905,6 +1905,11 @@ concourse:
       ## to use fuse-overlayfs.
       privilegedMode:
 
+      ## List of device cgroup rules to allow in containers, in the format
+      ## 'type major:minor access'
+      ## Example: ["b *:* rwm", "c 1:3 rwm"]
+      allowedDevices: []
+
     ## API endpoint of an externally managed Garden server to use instead of
     ## running the embedded Garden server.
     ##
