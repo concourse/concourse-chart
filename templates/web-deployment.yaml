@@ -1706,7 +1706,10 @@ spec:
         - name: postgresql-keys
           secret:
             secretName: {{ template "concourse.web.fullname" . }}
-            defaultMode: 0400
+            # Has to be 0600 for now. Can revert back to 0400 once
+            # https://github.com/lib/pq/issues/1257 is resolved and Dex
+            # upgrades to a new version with the fixed lib/pq release
+            defaultMode: 0600
             items:
               - key: postgresql-ca-cert
                 path: ca.cert
