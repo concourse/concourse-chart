@@ -32,6 +32,7 @@ spec:
 {{ toYaml .Values.worker.annotations | indent 8 }}
       {{- end }}
     spec:
+      enableServiceLinks: {{ .Values.concourse.enableServiceLinks }}
     {{- if .Values.worker.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.worker.nodeSelector | indent 8 }}

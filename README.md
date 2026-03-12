@@ -89,6 +89,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `imagePullSecrets` | Array of imagePullSecrets in the namespace for pulling images | `[]` |
 | `imageTag` | Concourse image version | `8.0.2` |
 | `image` | Concourse image | `concourse/concourse` |
+| `enableServiceLinks` | Enables service links in workload | `true` |
 | `nameOverride` | Provide a name in place of `concourse` for `app:` labels | `nil` |
 | `persistence.enabled` | Enable Concourse persistence using Persistent Volume Claims | `true` |
 | `persistence.worker.accessMode` | Concourse Worker Persistent Volume Access Mode | `ReadWriteOnce` |
