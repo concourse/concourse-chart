@@ -49,6 +49,9 @@ imagePullSecrets: []
 ## `concourse web` and `concourse worker` commands.
 ##
 concourse:
+  ## Enables service links for the workload
+  enableServiceLinks: true
+
   ## Configurations for the `web` component based on the possible flags configurable
   ## through the `concourse web` command.
   ##
