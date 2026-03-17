@@ -87,7 +87,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `imageDigest` | Specific image digest to use in place of a tag. | `nil` |
 | `imagePullPolicy` | Concourse image pull policy | `IfNotPresent` |
 | `imagePullSecrets` | Array of imagePullSecrets in the namespace for pulling images | `[]` |
-| `imageTag` | Concourse image version | `8.0.2` |
+| `imageTag` | Concourse image version | `8.1.0` |
 | `image` | Concourse image | `concourse/concourse` |
 | `enableServiceLinks` | Enables service links in workload | `true` |
 | `nameOverride` | Provide a name in place of `concourse` for `app:` labels | `nil` |
