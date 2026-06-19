@@ -317,6 +317,13 @@ concourse:
     ##
     p2pVolumeStreamingTimeout:
 
+    ## Period after which stalled (unresponsive, non-ephemeral) workers will be
+    ## automatically pruned along with their cache state. 0s (the default) means
+    ## stalled workers are never automatically pruned and must be removed manually
+    ## with 'fly prune-worker'.
+    ##
+    stalledWorkerTimeout:
+
     ## Maximum number of checks that can be started per second. If not
     ## specified, # this will be calculated as (# of resources)/(resource
     ## checking interval). # -1 value will remove this maximum limit of checks
