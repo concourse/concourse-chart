@@ -437,6 +437,10 @@ spec:
             - name: CONCOURSE_P2P_VOLUME_STREAMING_TIMEOUT
               value: {{ .Values.concourse.web.p2pVolumeStreamingTimeout | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.stalledWorkerTimeout }}
+            - name: CONCOURSE_STALLED_WORKER_TIMEOUT
+              value: {{ .Values.concourse.web.stalledWorkerTimeout | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.maxChecksPerSecond }}
             - name: CONCOURSE_MAX_CHECKS_PER_SECOND
               value: {{ .Values.concourse.web.maxChecksPerSecond | quote }}
