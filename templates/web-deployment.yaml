@@ -949,6 +949,14 @@ spec:
             - name: CONCOURSE_GC_VAR_SOURCE_RECYCLE_PERIOD
               value: {{ .Values.concourse.web.gc.varSourceRecyclePeriod | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.health.minWorkerCount }}
+            - name: CONCOURSE_HEALTH_MIN_WORKER_COUNT
+              value: {{ .Values.concourse.web.health.minWorkerCount | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.health.componentStaleMultiplier }}
+            - name: CONCOURSE_HEALTH_COMPONENT_STALE_MULTIPLIER
+              value: {{ .Values.concourse.web.health.componentStaleMultiplier | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.syslog.enabled }}
             {{- if .Values.concourse.web.syslog.hostname }}
             - name: CONCOURSE_SYSLOG_HOSTNAME
