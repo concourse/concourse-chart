@@ -1048,6 +1048,20 @@ concourse:
       ##
       varSourceRecyclePeriod:
 
+    health:
+      ## Minimum number of running workers before the health endpoint reports
+      ## degraded. Default in code: 1.
+      ## Set to 0 to disable the degraded state — status goes directly from
+      ## healthy to failing when no workers are running.
+      ##
+      minWorkerCount:
+
+      ## A component is stale when it has not run for more than this multiplier
+      ## times its configured interval. Default in code: 2.0.
+      ## Stale runtime components (scheduler, tracker, scanner) cause degraded status.
+      ##
+      componentStaleMultiplier:
+
     syslog:
       ## Enables the emission of build logs to external log ingesters through
       ## using the syslog protocol.
