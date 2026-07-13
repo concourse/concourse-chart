@@ -742,6 +742,10 @@ concourse:
       ##
       pathPrefix:
 
+      ## Path under which to to lookup shared credentials.
+      ##
+      sharedPath:
+
       ## Enables using a CA Certificate
       ##
       useCaCert: false
