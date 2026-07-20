@@ -19,5 +19,8 @@ data:
   {{- if .Values.concourse.web.baseResourceTypeDefaults }}
   brt-defaults.yml: {{ .Values.concourse.web.baseResourceTypeDefaults | quote }}
   {{- end -}}
+  {{- if .Values.concourse.web.customHttpHeaders }}
+  custom-http-headers.yml: {{ .Values.concourse.web.customHttpHeaders | quote }}
+  {{- end -}}
 {{- end -}}
 {{- end -}}
