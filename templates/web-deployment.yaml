@@ -925,6 +925,10 @@ spec:
             - name: CONCOURSE_STRICT_TRANSPORT_SECURITY
               value: {{ .Values.concourse.web.strictTransportPolicy | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.customHttpHeaders }}
+            - name: CONCOURSE_CUSTOM_HTTP_HEADERS
+              value: /custom-http-headers.yml
+            {{- end }}
             {{- if .Values.concourse.web.gc.interval }}
             - name: CONCOURSE_GC_INTERVAL
               value: {{ .Values.concourse.web.gc.interval | quote }}
@@ -1636,6 +1640,11 @@ spec:
               mountPath: /brt-defaults.yml
               subPath: brt-defaults.yml
 {{- end }}
+{{- if .Values.concourse.web.customHttpHeaders }}
+            - name: custom-http-headers
+              mountPath: /custom-http-headers.yml
+              subPath: custom-http-headers.yml
+{{- end }}
             - name: concourse-keys
               mountPath: {{ .Values.web.keySecretsPath | quote }}
               readOnly: true
@@ -1708,6 +1717,11 @@ spec:
 {{- end }}
 {{- if .Values.concourse.web.baseResourceTypeDefaults }}
         - name: brt-defaults-config
+          configMap:
+            name: {{ template "concourse.web.fullname" . }}
+{{- end }}
+{{- if .Values.concourse.web.customHttpHeaders }}
+        - name: custom-http-headers
           configMap:
             name: {{ template "concourse.web.fullname" . }}
 {{- end }}

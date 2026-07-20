@@ -1029,6 +1029,15 @@ concourse:
     ##
     strictTransportPolicy:
 
+    ## Custom HTTP headers to set on all responses. If omitted, no additional
+    ## headers are set.
+    ##
+    ## Example: |
+    ##  Cross-Origin-Opener-Policy: "same-origin"
+    ##  Referrer-Policy: "no-referrer"
+    ##
+    customHttpHeaders: ""
+
     gc:
       ## Interval on which to perform garbage collection.
       ##
