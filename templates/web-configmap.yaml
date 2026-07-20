@@ -1,5 +1,5 @@
 {{- if .Values.web.enabled -}}
-{{- if or .Values.concourse.web.auth.mainTeam.config (or .Values.concourse.web.configRBAC .Values.concourse.web.baseResourceTypeDefaults) -}}
+{{- if or .Values.concourse.web.auth.mainTeam.config .Values.concourse.web.configRBAC .Values.concourse.web.baseResourceTypeDefaults .Values.concourse.web.customHttpHeaders -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
