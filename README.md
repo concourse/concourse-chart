@@ -311,6 +311,7 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.annotations` | Annotations to be added to the worker pods | `{}` |
 | `worker.autoscaling` | Enable and configure pod autoscaling | `{}` |
 | `worker.cleanUpWorkDirOnStart` | Removes any previous state created in `concourse.worker.workDir` | `true` |
+| `worker.initRM.resources` | Resource requests/limits for the init-rm init container | `{}` |
 | `worker.emptyDirSize` | When persistance is disabled this value will be used to limit the emptyDir volume size | `nil` |
 | `worker.enabled` | Enable or disable the worker component. You should set postgres.enabled=false in order not to get an unnecessary Postgres chart deployed | `true` |
 | `worker.env` | Configure additional environment variables for the worker container(s) | `[]` |

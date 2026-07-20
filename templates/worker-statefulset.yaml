@@ -70,6 +70,12 @@ spec:
           imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           securityContext:
             privileged: true
+          {{- if .Values.worker.initRM }}
+          {{- if .Values.worker.initRM.resources }}
+          resources:
+            {{- toYaml .Values.worker.initRM.resources | nindent 12 }}
+          {{- end }}
+          {{- end }}
           command:
             - /bin/bash
           args:

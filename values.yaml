@@ -2637,6 +2637,23 @@ worker:
   ##
   cleanUpWorkDirOnStart: true
 
+  ## Configuration for the init-rm init container that cleans up the work dir.
+  ##
+  initRM:
+    ## Resource requests/limits for the init-rm init container.
+    ## Required on OpenShift or clusters with LimitRange/ResourceQuota enforcement.
+    ##
+    ## Example:
+    ## resources:
+    ##   requests:
+    ##     cpu: 100m
+    ##     memory: 128Mi
+    ##   limits:
+    ##     cpu: 200m
+    ##     memory: 256Mi
+    ##
+    resources: {}
+
   ## Number of replicas.
   ##
   replicas: 2
