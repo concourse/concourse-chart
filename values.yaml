@@ -1805,6 +1805,14 @@ concourse:
     ##
     ephemeral:
 
+    ## If set, when the worker registers with the web node(s) it will specify
+    ## this value as the max number of active tasks that can be assigned to it,
+    ## overriding the web's --max-active-tasks-per-worker for THIS worker. Web
+    ## nodes must be using the limit-active-tasks placement strategy for this to
+    ## have any effect.
+    ##
+    maxActiveTasks:
+
     ## IP address on which to listen for the pprof debugger endpoints.
     ##
     debugBindIp: 127.0.0.1
