@@ -559,6 +559,10 @@ concourse:
       ## the "main" Concourse team.
       namespacePrefix:
 
+      ## Appended to the namespacePrefix, which combined should match an
+      ## existing Kubernetes namespace used to lookup shared secrets in.
+      sharedNamespaceSuffix:
+
       ## Teams to create namespaces for to hold secrets.
       ## This property only has effect if `createTeamNamespaces` is set to `true`.
       ##

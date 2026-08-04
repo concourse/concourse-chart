@@ -560,6 +560,10 @@ spec:
               value: "true"
             - name: CONCOURSE_KUBERNETES_NAMESPACE_PREFIX
               value: {{ template "concourse.namespacePrefix" . }}
+            {{- if .Values.concourse.web.kubernetes.sharedNamespaceSuffix }}
+            - name: CONCOURSE_KUBERNETES_SHARED_NAMESPACE_SUFFIX
+              value: {{ .Values.concourse.web.kubernetes.sharedNamespaceSuffix | quote }}
+            {{- end }}
             {{- else}}
             {{- if .Values.concourse.web.kubernetes.configPath }}
             - name: CONCOURSE_KUBERNETES_CONFIG_PATH
@@ -568,6 +572,10 @@ spec:
             {{- if .Values.concourse.web.kubernetes.namespacePrefix }}
             - name: CONCOURSE_KUBERNETES_NAMESPACE_PREFIX
               value: {{ .Values.concourse.web.kubernetes.namespacePrefix | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.kubernetes.sharedNamespaceSuffix }}
+            - name: CONCOURSE_KUBERNETES_SHARED_NAMESPACE_SUFFIX
+              value: {{ .Values.concourse.web.kubernetes.sharedNamespaceSuffix | quote }}
             {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.awsSecretsManager.enabled }}
