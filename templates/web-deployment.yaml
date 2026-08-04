@@ -147,6 +147,10 @@ spec:
             - name: CONCOURSE_PAUSE_PIPELINES_AFTER
               value: {{ .Values.concourse.web.pausePipelinesAfter | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.destroyArchivedPipelinesAfter }}
+            - name: CONCOURSE_DESTROY_ARCHIVED_PIPELINES_AFTER
+              value: {{ .Values.concourse.web.destroyArchivedPipelinesAfter | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.enableGlobalResources }}
             - name: CONCOURSE_ENABLE_GLOBAL_RESOURCES
               value: {{ .Values.concourse.web.enableGlobalResources | quote }}
@@ -556,6 +560,10 @@ spec:
               value: "true"
             - name: CONCOURSE_KUBERNETES_NAMESPACE_PREFIX
               value: {{ template "concourse.namespacePrefix" . }}
+            {{- if .Values.concourse.web.kubernetes.sharedNamespaceSuffix }}
+            - name: CONCOURSE_KUBERNETES_SHARED_NAMESPACE_SUFFIX
+              value: {{ .Values.concourse.web.kubernetes.sharedNamespaceSuffix | quote }}
+            {{- end }}
             {{- else}}
             {{- if .Values.concourse.web.kubernetes.configPath }}
             - name: CONCOURSE_KUBERNETES_CONFIG_PATH
@@ -564,6 +572,10 @@ spec:
             {{- if .Values.concourse.web.kubernetes.namespacePrefix }}
             - name: CONCOURSE_KUBERNETES_NAMESPACE_PREFIX
               value: {{ .Values.concourse.web.kubernetes.namespacePrefix | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.kubernetes.sharedNamespaceSuffix }}
+            - name: CONCOURSE_KUBERNETES_SHARED_NAMESPACE_SUFFIX
+              value: {{ .Values.concourse.web.kubernetes.sharedNamespaceSuffix | quote }}
             {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.awsSecretsManager.enabled }}
@@ -804,6 +816,10 @@ spec:
               value: {{ .Values.concourse.web.conjur.teamSecretTemplate | quote }}
             - name: CONCOURSE_CONJUR_SECRET_TEMPLATE
               value: {{ .Values.concourse.web.conjur.secretTemplate | quote }}
+            {{- if .Values.concourse.web.conjur.sharedPath }}
+            - name: CONCOURSE_CONJUR_SHARED_PATH
+              value: {{ .Values.concourse.web.conjur.sharedPath | quote }}
+            {{- end }}
             {{- end }}
 
             {{- if .Values.concourse.web.idToken.signingKey.checkInterval }}

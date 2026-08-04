@@ -486,12 +486,18 @@ concourse:
     ## running build logs, then consider to increase the queue size.
     dbNotificationBusQueueSize: 10000
 
-    ## The number of days after which a pipeline will be automatically paused #
-    ## if none of its jobs have run in less than the given number of days. A #
+    ## The number of days after which a pipeline will be automatically paused
+    ## if none of its jobs have run in less than the given number of days. A
     ## value of zero disables this component. If not set the component is
     ## disabled by default.
     ##
     pausePipelinesAfter:
+
+    ## The duration in Go's time.Duration format, after which an archived
+    ## pipeline will be automatically destroyed. A value of zero (default value)
+    ## means archived pipelines are never destroyed.
+    ##
+    destroyArchivedPipelinesAfter:
 
     ## Network address of this web node, reachable by other web nodes. Used for forwarded worker addresses. (default: $POD_IP)
     ##
@@ -552,6 +558,10 @@ concourse:
       ## hyphen, e.g. "my-release-" produces namespace "my-release-main" for
       ## the "main" Concourse team.
       namespacePrefix:
+
+      ## Appended to the namespacePrefix, which combined should match an
+      ## existing Kubernetes namespace used to lookup shared secrets in.
+      sharedNamespaceSuffix:
 
       ## Teams to create namespaces for to hold secrets.
       ## This property only has effect if `createTeamNamespaces` is set to `true`.
@@ -778,6 +788,9 @@ concourse:
 
       # Path used to locate a vault or safe-level secret
       secretTemplate: concourse/{{.Secret}}
+
+      # Path under which to lookup shared credentials.
+      sharedPath:
 
     ## Configuration for Concourse Identity Tokens.
     ## Ref: https://concourse-ci.org/idtoken-credential-manager.html
@@ -1795,6 +1808,14 @@ concourse:
     ## Ignored for kind: Deployment and set to "true"
     ##
     ephemeral:
+
+    ## If set, when the worker registers with the web node(s) it will specify
+    ## this value as the max number of active tasks that can be assigned to it,
+    ## overriding the web's --max-active-tasks-per-worker for THIS worker. Web
+    ## nodes must be using the limit-active-tasks placement strategy for this to
+    ## have any effect.
+    ##
+    maxActiveTasks:
 
     ## IP address on which to listen for the pprof debugger endpoints.
     ##
