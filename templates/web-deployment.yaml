@@ -816,10 +816,6 @@ spec:
               value: {{ .Values.concourse.web.conjur.teamSecretTemplate | quote }}
             - name: CONCOURSE_CONJUR_SECRET_TEMPLATE
               value: {{ .Values.concourse.web.conjur.secretTemplate | quote }}
-            {{- if .Values.concourse.web.conjur.sharedPath }}
-            - name: CONCOURSE_CONJUR_SHARED_PATH
-              value: {{ .Values.concourse.web.conjur.sharedPath | quote }}
-            {{- end }}
             {{- end }}
 
             {{- if .Values.concourse.web.idToken.signingKey.checkInterval }}
