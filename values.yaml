@@ -789,9 +789,6 @@ concourse:
       # Path used to locate a vault or safe-level secret
       secretTemplate: concourse/{{.Secret}}
 
-      # Path under which to lookup shared credentials.
-      sharedPath:
-
     ## Configuration for Concourse Identity Tokens.
     ## Ref: https://concourse-ci.org/idtoken-credential-manager.html
     ##
