@@ -4,7 +4,8 @@ kind: ConfigMap
 metadata:
   name: "{{ template "concourse.postgresql.fullname" . }}-config-override"
   {{- if .Values.postgresql.configMapAnnotations }}
-  annotations: "{{ toYaml .Values.postgresql.annotations | nindent 4 }}"
+  annotations:
+    {{ toYaml .Values.postgresql.configMapAnnotations | nindent 4 }}
   {{- end }}
   labels:
     app: {{ template "concourse.postgresql.fullname" . }}

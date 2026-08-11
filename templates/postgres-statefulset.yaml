@@ -138,7 +138,7 @@ spec:
       {{- if .Values.postgresql.persistence.selector }}
         selector: {{- .Values.postgresql.persistence.selector | toYaml | nindent 10 }}
       {{- end }}
-        accessModes: {{ (default (list "ReadWriteOnce") .Values.postgresql.persistence.accessMode) | toJson }}
+        accessModes: {{ (default (list "ReadWriteOnce") .Values.postgresql.persistence.accessModes) | toJson }}
       {{- if .Values.postgresql.persistence.resources }}
         resources: {{ .Values.postgresql.persistence.resources | toYaml | nindent 10 }}
       {{- end }}
