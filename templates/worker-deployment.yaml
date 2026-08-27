@@ -59,6 +59,26 @@ spec:
       {{- if .Values.worker.extraInitContainers }}
       {{- toYaml .Values.worker.extraInitContainers | nindent 8 }}
       {{- end }}
+      {{- if .Values.worker.cleanUpWorkDirOnStart }}
+        - name: {{ template "concourse.worker.fullname" . }}-init-rm
+          {{- if .Values.imageDigest }}
+          image: "{{ .Values.image }}@{{ .Values.imageDigest }}"
+          {{- else }}
+          image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+          {{- end }}
+          imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          securityContext:
+            privileged: true
+          command:
+            - /bin/bash
+          args:
+            - -ce
+            - |-
+              for v in $((btrfs subvolume list --sort=-ogen "{{ .Values.concourse.worker.workDir }}" || true) | awk '{print $9}'); do
+                (btrfs subvolume show "{{ .Values.concourse.worker.workDir }}/$v" && btrfs subvolume delete "{{ .Values.concourse.worker.workDir }}/$v") || true
+              done
+              rm -rf "{{ .Values.concourse.worker.workDir }}"/*
+      {{- end }}
       containers:
       {{- if .Values.worker.sidecarContainers }}
       {{- toYaml .Values.worker.sidecarContainers | nindent 8 }}
