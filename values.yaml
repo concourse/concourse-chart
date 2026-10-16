@@ -131,9 +131,8 @@ concourse:
     ##
     enablePipelineInstances: false
 
-    ## Enable P2P volume streaming between all wokrers.
-    ## By default all volume streming goes through the web nodes.
-    ## NOTE: All workers must be on the same LAN network.
+    ## Enable P2P volume streaming between workers within the same P2P streaming group.
+    ## NOTE: All workers in a P2P group must be on the same LAN network.
     ##
     enablep2pVolumeStreaming: false
 
@@ -1813,6 +1812,14 @@ concourse:
     ## have any effect.
     ##
     maxActiveTasks:
+
+    ## Assign this worker to a P2P streaming group. When P2P streaming is
+    ## enabled, workers in the same group stream directly to each other.
+    ## Workers with different groups stream through the ATC. Workers with
+    ## no group will only stream to other workers that also have no P2P
+    ## streaming group.
+    ##
+    p2pStreamingGroup:
 
     ## IP address on which to listen for the pprof debugger endpoints.
     ##
