@@ -185,6 +185,10 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_MAX_ACTIVE_TASKS
   value: {{ .Values.concourse.worker.maxActiveTasks | quote }}
 {{- end }}
+{{- if .Values.concourse.worker.p2pStreamingGroup }}
+- name: CONCOURSE_P2P_STREAMING_GROUP
+  value: {{ .Values.concourse.worker.p2pStreamingGroup | quote }}
+{{- end }}
 {{- if .Values.concourse.worker.debugBindIp }}
 - name: CONCOURSE_DEBUG_BIND_IP
   value: {{ .Values.concourse.worker.debugBindIp | quote }}
