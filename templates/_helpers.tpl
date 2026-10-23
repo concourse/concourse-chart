@@ -181,6 +181,10 @@ Return concourse environment variables for worker configuration
 - name: CONCOURSE_EPHEMERAL
   value: "true"
 {{- end }}
+{{- if .Values.concourse.worker.maxActiveTasks }}
+- name: CONCOURSE_MAX_ACTIVE_TASKS
+  value: {{ .Values.concourse.worker.maxActiveTasks | quote }}
+{{- end }}
 {{- if .Values.concourse.worker.debugBindIp }}
 - name: CONCOURSE_DEBUG_BIND_IP
   value: {{ .Values.concourse.worker.debugBindIp | quote }}

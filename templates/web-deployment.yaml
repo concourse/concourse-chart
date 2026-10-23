@@ -147,6 +147,10 @@ spec:
             - name: CONCOURSE_PAUSE_PIPELINES_AFTER
               value: {{ .Values.concourse.web.pausePipelinesAfter | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.destroyArchivedPipelinesAfter }}
+            - name: CONCOURSE_DESTROY_ARCHIVED_PIPELINES_AFTER
+              value: {{ .Values.concourse.web.destroyArchivedPipelinesAfter | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.enableGlobalResources }}
             - name: CONCOURSE_ENABLE_GLOBAL_RESOURCES
               value: {{ .Values.concourse.web.enableGlobalResources | quote }}
@@ -437,6 +441,10 @@ spec:
             - name: CONCOURSE_P2P_VOLUME_STREAMING_TIMEOUT
               value: {{ .Values.concourse.web.p2pVolumeStreamingTimeout | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.stalledWorkerTimeout }}
+            - name: CONCOURSE_STALLED_WORKER_TIMEOUT
+              value: {{ .Values.concourse.web.stalledWorkerTimeout | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.maxChecksPerSecond }}
             - name: CONCOURSE_MAX_CHECKS_PER_SECOND
               value: {{ .Values.concourse.web.maxChecksPerSecond | quote }}
@@ -552,6 +560,10 @@ spec:
               value: "true"
             - name: CONCOURSE_KUBERNETES_NAMESPACE_PREFIX
               value: {{ template "concourse.namespacePrefix" . }}
+            {{- if .Values.concourse.web.kubernetes.sharedNamespaceSuffix }}
+            - name: CONCOURSE_KUBERNETES_SHARED_NAMESPACE_SUFFIX
+              value: {{ .Values.concourse.web.kubernetes.sharedNamespaceSuffix | quote }}
+            {{- end }}
             {{- else}}
             {{- if .Values.concourse.web.kubernetes.configPath }}
             - name: CONCOURSE_KUBERNETES_CONFIG_PATH
@@ -560,6 +572,10 @@ spec:
             {{- if .Values.concourse.web.kubernetes.namespacePrefix }}
             - name: CONCOURSE_KUBERNETES_NAMESPACE_PREFIX
               value: {{ .Values.concourse.web.kubernetes.namespacePrefix | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.kubernetes.sharedNamespaceSuffix }}
+            - name: CONCOURSE_KUBERNETES_SHARED_NAMESPACE_SUFFIX
+              value: {{ .Values.concourse.web.kubernetes.sharedNamespaceSuffix | quote }}
             {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.awsSecretsManager.enabled }}
@@ -733,6 +749,10 @@ spec:
             {{- if.Values.concourse.web.credhub.pathPrefix }}
             - name: CONCOURSE_CREDHUB_PATH_PREFIX
               value: {{ .Values.concourse.web.credhub.pathPrefix | quote }}
+            {{- end }}
+            {{- if.Values.concourse.web.credhub.sharedPath }}
+            - name: CONCOURSE_CREDHUB_SHARED_PATH
+              value: {{ .Values.concourse.web.credhub.sharedPath | quote }}
             {{- end }}
             {{- if .Values.concourse.web.credhub.insecureSkipVerify }}
             - name: CONCOURSE_CREDHUB_INSECURE_SKIP_VERIFY
@@ -917,6 +937,10 @@ spec:
             - name: CONCOURSE_STRICT_TRANSPORT_SECURITY
               value: {{ .Values.concourse.web.strictTransportPolicy | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.customHttpHeaders }}
+            - name: CONCOURSE_CUSTOM_HTTP_HEADERS
+              value: /custom-http-headers.yml
+            {{- end }}
             {{- if .Values.concourse.web.gc.interval }}
             - name: CONCOURSE_GC_INTERVAL
               value: {{ .Values.concourse.web.gc.interval | quote }}
@@ -944,6 +968,14 @@ spec:
             {{- if .Values.concourse.web.gc.varSourceRecyclePeriod }}
             - name: CONCOURSE_GC_VAR_SOURCE_RECYCLE_PERIOD
               value: {{ .Values.concourse.web.gc.varSourceRecyclePeriod | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.health.minWorkerCount }}
+            - name: CONCOURSE_HEALTH_MIN_WORKER_COUNT
+              value: {{ .Values.concourse.web.health.minWorkerCount | quote }}
+            {{- end }}
+            {{- if .Values.concourse.web.health.componentStaleMultiplier }}
+            - name: CONCOURSE_HEALTH_COMPONENT_STALE_MULTIPLIER
+              value: {{ .Values.concourse.web.health.componentStaleMultiplier | quote }}
             {{- end }}
             {{- if .Values.concourse.web.syslog.enabled }}
             {{- if .Values.concourse.web.syslog.hostname }}
@@ -1620,6 +1652,11 @@ spec:
               mountPath: /brt-defaults.yml
               subPath: brt-defaults.yml
 {{- end }}
+{{- if .Values.concourse.web.customHttpHeaders }}
+            - name: custom-http-headers
+              mountPath: /custom-http-headers.yml
+              subPath: custom-http-headers.yml
+{{- end }}
             - name: concourse-keys
               mountPath: {{ .Values.web.keySecretsPath | quote }}
               readOnly: true
@@ -1692,6 +1729,11 @@ spec:
 {{- end }}
 {{- if .Values.concourse.web.baseResourceTypeDefaults }}
         - name: brt-defaults-config
+          configMap:
+            name: {{ template "concourse.web.fullname" . }}
+{{- end }}
+{{- if .Values.concourse.web.customHttpHeaders }}
+        - name: custom-http-headers
           configMap:
             name: {{ template "concourse.web.fullname" . }}
 {{- end }}

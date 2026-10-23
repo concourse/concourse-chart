@@ -1,5 +1,5 @@
 {{- if .Values.web.enabled -}}
-{{- if or .Values.concourse.web.auth.mainTeam.config (or .Values.concourse.web.configRBAC .Values.concourse.web.baseResourceTypeDefaults) -}}
+{{- if or .Values.concourse.web.auth.mainTeam.config .Values.concourse.web.configRBAC .Values.concourse.web.baseResourceTypeDefaults .Values.concourse.web.customHttpHeaders -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -18,6 +18,9 @@ data:
   {{- end -}}
   {{- if .Values.concourse.web.baseResourceTypeDefaults }}
   brt-defaults.yml: {{ .Values.concourse.web.baseResourceTypeDefaults | quote }}
+  {{- end -}}
+  {{- if .Values.concourse.web.customHttpHeaders }}
+  custom-http-headers.yml: {{ .Values.concourse.web.customHttpHeaders | quote }}
   {{- end -}}
 {{- end -}}
 {{- end -}}
