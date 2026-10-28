@@ -1091,6 +1091,23 @@ concourse:
       ##
       componentStaleMultiplier:
 
+      ## Per-pool minimum running-worker thresholds. Each entry has the format
+      ## kind:name:count:severity, where:
+      ##   kind     — platform, team, or tag
+      ##   name     — the platform name (linux/darwin/windows), team name, or tag name
+      ##   count    — minimum number of running workers required
+      ##   severity — critical (missing pool → HTTP 503), warn (→ degraded only),
+      ##              or info (tracked in breakdowns, no status effect)
+      ##
+      ## Example:
+      ##   - platform:linux:2:critical
+      ##   - platform:windows:1:warn
+      ##   - team:infra-team:1:critical
+      ##   - tag:gpu:1:critical
+      ##   - tag:spot:1:info
+      ##
+      minWorkerScopes: []
+
     syslog:
       ## Enables the emission of build logs to external log ingesters through
       ## using the syslog protocol.

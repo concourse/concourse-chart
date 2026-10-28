@@ -977,6 +977,10 @@ spec:
             - name: CONCOURSE_HEALTH_COMPONENT_STALE_MULTIPLIER
               value: {{ .Values.concourse.web.health.componentStaleMultiplier | quote }}
             {{- end }}
+            {{- if .Values.concourse.web.health.minWorkerScopes }}
+            - name: CONCOURSE_HEALTH_MIN_WORKER_SCOPES
+              value: {{ .Values.concourse.web.health.minWorkerScopes | join "," | quote }}
+            {{- end }}
             {{- if .Values.concourse.web.syslog.enabled }}
             {{- if .Values.concourse.web.syslog.hostname }}
             - name: CONCOURSE_SYSLOG_HOSTNAME

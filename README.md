@@ -343,6 +343,9 @@ The following table lists the configurable parameters of the Concourse chart and
 | `worker.persistentVolumeClaimRetentionPolicy` | `Retain` or `Delete` (requires Kubernetes >= 1.32) | `Retain` |
 | `worker.updateStrategy` | `OnDelete` or `RollingUpdate` (requires Kubernetes >= 1.7) | `RollingUpdate` |
 | `worker.labels` | Additional labels to be added to the worker pods | `{}` |
+| `concourse.web.health.minWorkerCount` | Minimum running workers before the health endpoint reports degraded. Set to `0` to disable. | `nil` |
+| `concourse.web.health.componentStaleMultiplier` | Multiplier applied to a component's interval to determine when it is considered stale. | `nil` |
+| `concourse.web.health.minWorkerScopes` | Per-pool minimum running-worker thresholds. Repeatable; format `kind:name:count:severity`. Comma-separated when set via env var. | `[]` |
 
 For configurable Concourse parameters, refer to [`values.yaml`](values.yaml)' `concourse` section. All parameters under this section are strictly mapped from the `concourse` binary commands.
 
