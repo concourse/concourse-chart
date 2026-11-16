@@ -304,6 +304,9 @@ The following table lists the configurable parameters of the Concourse chart and
 | `web.teamSecretsPath` | Specify the mount directory of the team authorized keys secrets | `/team-authorized-keys` |
 | `web.conjurSecretsPath` | Specify the mount directory of the web conjur secrets | `/concourse-conjur` |
 | `web.concourseMigration.resources` | Resource requests/limits for the database migration init container | `{}` |
+| `web.tls.existingSecret` | Name of a Secret where the server certificate and private key are stored. | `nil` |
+| `web.tls.certSecretKey` | Name of the key in a Secret where the server certificate is stored. | `web-tls-cert` |
+| `web.tls.keySecretKey` | Name of the key in a Secret where the private key is stored. | `web-tls-key` |
 | `worker.additionalAffinities` | Additional affinities to apply to worker pods. E.g: node affinity | `{}` |
 | `worker.additionalVolumeMounts` | VolumeMounts to be added to the worker pods | `nil` |
 | `worker.additionalPorts` | Additional ports to be added to worker pods | `[]` |
