@@ -11,6 +11,6 @@
 {{- required "When ingress is enabled, you must define either web.ingress.hosts or web.ingress.rulesOverride" "" }}
 {{ end }}
 
-{{ if not (and .Values.concourse.web.tls.certSecretKey .Values.concourse.web.tls.keySecretKey) }}
-{{- required "Must set both concourse.web.tls.certSecretKey and concourse.web.tls.keySecretKey" "" }}
+{{ if not (and .Values.web.tls.certSecretKey .Values.web.tls.keySecretKey) }}
+{{- required "Must set both web.tls.certSecretKey and web.tls.keySecretKey" "" }}
 {{ end }}

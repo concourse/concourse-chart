@@ -1768,12 +1768,12 @@ spec:
         {{- if not .Values.concourse.web.letsEncrypt.enabled }}
         - name: web-tls
           secret:
-            secretName: {{ .Values.concourse.web.tls.existingSecretName | default (include "concourse.web.fullname" .) }}
+            secretName: {{ .Values.web.tls.existingSecret | default (include "concourse.web.fullname" .) }}
             defaultMode: 0400
             items:
-              - key: {{ .Values.concourse.web.tls.certSecretKey }}
+              - key: {{ .Values.web.tls.certSecretKey }}
                 path: tls.cert
-              - key: {{ .Values.concourse.web.tls.keySecretKey }}
+              - key: {{ .Values.web.tls.keySecretKey }}
                 path: tls.key
         {{- if .Values.secrets.webTlsCaCert }}
         - name: web-tls-ca

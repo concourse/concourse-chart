@@ -248,7 +248,7 @@ concourse:
 
     ## TLS configuration for the web component to be able to serve HTTPS traffic.
     ## Once enabled, sources the certificate and key set via .secrets.webTlsCert
-    ## and .secrets.webTlsKey, or from an existing Secret object.
+    ## and .secrets.webTlsKey, or from an existing Secret object (.web.tls.existingSecret)
     ##
     tls:
       ## Enable serving HTTPS traffic directly through the web component.
@@ -258,14 +258,6 @@ concourse:
       ## Port on which to listen for HTTPS traffic.
       ##
       bindPort: 443
-
-      ## Read certificates from an existing Secret. Useful when managing
-      ## certificates through cert-manager.
-      existingSecretName: ""
-
-      ## The Secret keys that hold the TLS certificate and key.
-      certSecretKey: web-tls-cert
-      keySecretKey: web-tls-key
 
     ## URL used to reach any ATC from the outside world.
     ## This is *very* important for a proper authentication workflow as
@@ -2647,6 +2639,19 @@ web:
     ## Example:
     ## - "concourse.example.com"
     hostnames: []
+
+  ## TLS configuration for the web Pods.
+  ##
+  tls:
+    ## The Secret keys that hold the server certificate and private key.
+    ##
+    certSecretKey: web-tls-cert
+    keySecretKey: web-tls-key
+
+    ## Source certificates from an existing Secret. Useful when certificates
+    ## are managed through other mechanisms.
+    ##
+    existingSecret: ""
 
 ## Configuration values for Concourse Worker components.
 ## For more information regarding the characteristics of
