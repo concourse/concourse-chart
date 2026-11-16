@@ -347,9 +347,9 @@ spec:
               value: {{ .Values.concourse.web.tls.bindPort | quote }}
             {{- if not .Values.concourse.web.letsEncrypt.enabled }}
             - name: CONCOURSE_TLS_CERT
-              value: "{{ .Values.web.tlsSecretsPath }}/client.cert"
+              value: "{{ .Values.web.tlsSecretsPath }}/tls.cert"
             - name: CONCOURSE_TLS_KEY
-              value: "{{ .Values.web.tlsSecretsPath }}/client.key"
+              value: "{{ .Values.web.tlsSecretsPath }}/tls.key"
             {{- if .Values.secrets.webTlsCaCert }}
             - name: CONCOURSE_TLS_CA_CERT
               value: "{{ .Values.web.tlsSecretsPath }}/ca.cert"
@@ -1767,9 +1767,9 @@ spec:
             defaultMode: 0400
             items:
               - key: web-tls-cert
-                path: client.cert
+                path: tls.cert
               - key: web-tls-key
-                path: client.key
+                path: tls.key
               {{- if .Values.secrets.webTlsCaCert }}
               - key: web-tls-ca-cert
                 path: ca.cert
