@@ -1,0 +1,74 @@
+suite: TLS
+
+tests:
+  - it: Default To Singlar Secret
+    set:
+      concourse:
+        web:
+          externalUrl: https://dummy.com
+          tls:
+            enabled: true
+      secrets:
+        webTlsCert: "cert"
+        webTlsKey: "key"
+    template: web-deployment.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.volumes[1].secret.secretName
+          value: RELEASE-NAME-web
+
+  - it: Mount Existing Secret
+    set:
+      concourse:
+        web:
+          externalUrl: https://dummy.com
+          tls:
+            enabled: true
+      web:
+        tls:
+          existingSecret: tls-for-web
+    template: web-deployment.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.volumes[1].secret.secretName
+          value: tls-for-web
+
+  - it: Cert And Key Removed From Singluar Secret
+    set:
+      concourse:
+        web:
+          externalUrl: https://dummy.com
+          tls:
+            enabled: true
+      web:
+        tls:
+          existingSecret: random-name
+    template: web-secrets.yaml
+    asserts:
+      - notExists:
+          path: data.web-tls-cert
+      - notExists:
+          path: data.web-tls-key
+
+  - it: Mount Arbitrary Keys
+    set:
+      concourse:
+        web:
+          externalUrl: https://dummy.com
+          tls:
+            enabled: true
+      web:
+        tls:
+          certSecretKey: cert
+          keySecretKey: key
+      secrets:
+        webTlsCert: a-certificate
+        webTlsKey: a-private-key
+    template: web-deployment.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.volumes[1].secret.items[0].key
+          value: cert
+      - equal:
+          path: spec.template.spec.volumes[1].secret.items[1].key
+          value: key
