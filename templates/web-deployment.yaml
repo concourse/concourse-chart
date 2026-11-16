@@ -347,12 +347,12 @@ spec:
               value: {{ .Values.concourse.web.tls.bindPort | quote }}
             {{- if not .Values.concourse.web.letsEncrypt.enabled }}
             - name: CONCOURSE_TLS_CERT
-              value: "{{ .Values.web.tlsSecretsPath }}/tls.cert"
+              value: "{{ .Values.web.tlsSecretsPath }}/tls/tls.cert"
             - name: CONCOURSE_TLS_KEY
-              value: "{{ .Values.web.tlsSecretsPath }}/tls.key"
+              value: "{{ .Values.web.tlsSecretsPath }}/tls/tls.key"
             {{- if .Values.secrets.webTlsCaCert }}
             - name: CONCOURSE_TLS_CA_CERT
-              value: "{{ .Values.web.tlsSecretsPath }}/ca.cert"
+              value: "{{ .Values.web.tlsSecretsPath }}/ca/ca.cert"
             {{- end }}
             {{- end }}
             {{- end }}
@@ -1668,8 +1668,13 @@ spec:
             {{- if .Values.concourse.web.tls.enabled }}
             {{- if not .Values.concourse.web.letsEncrypt.enabled }}
             - name: web-tls
-              mountPath: {{ .Values.web.tlsSecretsPath | quote }}
+              mountPath: "{{ .Values.web.tlsSecretsPath }}/tls"
               readOnly: true
+            {{- if .Values.secrets.webTlsCaCert }}
+            - name: web-tls-ca
+              mountPath: "{{ .Values.web.tlsSecretsPath }}/ca"
+              readOnly: true
+            {{- end }}
             {{- end }}
             {{- end }}
             {{- if .Values.concourse.web.vault.enabled }}
@@ -1770,10 +1775,15 @@ spec:
                 path: tls.cert
               - key: {{ .Values.concourse.web.tls.keySecretKey }}
                 path: tls.key
-              {{- if .Values.secrets.webTlsCaCert }}
+        {{- if .Values.secrets.webTlsCaCert }}
+        - name: web-tls-ca
+          secret:
+            secretName: {{ template "concourse.web.fullname" . }}
+            defaultMode: 0400
+            items:
               - key: web-tls-ca-cert
                 path: ca.cert
-              {{- end }}
+        {{- end }}
         {{- end }}
         {{- end }}
         {{- if .Values.concourse.web.vault.enabled }}
