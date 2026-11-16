@@ -1766,9 +1766,9 @@ spec:
             secretName: {{ .Values.concourse.web.tls.existingSecretName | default (include "concourse.web.fullname" .) }}
             defaultMode: 0400
             items:
-              - key: web-tls-cert
+              - key: {{ .Values.concourse.web.tls.certSecretKey }}
                 path: tls.cert
-              - key: web-tls-key
+              - key: {{ .Values.concourse.web.tls.keySecretKey }}
                 path: tls.key
               {{- if .Values.secrets.webTlsCaCert }}
               - key: web-tls-ca-cert

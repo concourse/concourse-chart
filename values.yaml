@@ -263,6 +263,10 @@ concourse:
       ## certificates through cert-manager.
       existingSecretName: ""
 
+      ## The Secret keys that hold the TLS certificate and key.
+      certSecretKey: web-tls-cert
+      keySecretKey: web-tls-key
+
     ## URL used to reach any ATC from the outside world.
     ## This is *very* important for a proper authentication workflow as
     ## browser redirects are based on the value set here.
