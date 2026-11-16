@@ -247,8 +247,8 @@ concourse:
     bindPort: 8080
 
     ## TLS configuration for the web component to be able to serve HTTPS traffic.
-    ## Once enabled, consumes the certificates set via secrets (`web-tls-cert` and
-    ## `web-tls-key`).
+    ## Once enabled, sources the certificate and key set via .secrets.webTlsCert
+    ## and .secrets.webTlsKey, or from an existing Secret object.
     ##
     tls:
       ## Enable serving HTTPS traffic directly through the web component.
@@ -258,6 +258,10 @@ concourse:
       ## Port on which to listen for HTTPS traffic.
       ##
       bindPort: 443
+
+      ## Read certificates from an existing Secret. Useful when managing
+      ## certificates through cert-manager.
+      existingSecretName: ""
 
     ## URL used to reach any ATC from the outside world.
     ## This is *very* important for a proper authentication workflow as

@@ -1763,7 +1763,7 @@ spec:
         {{- if not .Values.concourse.web.letsEncrypt.enabled }}
         - name: web-tls
           secret:
-            secretName: {{ template "concourse.web.fullname" . }}
+            secretName: {{ .Values.concourse.web.tls.existingSecretName | default (include "concourse.web.fullname" .) }}
             defaultMode: 0400
             items:
               - key: web-tls-cert
